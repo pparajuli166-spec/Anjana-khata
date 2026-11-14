@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Anjana & Prakash - Super Couple App</title>
+<!-- यो लाइनले एप जस्तो बनाउन मद्दत गर्छ -->
+<link rel="manifest" href="manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter@3.3.4/dist/nepali-date-converter.umd.js"></script>
 
@@ -183,9 +185,8 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
     </div>
   </header>
 
-  <!-- 💰 Tab 1: ANJANA HISAB (Expense Tracker) -->
+  <!-- 💰 Tab 1: ANJANA HISAB -->
   <div id="tab-hisab" class="tab-content active">
-    <!-- नयाँ थपिएको शीर्षक -->
     <h2 class="page-title">🌸 अन्जना हिसाब 🌸</h2>
 
     <div class="card budget-card">
@@ -218,7 +219,7 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
     </div>
 
     <div class="chart-card">
-        <h2 class="card-title">📊 वार्षिक विश्लेषण (Yearly Analysis)</h2>
+        <h2 class="card-title">📊 वार्षिक विश्लेषण</h2>
         <div class="chart-container" id="yearlyChart"></div>
         <div class="analysis-text" id="analysisText"></div>
     </div>
@@ -265,12 +266,10 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
     </div>
   </div>
 
-  <!-- 💑 Tab 2: HAMI (Anjana & Prakash) -->
+  <!-- 💑 Tab 2: HAMI -->
   <div id="tab-us" class="tab-content">
-    <!-- नयाँ थपिएको शीर्षक -->
     <h2 class="page-title">💑 अन्जना र प्रकाश 💑</h2>
 
-    <!-- Love Counter -->
     <div class="card">
         <h2 class="card-title" style="justify-content:center;">⏳ हामी सँगै बसेको दिन</h2>
         <div class="love-counter-box">
@@ -281,7 +280,6 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
         </div>
     </div>
 
-    <!-- Hugs & Kisses -->
     <div class="card" style="text-align:center; background: linear-gradient(135deg, #fdf4ff, #fae8ff); border-color: #f0abfc;">
         <h2 class="card-title" style="justify-content:center; color:#c026d3;">🤗 भर्चुअल माया</h2>
         <div style="display:flex; justify-content:space-around; margin-bottom:10px;">
@@ -294,9 +292,8 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
         </div>
     </div>
 
-    <!-- Truth or Dare -->
     <div class="card">
-        <h2 class="card-title">🎲 ट्रुथ वा डेयर (खेल)</h2>
+        <h2 class="card-title">🎲 ट्रुथ वा डेयर</h2>
         <div class="tod-box">
             <p id="todText">खेल खेल्न तलको बटन थिच्नुहोस्!</p>
             <div class="tod-btns">
@@ -306,7 +303,6 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
         </div>
     </div>
 
-    <!-- Daily Question -->
     <div class="card">
         <h2 class="card-title">🤔 आजको प्रश्न</h2>
         <div class="q-box">
@@ -319,9 +315,8 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
         </div>
     </div>
 
-    <!-- Love Notes -->
     <div class="card">
-        <h2 class="card-title">💌 मायाको चिठी (Sticky Notes)</h2>
+        <h2 class="card-title">💌 मायाको चिठी</h2>
         <div style="display:flex; gap:8px; margin-bottom:15px;">
             <input type="text" id="noteInput" placeholder="छोटो मीठो सन्देश..." style="flex:1; padding:10px; border:1.5px solid #e2e8f0; border-radius:8px; outline:none;">
             <button onclick="addLoveNote()" style="background:#db2777; color:white; padding:10px 15px; border-radius:8px; font-weight:bold;">+</button>
@@ -329,7 +324,6 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
         <div class="notes-board" id="notesBoard"></div>
     </div>
 
-    <!-- Bucket List -->
     <div class="card">
         <h2 class="card-title">🎯 साझा सपना (Bucket List)</h2>
         <div style="display:flex; gap:8px; margin-bottom:15px;">
@@ -339,9 +333,8 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
         <div id="bucketList"></div>
     </div>
 
-    <!-- Memory Jar -->
     <div class="card">
-        <h2 class="card-title">📸 सम्झनाको बाकस (Memory Jar)</h2>
+        <h2 class="card-title">📸 सम्झनाको बाकस</h2>
         <div style="display:flex; gap:8px; margin-bottom:15px; flex-direction:column;">
             <input type="text" id="memoryTitle" placeholder="शीर्षक (जस्तै: पहिलो भेट)" style="padding:10px; border:1.5px solid #e2e8f0; border-radius:8px; outline:none;">
             <div style="display:flex; gap:8px;">
@@ -560,9 +553,7 @@ document.body.addEventListener('click', function(e) {
     if (!e.target.closest('#musicBtn')) playMusic();
 });
 
-/* ================= "HAMI" TAB (Super Couple Features) ================= */
-
-// 1. Love Counter
+/* ================= "HAMI" TAB ================= */
 async function saveLoveDate(dateVal) {
     if(!dateVal) return;
     await fetch(LOVE_DATE_URL + ".json", { method: 'PUT', body: JSON.stringify(dateVal) });
@@ -583,7 +574,6 @@ async function loadLoveDate() {
     }
 }
 
-// 2. Hugs & Kisses
 async function sendLoveAction(type) {
     const myRole = $('myRole').value;
     let msgText = type === 'hug' ? "🤗 (Virtual Hug) मैले तिमीलाई अँगालो हालेको छु!" : "😘 (Virtual Kiss) मेरो तर्फबाट मीठो चुम्बन!";
@@ -613,14 +603,12 @@ async function loadCounters() {
     } catch(e) {}
 }
 
-// 3. Truth or Dare
 function playTOD(type) {
     const arr = type === 'truth' ? TRUTHS : DARES;
     const random = arr[Math.floor(Math.random() * arr.length)];
     $('todText').textContent = random;
 }
 
-// 4. Daily Questions
 function getDayOfYear() {
     const now = new Date();
     const start = new Date(now.getFullYear(), 0, 0);
@@ -650,7 +638,6 @@ async function submitAnswer() {
     loadDailyQ();
 }
 
-// 5. Sticky Notes
 let notesData = [];
 async function loadLoveNotes() {
     try {
@@ -688,7 +675,6 @@ async function deleteLoveNote(id) {
     loadLoveNotes();
 }
 
-// 6. Bucket List
 let bucketData = [];
 async function loadBucketList() {
     try {
@@ -730,7 +716,6 @@ async function deleteBucketItem(id) {
     loadBucketList();
 }
 
-// 7. Memory Jar
 let memoryData = [];
 async function loadMemories() {
     try {
