@@ -409,13 +409,48 @@ function spawnBgFlowers() {
         setTimeout(() => flower.remove(), 15000);
     }, 600);
 }
+
 const music = $('bgMusic');
 let isPlaying = false;
+
+// 🎵 गीत बजाउने लजिक
+function playMusic() {
+  if (!isPlaying) {
+    music.play().then(() => {
+      isPlaying = true;
+      $('musicBtn').classList.add('playing');
+      $('musicIcon').textContent = '⏸️';
+    }).catch(e => {}); // ब्राउजरले रोक्यो भने केही नगर्ने
+  }
+}
+
+// गीत अन/अफ गर्ने बटन
 function toggleMusic(e) {
   if(e) e.stopPropagation();
-  if (isPlaying) { music.pause(); isPlaying = false; $('musicBtn').classList.remove('playing'); $('musicIcon').textContent = '🎵'; } 
-  else { music.play().then(() => { isPlaying = true; $('musicBtn').classList.add('playing'); $('musicIcon').textContent = '⏸️'; }).catch(e=>{}); }
+  if (isPlaying) { 
+      music.pause(); 
+      isPlaying = false; 
+      $('musicBtn').classList.remove('playing'); 
+      $('musicIcon').textContent = '🎵'; 
+  } else { 
+      playMusic(); 
+  }
 }
+
+// 🌟 स्क्रिनमा जहाँ पनि टच/क्लिक गर्दा गीत बज्ने लजिक
+document.body.addEventListener('touchstart', function(e) {
+    // यदि म्युजिक बटन आफैंमा टच गरेको छैन भने मात्र गीत बजाउने
+    if (!e.target.closest('#musicBtn')) {
+        playMusic();
+    }
+}, { passive: true });
+
+document.body.addEventListener('click', function(e) {
+    if (!e.target.closest('#musicBtn')) {
+        playMusic();
+    }
+});
+
 
 /* ================= HOME TAB ================= */
 function initHome() {
@@ -479,14 +514,12 @@ async function loadCloudData() {
     data = [];
     if (json) { for (let key in json) { data.push({ id: key, ...json[key] }); } }
     
-    // Load Budget
     const bRes = await fetch(BUDGET_URL + ".json");
     budgetData = await bRes.json() || 0;
     $('budgetInput').value = budgetData > 0 ? budgetData : '';
     
     $('syncStatus').textContent = `✓ सिंक भयो`;
     
-    // Setup Year Filter
     const years = new Set(data.map(d => +d.date.split('-')[0]));
     const currentYear = new Date().getFullYear();
     years.add(currentYear);
@@ -542,7 +575,6 @@ function renderExpenses() {
       filtered = filtered.filter(d => (+d.date.split('-')[1] - 1) === +m);
   }
 
-  // 1. Update Stats
   const total = filtered.reduce((s,d) => s + d.amount, 0);
   $('statTotal').textContent = fmt(total);
   
@@ -550,7 +582,6 @@ function renderExpenses() {
   const todayTotal = data.filter(d => d.date === todayStr).reduce((s,d) => s + d.amount, 0);
   $('statToday').textContent = fmt(todayTotal);
 
-  // 2. Budget Target Logic (Current Month)
   const now = new Date();
   const currentMonthSpent = data.filter(d => +d.date.split('-')[0] === y && (+d.date.split('-')[1] - 1) === now.getMonth()).reduce((s,d)=>s+d.amount, 0);
   
@@ -560,11 +591,11 @@ function renderExpenses() {
       $('budgetSpent').textContent = fmt(currentMonthSpent);
       
       let percent = (currentMonthSpent / budgetData) * 100;
-      let barColor = '#f97316'; // Orange
+      let barColor = '#f97316';
       
       if (percent > 100) {
           percent = 100;
-          barColor = '#ef4444'; // Red
+          barColor = '#ef4444';
           $('budgetMsg').innerHTML = `⚠️ तपाईंले यो महिना बजेट भन्दा ${fmt(currentMonthSpent - budgetData)} बढी खर्च गर्नुभयो!`;
           $('budgetMsg').style.color = '#ef4444';
       } else {
@@ -577,7 +608,6 @@ function renderExpenses() {
       $('budgetProgressArea').style.display = 'none';
   }
 
-  // 3. 📊 YEARLY CHART & ANALYSIS LOGIC
   const monthlyTotals = Array(12).fill(0);
   const yearData = data.filter(d => +d.date.split('-')[0] === y);
   yearData.forEach(d => {
@@ -594,7 +624,7 @@ function renderExpenses() {
   for(let i=0; i<12; i++) {
       const amt = monthlyTotals[i];
       let heightPercent = maxMonthVal > 0 ? (amt / maxMonthVal) * 100 : 0;
-      if (heightPercent < 2 && amt > 0) heightPercent = 2; // minimum visible height
+      if (heightPercent < 2 && amt > 0) heightPercent = 2;
       
       let barClass = '';
       if (budgetData > 0 && amt > budgetData) {
@@ -612,7 +642,6 @@ function renderExpenses() {
   }
   $('yearlyChart').innerHTML = chartHTML;
 
-  // Analysis Text
   let analysisStr = "";
   if (maxMonthVal > 0) {
       analysisStr += `🔴 <b>सबैभन्दा धेरै खर्च:</b> ${MONTHS_NE[highestMonthIdx]} महिनामा (${fmt(maxMonthVal)}) भएको छ।<br>`;
@@ -628,7 +657,6 @@ function renderExpenses() {
   }
   $('analysisText').innerHTML = analysisStr;
 
-  // 4. Category Breakdown Bars
   const catTotals = {};
   filtered.forEach(d => {
       catTotals[d.category] = (catTotals[d.category] || 0) + d.amount;
@@ -652,7 +680,6 @@ function renderExpenses() {
   }
   $('catBreakdown').innerHTML = catHTML;
 
-  // 5. Render Table
   filtered.sort((a,b) => b.date.localeCompare(a.date) || b.ts - a.ts);
   $('tableBody').innerHTML = filtered.map(d => {
     const c = catMap[d.category] || catMap.other;
