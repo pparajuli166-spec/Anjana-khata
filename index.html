@@ -3,203 +3,379 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Anjana Hisab Khata - Secure Cloud</title>
+<title>Hamro Sansar - Main Hisab</title>
 <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/nepali-date-converter@3.3.4/dist/nepali-date-converter.umd.js"></script>
+
 <style>
-:root{ --bg:#f1f5f9; --card:rgba(255,255,255,0.95); --text:#0f172a; --muted:#475569; --primary:#4f46e5; --border:#e2e8f0; --radius:16px; --shadow:0 4px 20px rgba(15,23,42,.1); }
+:root{ 
+    --bg:#f1f5f9; --card:rgba(255,255,255,0.96); --text:#0f172a; --muted:#475569; 
+    --primary:#4f46e5; --border:#e2e8f0; --radius:16px; --shadow:0 4px 20px rgba(15,23,42,.1);
+    --nav-height: 65px;
+}
 *{box-sizing:border-box;margin:0;padding:0} 
-body{font-family:'Mukta',sans-serif;color:var(--text);padding:16px;padding-bottom:90px;background-color:#1e293b;background-size:cover;background-position:center;background-attachment:fixed; overflow-x: hidden;}
-body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:-2;}
+body{font-family:'Mukta',sans-serif;color:var(--text);padding:12px;padding-bottom:calc(var(--nav-height) + 20px);background-color:#1e293b;background-size:cover;background-position:center;background-attachment:fixed; overflow-x: hidden;}
+body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15, 23, 42, 0.75);z-index:-2;}
 
-/* --- ब्याकग्राउन्डमा बिस्तारै माथि उड्ने गुलाब --- */
-.bg-rose {
-    position: fixed;
-    bottom: -50px;
-    pointer-events: none;
-    z-index: -1;
-    animation: floatUp linear infinite;
-    opacity: 0;
-}
+/* 🌸 ब्याकग्राउन्ड फूल */
+.bg-flower { position: fixed; bottom: -50px; pointer-events: none; z-index: -1; animation: floatUp linear infinite; opacity: 0; }
 @keyframes floatUp {
-    0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
-    10% { opacity: 0.8; }
-    90% { opacity: 0.8; }
-    100% { transform: translateY(-110vh) rotate(360deg) scale(1.2); opacity: 0; }
+    0% { transform: translateY(0) rotate(-20deg) scale(0.8); opacity: 0; }
+    10% { opacity: 0.9; } 80% { opacity: 0.8; }
+    100% { transform: translateY(-110vh) rotate(30deg) scale(1.2); opacity: 0; }
 }
 
-/* --- टच गर्दा फुरुरुरु उड्ने गुलाब --- */
-.burst-rose {
-    position: fixed;
-    pointer-events: none;
-    z-index: 99999;
-    font-size: 24px;
-    transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.5s ease-out;
-}
+.wrap{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:16px; position: relative; z-index: 1;}
 
-.wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:16px; position: relative; z-index: 1;}
-.hero{background:linear-gradient(135deg,#4f46e5,#9333ea);color:#fff;border-radius:var(--radius);padding:26px;text-align:center;box-shadow:0 10px 28px rgba(79,70,229,.3);display: flex;flex-direction: column;align-items: center;}
-.hero h1{font-size:26px;font-weight:800; margin-top: 10px;}
-.hero p{font-size:14px;opacity:.9;margin-top:6px}
+/* Top Header */
+.top-header { display: flex; align-items: center; gap: 12px; background: linear-gradient(135deg,#4f46e5,#9333ea); padding: 15px; border-radius: var(--radius); color: white; box-shadow: 0 10px 20px rgba(79,70,229,.3); }
+.couple-photo-small { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+.header-text h1 { font-size: 20px; font-weight: 800; }
+.header-text p { font-size: 12px; opacity: 0.9; }
 
-.couple-photo {
-    width: 130px; height: 130px; border-radius: 50%; object-fit: cover;
-    border: 5px solid transparent;
-    background: linear-gradient(#fff, #fff) padding-box, linear-gradient(45deg, #ff6b6b, #4f46e5, #9333ea) border-box;
-    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
-    animation: float 3s ease-in-out infinite;
-}
-@keyframes float {
-    0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); }
-}
+/* Tab System */
+.tab-content { display: none; animation: fadeIn 0.3s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-.card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.5);backdrop-filter:blur(10px);}
-.card-title{font-size:16.5px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
-.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;align-items:end;}
-.field{display:flex;flex-direction:column;gap:6px}
-.field label{font-size:13px;font-weight:600;color:#334155}
-.field input,.field select{font-family:inherit;font-size:15px;padding:10px;border:1.5px solid var(--border);border-radius:10px;background:#f8fafc;outline:none;width:100%;}
+/* Cards & UI Elements */
+.card{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.5);backdrop-filter:blur(10px); margin-bottom: 16px;}
+.card-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px; color: #1e293b;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:end;}
+.field{display:flex;flex-direction:column;gap:4px;}
+.field.full{grid-column: span 2;}
+.field label{font-size:12px;font-weight:600;color:#334155}
+.field input,.field select,.field textarea{font-family:inherit;font-size:14px;padding:10px;border:1.5px solid var(--border);border-radius:10px;background:#f8fafc;outline:none;width:100%;}
+textarea { resize: vertical; min-height: 60px; }
 button{font-family:inherit;cursor:pointer;border:none;transition:.18s}
-.btn-primary{background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;font-size:15px;font-weight:700;padding:11px;border-radius:10px;width:100%;}
-.btn-primary:hover{transform:translateY(-1px);}
-.btn-ghost{background:#fff;color:#334155;font-size:13.5px;font-weight:600;padding:9px 14px;border-radius:10px;border:1.5px solid var(--border);}
-.filter-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:var(--card);border-radius:var(--radius);padding:14px 18px;box-shadow:var(--shadow);}
-.filter-bar select{font-family:inherit;font-size:14.5px;padding:8px 12px;border:1.5px solid var(--border);border-radius:9px;background:#f8fafc;outline:none;}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;}
-.stat{background:var(--card);border-radius:14px;padding:16px;box-shadow:var(--shadow);border-left:4px solid var(--primary);}
-.stat .lbl{font-size:12.5px;color:var(--muted);font-weight:600}
-.stat .val{font-size:21px;font-weight:800;margin-top:4px}
-table{width:100%;border-collapse:collapse;min-width:650px;}
-thead th{text-align:left;font-size:12.5px;font-weight:700;color:var(--muted);padding:8px 10px;border-bottom:2px solid var(--border);}
-tbody td{padding:11px 10px;font-size:14.5px;border-bottom:1px solid #f1f5f9;}
-.badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:3px 8px;border-radius:99px;}
-.table-scroll{overflow-x:auto;margin:0 -20px;padding:0 20px}
-.icon-btn{width:30px;height:30px;border-radius:8px;background:#f1f5f9;display:grid;place-items:center;font-size:14px;cursor:pointer;}
-.icon-btn:hover{background:#e2e8f0}
-.hint{text-align:center;font-size:12.5px;color:#f8fafc;background:rgba(15,23,42,0.8);padding:10px;border-radius:8px;line-height:1.6;}
-#toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(100px);background:#16a34a;color:#fff;padding:12px 24px;border-radius:99px;font-weight:600;font-size:14px;z-index:10000;transition:transform .35s;box-shadow:0 8px 24px rgba(22,163,74,.4);}
+.btn-primary{background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;font-size:14px;font-weight:700;padding:12px;border-radius:10px;width:100%;}
+.btn-ghost{background:#fff;color:#334155;font-size:13px;font-weight:600;padding:8px 12px;border-radius:8px;border:1.5px solid var(--border);}
+
+/* 💰 HISAB SPECIFIC STYLES */
+.filter-bar { display: flex; gap: 10px; margin-bottom: 15px; }
+.filter-bar select { flex: 1; padding: 10px; border-radius: 10px; border: 1.5px solid var(--border); font-weight: bold; color: var(--primary); background: #f8fafc; outline: none; }
+
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.stat-card { background: #fff; border-radius: 14px; padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-left: 5px solid var(--primary); }
+.stat-card.green { border-left-color: #10b981; }
+.stat-card.red { border-left-color: #ef4444; }
+.stat-title { font-size: 12px; color: #64748b; font-weight: 700; text-transform: uppercase; }
+.stat-amount { font-size: 20px; font-weight: 900; color: #1e293b; margin-top: 5px; }
+
+/* Budget Card */
+.budget-card { background: linear-gradient(135deg, #fff7ed, #ffedd5); border: 2px solid #fdba74; }
+.budget-card .card-title { color: #c2410c; }
+.budget-input-area { display: flex; gap: 10px; margin-bottom: 10px; }
+.budget-input-area input { flex: 1; padding: 10px; border-radius: 8px; border: 1.5px solid #fdba74; outline: none; font-weight: bold; color: #c2410c; }
+.budget-input-area button { background: #c2410c; color: white; padding: 10px 15px; border-radius: 8px; font-weight: bold; }
+.budget-progress-bg { width: 100%; height: 16px; background: #fed7aa; border-radius: 10px; overflow: hidden; margin-bottom: 8px; }
+.budget-progress-fill { height: 100%; width: 0%; background: #f97316; transition: width 0.5s ease; border-radius: 10px; }
+
+/* Yearly Chart Section */
+.chart-card { background: #fff; border-radius: 14px; padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 16px;}
+.chart-container { display: flex; align-items: flex-end; height: 120px; gap: 4px; margin-top: 15px; padding-bottom: 20px; border-bottom: 1px solid #e2e8f0;}
+.chart-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; position: relative;}
+.chart-bar { width: 100%; background: #4f46e5; border-radius: 4px 4px 0 0; transition: height 0.5s ease; min-height: 2px;}
+.chart-bar.over-budget { background: #ef4444; }
+.chart-bar.highest { background: #10b981; }
+.chart-label { position: absolute; bottom: -20px; font-size: 9px; font-weight: bold; color: #64748b; }
+.analysis-text { font-size: 12px; color: #475569; margin-top: 15px; line-height: 1.6; padding: 10px; background: #f8fafc; border-radius: 8px;}
+
+/* Table */
+table{width:100%;border-collapse:collapse;min-width:100%;}
+thead th{text-align:left;font-size:12px;font-weight:700;color:var(--muted);padding:8px;border-bottom:2px solid var(--border);}
+tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
+.table-scroll{overflow-x:auto; margin: 0 -16px; padding: 0 16px;}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:2px 6px;border-radius:99px;}
+.action-btns { display: flex; gap: 5px; }
+.icon-btn{width:28px;height:28px;border-radius:6px;background:#f1f5f9;display:grid;place-items:center;font-size:12px;cursor:pointer; border:none;}
+.icon-btn.del { background: #fee2e2; color: #ef4444; }
+
+/* Chat */
+.chat-container { display: flex; flex-direction: column; height: 400px; border-radius: 12px; overflow: hidden; background: #e5ddd5;}
+.chat-header { background: #075e54; color: white; padding: 10px; display: flex; align-items: center; gap: 10px; font-weight: 600;}
+.chat-messages { flex: 1; padding: 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;}
+.message { max-width: 85%; padding: 8px 12px; border-radius: 8px; font-size: 14px; line-height: 1.4; position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.1); word-wrap: break-word;}
+.message.partner { background: #fff; align-self: flex-start; border-top-left-radius: 0;}
+.message.me { background: #dcf8c6; align-self: flex-end; border-top-right-radius: 0;}
+.message .time { font-size: 10px; color: #888; text-align: right; margin-top: 4px;}
+.chat-input-area { display: flex; padding: 8px; background: #f0f0f0; gap: 8px;}
+.chat-input-area input { flex: 1; padding: 10px; border-radius: 20px; border: none; outline: none; font-size: 14px;}
+.chat-input-area button { background: #075e54; color: white; border-radius: 50%; width: 40px; height: 40px; font-size: 18px; display: flex; justify-content: center; align-items: center;}
+
+/* Home Specifics */
+.love-quote { text-align: center; font-style: italic; color: #db2777; font-weight: 600; padding: 10px; font-size: 15px; }
+.miss-btn { background: linear-gradient(45deg, #ff6b6b, #db2777); color: white; padding: 15px; border-radius: 12px; font-size: 18px; font-weight: 800; width: 100%; margin-top: 10px; box-shadow: 0 6px 15px rgba(219, 39, 119, 0.4); animation: pulse 2s infinite;}
+
+/* Live Clock */
+.clock-container { display: flex; justify-content: space-around; text-align: center; background: #f8fafc; border-radius: 12px; border: 1px dashed #cbd5e1; padding: 15px; margin: 10px 0; }
+.clock-box { flex: 1; }
+.clock-box .flag { font-size: 24px; margin-bottom: 2px; }
+.clock-box .country { font-size: 12px; color: #64748b; font-weight: 700; }
+.clock-box .time { font-size: 18px; font-weight: 800; color: #4f46e5; letter-spacing: 1px; }
+.clock-box .time.nepal { color: #db2777; }
+
+/* Special Anniversary Banner */
+.anniversary-card { background: linear-gradient(135deg, #ffe4e6, #fbcfe8); border: 2px solid #fb7185; border-radius: 12px; padding: 15px; text-align: center; margin-top: 15px; box-shadow: 0 4px 10px rgba(251, 113, 133, 0.2); }
+.anniversary-card h3 { color: #be123c; font-size: 16px; font-weight: 800; margin-bottom: 5px; }
+.anniversary-card .days { font-size: 28px; font-weight: 900; color: #e11d48; }
+.anniversary-card p { font-size: 12px; color: #9f1239; margin-top: 5px; }
+
+/* Mood Tracker */
+.mood-container { display: flex; justify-content: space-around; margin-top: 10px; background: #fff; padding: 10px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+.mood-item { text-align: center; cursor: pointer; transition: transform 0.2s; padding: 5px; border-radius: 8px;}
+.mood-item:hover { transform: scale(1.1); background: #f1f5f9;}
+.mood-item .emoji { font-size: 28px; }
+.mood-item .name { font-size: 11px; font-weight: bold; color: #475569; margin-top: 4px;}
+
+/* Big Couple Photo */
+.big-couple-photo { width: 100%; max-width: 300px; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); border: 4px solid #fff; margin: 10px auto; display: block; }
+
+/* Bottom Navigation */
+.bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: var(--nav-height); background: rgba(255, 255, 255, 0.98); display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 1000; overflow-x: auto; }
+.nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #94a3b8; font-size: 10px; font-weight: 600; cursor: pointer; width: 20%; min-width: 60px; height: 100%; gap: 2px;}
+.nav-item.active { color: var(--primary); }
+.nav-item span.icon { font-size: 20px; }
+
+#toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(100px);background:#16a34a;color:#fff;padding:10px 20px;border-radius:99px;font-weight:600;font-size:13px;z-index:10000;transition:transform .35s;box-shadow:0 8px 24px rgba(22,163,74,.4);}
 #toast.show{transform:translateX(-50%) translateY(0);}
 
-#musicBtn {
-    position: fixed; bottom: 20px; right: 20px;
-    background: linear-gradient(45deg, #ff6b6b, #9333ea); color: white;
-    padding: 12px 20px; border-radius: 30px; font-weight: 800; font-size: 14px;
-    cursor: pointer; box-shadow: 0 6px 20px rgba(147, 51, 234, 0.6);
-    z-index: 9999; display: flex; align-items: center; gap: 8px;
-    border: 2px solid #fff; transition: all 0.3s ease;
-}
-#musicBtn.playing {
-    background: linear-gradient(45deg, #10b981, #059669);
-    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
-    animation: pulse 2s infinite;
-}
-@keyframes pulse {
-    0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); }
-}
+#musicBtn { position: fixed; bottom: 80px; right: 15px; background: linear-gradient(45deg, #ff6b6b, #9333ea); color: white; padding: 10px 16px; border-radius:30px; font-weight: 800; font-size: 13px; cursor: pointer; box-shadow: 0 6px 20px rgba(147, 51, 234, 0.6); z-index: 9999; display: flex; align-items: center; gap: 6px; border: 2px solid #fff; transition: all 0.3s ease; }
+#musicBtn.playing { background: linear-gradient(45deg, #10b981, #059669); animation: pulse 2s infinite; }
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 </style>
 </head>
 <body>
 
-<audio id="bgMusic" loop>
-  <source src="song.mp3" type="audio/mpeg">
-</audio>
-
+<audio id="bgMusic" loop><source src="song.mp3" type="audio/mpeg"></audio>
 <div id="toast">✓ <span id="toastMsg"></span></div>
 
 <div class="wrap">
-  <header class="hero">
-    <img src="wife.jpg" alt="Hamro Photo" class="couple-photo">
-    <h1>🌸 Anjana Hisab Khata</h1>
-    <p>☁️ 100% Secure Cloud Sync</p>
-    <div id="syncStatus" style="margin-top:10px;font-size:12px;background:rgba(255,255,255,0.2);display:inline-block;padding:4px 12px;border-radius:99px;">इन्टरनेट जोडिँदै...</div>
+  <header class="top-header">
+    <img src="wife.jpg" alt="Hamro Photo" class="couple-photo-small">
+    <div class="header-text">
+        <h1>हाम्रो संसार</h1>
+        <p id="syncStatus">इन्टरनेट जोडिँदै...</p>
+    </div>
   </header>
 
-  <form id="expenseForm" class="card">
-    <h2 class="card-title">➕ नयाँ खर्च थप्नुहोस्</h2>
-    <div class="form-grid">
-      <div class="field"><label>मिति</label><input type="date" id="date" required min="1990-01-01" max="2060-12-31"></div>
-      <div class="field"><label>कसको लागि?</label><select id="person" required></select></div>
-      <div class="field"><label>के को लागि?</label><select id="category" required></select></div>
-      <div class="field"><label>रकम (रु.)</label><input type="number" id="amount" min="1" step="1" placeholder="0" required></div>
-      <div class="field"><label>विवरण</label><input type="text" id="note" placeholder="वैकल्पिक"></div>
-      <div class="field"><label>&nbsp;</label><button type="submit" class="btn-primary" id="submitBtn">थप्नुहोस्</button></div>
+  <!-- 💰 Tab 1: MAIN HISAB (Expense Tracker) -->
+  <div id="tab-hisab" class="tab-content active">
+    
+    <!-- 🎯 Target / Budget Card -->
+    <div class="card budget-card">
+        <h2 class="card-title">🎯 मासिक खर्चको लक्ष्य (Target)</h2>
+        <div class="budget-input-area">
+            <input type="number" id="budgetInput" placeholder="जस्तै: ५०,०००">
+            <button onclick="saveBudget()">सेभ</button>
+        </div>
+        <div id="budgetProgressArea" style="display:none;">
+            <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:bold; margin-bottom:5px;">
+                <span>यो महिनाको खर्च: <span id="budgetSpent" style="color:#ef4444;">रु. ०</span></span>
+                <span>लक्ष्य: <span id="budgetTarget" style="color:#c2410c;">रु. ०</span></span>
+            </div>
+            <div class="budget-progress-bg">
+                <div id="budgetBar" class="budget-progress-fill"></div>
+            </div>
+            <p id="budgetMsg" style="font-size:12px; font-weight:bold; margin-top:8px; text-align:center;"></p>
+        </div>
     </div>
-  </form>
 
-  <div class="filter-bar">
-    <label>वर्ष:</label> <select id="yearFilter"></select>
-    <label>महिना:</label> <select id="monthFilter"><option value="all">सबै महिना</option></select>
-    <div style="flex:1"></div>
-    <button type="button" class="btn-ghost" id="refreshBtn">🔄 रिफ्रेस</button>
-    <button type="button" class="btn-ghost" id="exportBtn">⬇️ ब्याकअप</button>
-  </div>
-
-  <div class="stats">
-    <div class="stat"><div class="lbl" id="statPeriodLabel">यो महिनाको खर्च</div><div class="val" id="statPeriod">रु. ०</div></div>
-    <div class="stat"><div class="lbl" id="statYearLabel">यो वर्षको खर्च</div><div class="val" id="statYear">रु. ०</div></div>
-    <div class="stat"><div class="lbl">आजको खर्च</div><div class="val" id="statToday">रु. ०</div></div>
-    <div class="stat"><div class="lbl">कुल रेकर्ड</div><div class="val" id="statCount">० वटा</div></div>
-  </div>
-
-  <div class="card">
-    <h2 class="card-title">🧾 खर्चको सूची <span style="font-size:12px;font-weight:400;color:#64748b;margin-left:auto;" id="listSub"></span></h2>
-    <div class="table-scroll">
-      <table>
-        <thead><tr><th>मिति</th><th>कसको</th><th>के को</th><th>विवरण</th><th style="text-align:right">रकम</th><th></th></tr></thead>
-        <tbody id="tableBody"></tbody>
-      </table>
+    <!-- Filters -->
+    <div class="filter-bar">
+        <select id="yearFilter" onchange="renderExpenses()"></select>
+        <select id="monthFilter" onchange="renderExpenses()">
+            <option value="all">सबै महिना</option>
+            <option value="0">जनवरी</option><option value="1">फेब्रुअरी</option><option value="2">मार्च</option>
+            <option value="3">अप्रिल</option><option value="4">मे</option><option value="5">जुन</option>
+            <option value="6">जुलाई</option><option value="7">अगस्ट</option><option value="8">सेप्टेम्बर</option>
+            <option value="9">अक्टोबर</option><option value="10">नोभेम्बर</option><option value="11">डिसेम्बर</option>
+        </select>
     </div>
-    <div id="tableEmpty" style="text-align:center;padding:34px;color:#64748b;display:none;">📭 यो अवधिमा कुनै खर्च छैन।</div>
+
+    <!-- 📊 Yearly Analysis Chart -->
+    <div class="chart-card">
+        <h2 class="card-title">📊 वार्षिक विश्लेषण (Yearly Analysis)</h2>
+        <div class="chart-container" id="yearlyChart">
+            <!-- Bars will be injected here -->
+        </div>
+        <div class="analysis-text" id="analysisText">
+            <!-- Summary Text -->
+        </div>
+    </div>
+
+    <!-- Dashboard Stats -->
+    <div class="stats-grid">
+        <div class="stat-card red">
+            <div class="stat-title">कुल खर्च (छानिएको)</div>
+            <div class="stat-amount" id="statTotal">रु. ०</div>
+        </div>
+        <div class="stat-card green">
+            <div class="stat-title">आजको खर्च</div>
+            <div class="stat-amount" id="statToday">रु. ०</div>
+        </div>
+    </div>
+
+    <!-- Category Breakdown -->
+    <div class="cat-breakdown" id="catBreakdown" style="background:#fff; border-radius:14px; padding:15px; margin-bottom:16px; box-shadow:0 4px 10px rgba(0,0,0,0.05);">
+        <!-- Bars will be injected here via JS -->
+    </div>
+
+    <!-- Add Expense Form -->
+    <form id="expenseForm" class="card" style="border: 2px solid #4f46e5;">
+        <h2 class="card-title" style="color:#4f46e5;">➕ नयाँ खर्च थप्नुहोस्</h2>
+        <div class="form-grid">
+          <div class="field"><label>मिति</label><input type="date" id="date" required></div>
+          <div class="field"><label>रकम (रु.)</label><input type="number" id="amount" min="1" placeholder="0" required></div>
+          <div class="field full"><label>के को लागि? (कोटी)</label><select id="category" required></select></div>
+          <div class="field full"><label>विवरण (Note)</label><input type="text" id="note" placeholder="जस्तै: तेल र चामल किनेको"></div>
+          <div class="field full">
+             <button type="submit" class="btn-primary" id="submitBtn" style="background: linear-gradient(135deg,#4f46e5,#9333ea);">हिसाब सेभ गर्नुहोस्</button>
+             <button type="button" class="btn-ghost" id="cancelEditBtn" style="display:none; margin-top: 8px; width:100%;" onclick="cancelEdit()">रद्द गर्नुहोस्</button>
+          </div>
+        </div>
+    </form>
+
+    <!-- Expenses List -->
+    <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <h2 class="card-title" style="margin:0;">🧾 खर्चको सूची</h2>
+            <button class="btn-ghost" onclick="downloadCSV()" style="padding: 5px 10px; font-size:11px;">⬇️ CSV</button>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>मिति</th><th>के को</th><th>विवरण</th><th>रकम</th><th>Action</th></tr></thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+        <div id="tableEmpty" style="text-align:center;padding:24px;color:#64748b;display:none;">📭 यो अवधिमा कुनै खर्च भेटिएन।</div>
+    </div>
   </div>
 
-  <p class="hint">🛡️ डाटा गुगलको सर्भरमा सुरक्षित छ।</p>
+  <!-- 🏠 Tab 2: Home -->
+  <div id="tab-home" class="tab-content">
+    <div class="card">
+        <h2 style="color: #4f46e5; margin-bottom: 5px; text-align:center;">नमस्ते! 🙏</h2>
+        <p style="color: #64748b; font-size: 15px; text-align:center; font-weight:bold;" id="todayDate">मिति लोड हुँदै...</p>
+        
+        <img src="wife.jpg" alt="Hamro Photo" class="big-couple-photo">
+
+        <div class="anniversary-card">
+            <h3>💍 हाम्रो विवाह वार्षिकी (बैशाख ६) 💍</h3>
+            <div class="days" id="anniversaryDays">--</div>
+            <p>दिन बाँकी छ</p>
+        </div>
+
+        <div class="clock-container">
+            <div class="clock-box"><div class="flag">🇸🇦</div><div class="country">साउदी समय</div><div class="time" id="saudiTime">--:--:--</div></div>
+            <div class="clock-box"><div class="flag">🇳🇵</div><div class="country">नेपाल समय</div><div class="time nepal" id="nepalTime">--:--:--</div></div>
+        </div>
+
+        <div style="margin-top: 15px;">
+            <h3 style="font-size: 14px; color: #475569; margin-bottom: 5px;">आज तपाईंको मूड कस्तो छ?</h3>
+            <div class="mood-container">
+                <div class="mood-item" onclick="setMood('husband', '😊')"><div class="emoji">😊</div><div class="name">पति</div></div>
+                <div class="mood-item" onclick="setMood('wife', '😊')"><div class="emoji">😊</div><div class="name">पार्टनर</div></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-top:10px; font-size:13px; font-weight:bold;">
+                <div id="husbandMoodDisplay" style="color:#2563eb;">पति: 😊</div>
+                <div id="wifeMoodDisplay" style="color:#db2777;">पार्टनर: 😊</div>
+            </div>
+        </div>
+
+        <div class="love-quote" style="margin-top: 15px;">"तिमी टाढा छौ, तर मेरो मन सधैं तिमीसंगै छ। ❤️"</div>
+        <button class="miss-btn" onclick="sendMissYou()">❤️ I Miss You (मिस गर्छु)</button>
+    </div>
+  </div>
+
+  <!-- 💌 Tab 3: Chat -->
+  <div id="tab-chat" class="tab-content">
+    <div class="card" style="padding:0;">
+        <div class="chat-container">
+          <div class="chat-header">
+            <span style="font-size: 20px;">💌</span> 
+            <div style="flex:1;">प्रेम सन्देश</div>
+            <select id="myRole" style="background:rgba(255,255,255,0.2); color:white; border:none; padding:4px; border-radius:6px; font-size:12px; outline:none;">
+                <option value="husband">म पति हुँ</option>
+                <option value="wife">म पार्टनर हुँ</option>
+            </select>
+          </div>
+          <div class="chat-messages" id="chatMessages"></div>
+          <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="सन्देश लेख्नुहोस्...">
+            <button id="sendChatBtn">➤</button>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- 🎬 Tab 4: Reels -->
+  <div id="tab-reels" class="tab-content">
+    <div class="card">
+        <h2 class="card-title">🎬 रिल्स / भिडियो हेर्नुहोस्</h2>
+        <div style="display:flex; gap:8px; margin-bottom: 10px;">
+            <input type="text" id="reelInput" placeholder="YouTube को लिङ्क यहाँ राख्नुहोस्" style="flex:1; padding:10px; border:1.5px solid #e2e8f0; border-radius:8px; outline:none; font-size:12px;">
+            <button onclick="addReel()" style="background:#ef4444; color:white; padding:10px 15px; border-radius:8px; font-weight:bold;">+</button>
+        </div>
+        <div id="reelsFeed"></div>
+    </div>
+  </div>
+
 </div>
 
-<button id="musicBtn" onclick="toggleMusic()">
-    <span id="musicIcon">🎵</span> <span id="musicText">श्रीमतीको माया</span>
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+    <div class="nav-item active" onclick="switchTab('tab-hisab', this)">
+        <span class="icon">💰</span> मुख्य हिसाब
+    </div>
+    <div class="nav-item" onclick="switchTab('tab-home', this)">
+        <span class="icon">🏠</span> होम
+    </div>
+    <div class="nav-item" onclick="switchTab('tab-chat', this)">
+        <span class="icon">💌</span> च्याट
+    </div>
+    <div class="nav-item" onclick="switchTab('tab-reels', this)">
+        <span class="icon">🎬</span> रिल्स
+    </div>
+</nav>
+
+<button id="musicBtn" onclick="toggleMusic(event)">
+    <span id="musicIcon">🎵</span>
 </button>
 
 <script>
-const DB_URL = "https://anjana-khata-default-rtdb.firebaseio.com/khata/expenses";
-
-const PERSONS = [
-  { id:'priyanshu', name:'प्रियांशु (Priyanshu)', color:'#2563eb' },
-  { id:'priyans',   name:'प्रियांस (Priyans)',    color:'#16a34a' },
-  { id:'anjana',    name:'अन्जना (Anjana)',       color:'#db2777' },
-  { id:'home',      name:'होम (Home)',            color:'#475569' }
-];
+/* ================= CONFIG ================= */
+const BASE_URL = "https://anjana-khata-default-rtdb.firebaseio.com/khata/";
+const EXPENSE_URL = BASE_URL + "expenses";
+const MSG_URL = BASE_URL + "messages";
+const REELS_URL = BASE_URL + "reels";
+const MOOD_URL = BASE_URL + "mood";
+const BUDGET_URL = BASE_URL + "budget";
 
 const CATEGORIES = [
-  { id:'khana',      name:'खाना/किराना',    icon:'🍚' },
-  { id:'school_fee', name:'स्कुल/कलेज फी',   icon:'🏫' },
-  { id:'books',      name:'किताब/स्टेशनरी',   icon:'📚' },
-  { id:'transport',  name:'यातायात/स्कुल बस', icon:'🚌' },
-  { id:'bijuli',     name:'बिजुली बिल',      icon:'💡' },
-  { id:'pani',       name:'पानी बिल',        icon:'💧' },
-  { id:'gas',        name:'ग्यास सिलिन्डर',   icon:'🔥' },
-  { id:'wifi',       name:'वाइफाइ/इन्टरनेट',  icon:'📶' },
-  { id:'mobile',     name:'मोबाइल रिचार्ज',   icon:'📱' },
-  { id:'shopping',   name:'सपिङ/लुगाफाटा',   icon:'🛍️' },
-  { id:'medical',    name:'औषधि/मेडिकल',     icon:'💊' },
-  { id:'hospital',   name:'डाक्टर/अस्पताल',   icon:'🏥' },
-  { id:'fuel',       name:'पेट्रोल/डिजेल',    icon:'⛽' },
-  { id:'home_items', name:'घर मर्मत/सामान',  icon:'🛠️' },
-  { id:'fun',        name:'मनोरञ्जन/घुम्न',   icon:'🎬' },
-  { id:'puja',       name:'दान/पूजा',        icon:'🙏' },
-  { id:'other',      name:'अन्य',            icon:'📦' }
+  { id:'khana', name:'खाना/किराना', icon:'🍚', color:'#f59e0b' }, 
+  { id:'school_fee', name:'स्कुल फी', icon:'🏫', color:'#f97316' },
+  { id:'bijuli', name:'बिजुली', icon:'💡', color:'#eab308' }, 
+  { id:'pani', name:'पानी', icon:'💧', color:'#3b82f6' },
+  { id:'gas', name:'ग्यास', icon:'🔥', color:'#ef4444' }, 
+  { id:'wifi', name:'वाइफाइ', icon:'📶', color:'#06b6d4' },
+  { id:'shopping', name:'सपिङ/लुगा', icon:'🛍️', color:'#a855f7' }, 
+  { id:'medical', name:'मेडिकल', icon:'💊', color:'#dc2626' },
+  { id:'other', name:'अन्य', icon:'📦', color:'#64748b' }
 ];
-
 const MONTHS_NE = ['जनवरी','फेब्रुअरी','मार्च','अप्रिल','मे','जुन','जुलाई','अगस्ट','सेप्टेम्बर','अक्टोबर','नोभेम्बर','डिसेम्बर'];
+const MONTHS_SHORT = ['जन','फेब','मार्च','अप्रि','मे','जुन','जुल','अग','सेप','अक्टो','नोभ','डिस'];
 
 let data = [];
+let budgetData = 0;
 let editingId = null;
-
 const $ = id => document.getElementById(id);
 const catMap = Object.fromEntries(CATEGORIES.map(c => [c.id, c]));
-const personMap = Object.fromEntries(PERSONS.map(p => [p.id, p]));
 
 function fmt(n){ return 'रु. ' + (Number(n)||0).toLocaleString('en-IN'); }
 function toISO(d){ return d.toISOString().split('T')[0]; }
 function formatDate(iso){ const [y,m,d] = iso.split('-'); return `${+d} ${MONTHS_NE[+m-1]} ${y}`; }
+function formatTime(ts){ const d = new Date(ts); return d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0'); }
 
 let toastTimer;
 function showToast(msg, color='#16a34a'){
@@ -208,173 +384,288 @@ function showToast(msg, color='#16a34a'){
   toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-/* =========================================================
-   🎵 गीत बजाउने र गुलाब फुलाउने (Music & Rose Logic)
-========================================================= */
-const music = document.getElementById('bgMusic');
-const musicBtn = document.getElementById('musicBtn');
-const musicText = document.getElementById('musicText');
-const musicIcon = document.getElementById('musicIcon');
-let isPlaying = false;
-
-function playMusic() {
-  if (!isPlaying) {
-    music.play().then(() => {
-      isPlaying = true;
-      musicBtn.classList.add('playing');
-      musicIcon.textContent = '⏸️';
-      musicText.textContent = 'गीत चल्दैछ...';
-    }).catch(e => {});
-  }
+/* ================= TAB SWITCHING ================= */
+function switchTab(tabId, navEl) {
+    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+    $(tabId).classList.add('active');
+    navEl.classList.add('active');
+    if(tabId === 'tab-chat') { loadMessages(); }
+    if(tabId === 'tab-reels') { loadReels(); }
+    if(tabId === 'tab-hisab') { renderExpenses(); }
 }
 
-function toggleMusic(e) {
-  if(e) e.stopPropagation(); // बटन थिच्दा गुलाब नछरियोस्
-  if (isPlaying) {
-    music.pause();
-    isPlaying = false;
-    musicBtn.classList.remove('playing');
-    musicIcon.textContent = '🎵';
-    musicText.textContent = 'श्रीमतीको माया';
-  } else {
-    playMusic();
-  }
-}
-
-// 🌹 टच गर्दा फूलहरू फुरुरुरु उड्ने फङ्सन
-function createBurstRoses(x, y) {
-    const emojis = ['🌹', '🌹', '❤️', '🌸'];
-    for (let i = 0; i < 15; i++) {
-        const rose = document.createElement('div');
-        rose.className = 'burst-rose';
-        rose.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-        rose.style.left = x + 'px';
-        rose.style.top = y + 'px';
-        document.body.appendChild(rose);
-
-        // फूलहरू कता-कता उड्ने भनेर एंगल निकाल्ने
-        const angle = Math.random() * Math.PI * 2;
-        const distance = Math.random() * 150 + 50;
-        const tx = Math.cos(angle) * distance;
-        const ty = Math.sin(angle) * distance - 50; // अलि माथि उड्ने
-
-        requestAnimationFrame(() => {
-            rose.style.transform = `translate(${tx}px, ${ty}px) rotate(${Math.random() * 720}deg) scale(${Math.random() * 0.5 + 0.5})`;
-            rose.style.opacity = '0';
-        });
-
-        setTimeout(() => rose.remove(), 1500);
-    }
-}
-
-// स्क्रिनमा जहाँ पनि क्लिक वा टच हुँदा फूल फुलाउने र गीत बजाउने
-document.body.addEventListener('click', function(e) {
-    createBurstRoses(e.clientX, e.clientY);
-    playMusic(); // क्लिक गर्दा गीत बज्न थाल्ने
-});
-
-document.body.addEventListener('touchstart', function(e) {
-    if (e.touches.length > 0) {
-        createBurstRoses(e.touches[0].clientX, e.touches[0].clientY);
-        playMusic();
-    }
-}, { passive: true });
-
-// ब्याकग्राउन्डमा बिस्तारै माथि उड्ने गुलाबहरू
-function spawnBgRoses() {
+/* ================= BG FLOWERS & MUSIC ================= */
+function spawnBgFlowers() {
+    const emojis = ['🌹', '🌸', '🌺', '✨', '❤️', '🌷'];
     setInterval(() => {
-        const rose = document.createElement('div');
-        rose.className = 'bg-rose';
-        rose.textContent = Math.random() > 0.5 ? '🌹' : '🌸';
-        rose.style.left = Math.random() * 100 + 'vw';
-        rose.style.fontSize = (Math.random() * 15 + 15) + 'px';
-        rose.style.animationDuration = (Math.random() * 5 + 7) + 's';
-        document.body.appendChild(rose);
-        setTimeout(() => rose.remove(), 12000);
-    }, 800); // प्रत्येक ०.८ सेकेन्डमा एउटा फूल
+        const flower = document.createElement('div');
+        flower.className = 'bg-flower';
+        flower.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        flower.style.left = Math.random() * 100 + 'vw';
+        flower.style.fontSize = (Math.random() * 20 + 15) + 'px'; 
+        flower.style.animationDuration = (Math.random() * 6 + 8) + 's';
+        document.body.appendChild(flower);
+        setTimeout(() => flower.remove(), 15000);
+    }, 600);
+}
+const music = $('bgMusic');
+let isPlaying = false;
+function toggleMusic(e) {
+  if(e) e.stopPropagation();
+  if (isPlaying) { music.pause(); isPlaying = false; $('musicBtn').classList.remove('playing'); $('musicIcon').textContent = '🎵'; } 
+  else { music.play().then(() => { isPlaying = true; $('musicBtn').classList.add('playing'); $('musicIcon').textContent = '⏸️'; }).catch(e=>{}); }
 }
 
-/* =========================================================
-   Cloud Sync & Logic
-========================================================= */
+/* ================= HOME TAB ================= */
+function initHome() {
+    try {
+        const now = new Date();
+        const nd = new NepaliDate(now);
+        $('todayDate').innerHTML = `आजको मिति: <b>${nd.format('DD MMMM YYYY', 'np')}</b>`;
+    } catch (e) { $('todayDate').textContent = "नेपाली मिति लोड हुन सकेन"; }
+
+    try {
+        const now = new Date();
+        const ndNow = new NepaliDate(now);
+        let annivDate = new NepaliDate(ndNow.getYear(), 0, 6);
+        if (now > annivDate.toJsDate()) { annivDate = new NepaliDate(ndNow.getYear() + 1, 0, 6); }
+        const diffDays = Math.ceil((annivDate.toJsDate() - now) / (1000 * 60 * 60 * 24));
+        $('anniversaryDays').textContent = diffDays;
+    } catch(e) { $('anniversaryDays').textContent = "--"; }
+
+    setInterval(() => {
+        const d = new Date();
+        $('saudiTime').textContent = d.toLocaleTimeString('en-US', { timeZone: 'Asia/Riyadh', hour12: false });
+        $('nepalTime').textContent = d.toLocaleTimeString('en-US', { timeZone: 'Asia/Kathmandu', hour12: false });
+    }, 1000);
+
+    loadMoods();
+}
+
+async function setMood(role, emoji) {
+    try {
+        await fetch(MOOD_URL + `/${role}.json`, { method: 'PUT', body: JSON.stringify(emoji) });
+        loadMoods();
+    } catch(e) {}
+}
+async function loadMoods() {
+    try {
+        const res = await fetch(MOOD_URL + ".json");
+        const json = await res.json();
+        if(json) {
+            if(json.husband) $('husbandMoodDisplay').textContent = `पति: ${json.husband}`;
+            if(json.wife) $('wifeMoodDisplay').textContent = `पार्टनर: ${json.wife}`;
+        }
+    } catch(e) {}
+}
+
+async function sendMissYou() {
+    const myRole = $('myRole').value;
+    const msg = { sender: myRole, text: "❤️ I Miss You so much! (मिस गर्छु) ❤️", ts: Date.now() };
+    try {
+        await fetch(MSG_URL + ".json", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(msg) });
+        showToast("तपाईंको माया पठाइयो! ❤️", "#db2777");
+        if(navigator.vibrate) navigator.vibrate(200);
+    } catch(e) { alert("इन्टरनेट चेक गर्नुहोस्।"); }
+}
+
+/* ================= MAIN HISAB & BUDGET LOGIC ================= */
 async function loadCloudData() {
-  $('syncStatus').textContent = "☁️ डाटा तानिँदै...";
+  $('syncStatus').textContent = "☁️ सिंक हुँदै...";
   try {
-    const res = await fetch(DB_URL + ".json");
+    const res = await fetch(EXPENSE_URL + ".json");
     const json = await res.json();
     data = [];
     if (json) { for (let key in json) { data.push({ id: key, ...json[key] }); } }
-    $('syncStatus').textContent = `✓ Cloud Synced (${data.length} रेकर्ड)`;
-    render();
-  } catch(e) {
-    $('syncStatus').textContent = "❌ इन्टरनेट चेक गर्नुहोस्";
-    showToast("डाटा लोड गर्न सकिएन।", "#ef4444");
-  }
+    
+    // Load Budget
+    const bRes = await fetch(BUDGET_URL + ".json");
+    budgetData = await bRes.json() || 0;
+    $('budgetInput').value = budgetData > 0 ? budgetData : '';
+    
+    $('syncStatus').textContent = `✓ सिंक भयो`;
+    
+    // Setup Year Filter
+    const years = new Set(data.map(d => +d.date.split('-')[0]));
+    const currentYear = new Date().getFullYear();
+    years.add(currentYear);
+    const sortedYears = [...years].sort((a,b) => b-a);
+    $('yearFilter').innerHTML = sortedYears.map(y => `<option value="${y}">${y}</option>`).join('');
+    $('yearFilter').value = currentYear;
+    
+    renderExpenses();
+  } catch(e) { $('syncStatus').textContent = "❌ अफलाइन"; }
+}
+
+async function saveBudget() {
+    const val = Number($('budgetInput').value);
+    if(!val) return alert('कृपया सही रकम हाल्नुहोस्।');
+    try {
+        await fetch(BUDGET_URL + ".json", { method: 'PUT', body: JSON.stringify(val) });
+        budgetData = val;
+        showToast('✓ बजेट सेभ भयो!');
+        renderExpenses();
+    } catch(e) { alert("बजेट सेभ गर्न सकिएन।"); }
 }
 
 $('expenseForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  playMusic(); // डाटा सेभ गर्दा पनि गीत बज्ने
-
   const newItem = {
-    date: $('date').value, person: $('person').value, category: $('category').value,
+    date: $('date').value, category: $('category').value,
     amount: Number($('amount').value), note: $('note').value.trim(), ts: Date.now()
   };
-
   $('submitBtn').textContent = 'सेभ हुँदै...'; $('submitBtn').disabled = true;
-
+  
   try {
     if (editingId) {
-      await fetch(`${DB_URL}/${editingId}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newItem) });
-      showToast('✓ अपडेट भयो!'); editingId = null; $('submitBtn').textContent = 'थप्नुहोस्';
+      await fetch(`${EXPENSE_URL}/${editingId}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newItem) });
+      editingId = null; $('submitBtn').textContent = 'हिसाब सेभ गर्नुहोस्'; $('cancelEditBtn').style.display = 'none';
+      showToast('✓ अपडेट भयो!');
     } else {
-      const res = await fetch(DB_URL + ".json", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newItem) });
-      showToast('✓ क्लाउडमा सुरक्षित भयो!');
+      await fetch(EXPENSE_URL + ".json", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newItem) });
+      showToast('✓ हिसाब सुरक्षित भयो!');
     }
     $('amount').value = ''; $('note').value = ''; $('date').value = toISO(new Date());
-    await loadCloudData();
-  } catch(err) {
-    alert("सेभ गर्न सकिएन। इन्टरनेट चेक गर्नुहोस्।");
-  } finally {
-    $('submitBtn').textContent = 'थप्नुहोस्'; $('submitBtn').disabled = false;
-  }
+    loadCloudData();
+  } catch(err) { alert("सेभ गर्न सकिएन।"); } finally { $('submitBtn').textContent = 'हिसाब सेभ गर्नुहोस्'; $('submitBtn').disabled = false; }
 });
 
-function render() {
-  $('person').innerHTML = PERSONS.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+function renderExpenses() {
   $('category').innerHTML = CATEGORIES.map(c => `<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
 
-  const years = new Set(data.map(d => +d.date.split('-')[0]));
-  const cy = new Date().getFullYear(); years.add(cy);
-  const sortedYears = [...years].sort((a,b) => b-a);
-  $('yearFilter').innerHTML = sortedYears.map(y => `<option value="${y}">${y}</option>`).join('');
-  
-  const y = +$('yearFilter').value || cy;
+  const y = +$('yearFilter').value || new Date().getFullYear(); 
   const m = $('monthFilter').value;
   
   let filtered = data.filter(d => +d.date.split('-')[0] === y);
-  if (m !== 'all') filtered = filtered.filter(d => (+d.date.split('-')[1] - 1) === +m);
+  if (m !== 'all') {
+      filtered = filtered.filter(d => (+d.date.split('-')[1] - 1) === +m);
+  }
 
-  $('statPeriod').textContent = fmt(filtered.reduce((s,d) => s + d.amount, 0));
-  $('statPeriodLabel').textContent = m === 'all' ? `${y} वर्षको खर्च` : `${MONTHS_NE[m]} ${y} को खर्च`;
-  $('statYear').textContent = fmt(data.filter(d => +d.date.split('-')[0] === y).reduce((s,d) => s + d.amount, 0));
-  $('statToday').textContent = fmt(data.filter(d => d.date === toISO(new Date())).reduce((s,d) => s + d.amount, 0));
-  $('statCount').textContent = filtered.length + ' वटा';
+  // 1. Update Stats
+  const total = filtered.reduce((s,d) => s + d.amount, 0);
+  $('statTotal').textContent = fmt(total);
+  
+  const todayStr = toISO(new Date());
+  const todayTotal = data.filter(d => d.date === todayStr).reduce((s,d) => s + d.amount, 0);
+  $('statToday').textContent = fmt(todayTotal);
 
-  filtered.sort((a,b) => b.date.localeCompare(a.date));
+  // 2. Budget Target Logic (Current Month)
+  const now = new Date();
+  const currentMonthSpent = data.filter(d => +d.date.split('-')[0] === y && (+d.date.split('-')[1] - 1) === now.getMonth()).reduce((s,d)=>s+d.amount, 0);
+  
+  if (budgetData > 0) {
+      $('budgetProgressArea').style.display = 'block';
+      $('budgetTarget').textContent = fmt(budgetData);
+      $('budgetSpent').textContent = fmt(currentMonthSpent);
+      
+      let percent = (currentMonthSpent / budgetData) * 100;
+      let barColor = '#f97316'; // Orange
+      
+      if (percent > 100) {
+          percent = 100;
+          barColor = '#ef4444'; // Red
+          $('budgetMsg').innerHTML = `⚠️ तपाईंले यो महिना बजेट भन्दा ${fmt(currentMonthSpent - budgetData)} बढी खर्च गर्नुभयो!`;
+          $('budgetMsg').style.color = '#ef4444';
+      } else {
+          $('budgetMsg').innerHTML = `✓ तपाईंले यो महिना रु. ${(budgetData - currentMonthSpent).toLocaleString('en-IN')} बचत गर्न सक्नुहुन्छ।`;
+          $('budgetMsg').style.color = '#16a34a';
+      }
+      $('budgetBar').style.width = percent + '%';
+      $('budgetBar').style.background = barColor;
+  } else {
+      $('budgetProgressArea').style.display = 'none';
+  }
 
+  // 3. 📊 YEARLY CHART & ANALYSIS LOGIC
+  const monthlyTotals = Array(12).fill(0);
+  const yearData = data.filter(d => +d.date.split('-')[0] === y);
+  yearData.forEach(d => {
+      const monthIdx = +d.date.split('-')[1] - 1;
+      monthlyTotals[monthIdx] += d.amount;
+  });
+
+  const maxMonthVal = Math.max(...monthlyTotals);
+  const highestMonthIdx = monthlyTotals.indexOf(maxMonthVal);
+  
+  let chartHTML = '';
+  let overBudgetMonths = [];
+  
+  for(let i=0; i<12; i++) {
+      const amt = monthlyTotals[i];
+      let heightPercent = maxMonthVal > 0 ? (amt / maxMonthVal) * 100 : 0;
+      if (heightPercent < 2 && amt > 0) heightPercent = 2; // minimum visible height
+      
+      let barClass = '';
+      if (budgetData > 0 && amt > budgetData) {
+          barClass = 'over-budget';
+          overBudgetMonths.push(MONTHS_SHORT[i]);
+      } else if (i === highestMonthIdx && amt > 0) {
+          barClass = 'highest';
+      }
+      
+      chartHTML += `
+      <div class="chart-bar-wrap" title="${MONTHS_NE[i]}: ${fmt(amt)}">
+          <div class="chart-bar ${barClass}" style="height: ${heightPercent}%"></div>
+          <span class="chart-label">${MONTHS_SHORT[i]}</span>
+      </div>`;
+  }
+  $('yearlyChart').innerHTML = chartHTML;
+
+  // Analysis Text
+  let analysisStr = "";
+  if (maxMonthVal > 0) {
+      analysisStr += `🔴 <b>सबैभन्दा धेरै खर्च:</b> ${MONTHS_NE[highestMonthIdx]} महिनामा (${fmt(maxMonthVal)}) भएको छ।<br>`;
+  }
+  if (budgetData > 0) {
+      if (overBudgetMonths.length > 0) {
+          analysisStr += `⚠️ <b>बजेट नाघेका महिना:</b> ${overBudgetMonths.join(', ')} (यी महिनाहरूमा रु. ${budgetData.toLocaleString('en-IN')} भन्दा बढी खर्च भयो)।`;
+      } else {
+          analysisStr += `✅ <b>राम्रो खबर:</b> यो वर्ष कुनै पनि महिनामा बजेट नाघेको छैन।`;
+      }
+  } else {
+      analysisStr += `<i>(बजेट सेट गर्नुभएको छैन। माथि गएर बजेट सेट गर्नुहोस्, जसले गर्दा कुन महिना बजेट नाघ्यो थाहा हुनेछ।)</i>`;
+  }
+  $('analysisText').innerHTML = analysisStr;
+
+  // 4. Category Breakdown Bars
+  const catTotals = {};
+  filtered.forEach(d => {
+      catTotals[d.category] = (catTotals[d.category] || 0) + d.amount;
+  });
+  
+  let catHTML = '<div style="font-size:13px; font-weight:bold; margin-bottom:10px; color:#475569;">कुन कोटीमा कति खर्च भयो?</div>';
+  if (Object.keys(catTotals).length === 0) {
+      catHTML += `<div style="font-size:12px; color:#94a3b8; text-align:center;">कुनै खर्च छैन।</div>`;
+  } else {
+      const sortedCats = Object.keys(catTotals).sort((a,b) => catTotals[b] - catTotals[a]);
+      sortedCats.forEach(catId => {
+          const cat = catMap[catId] || catMap.other;
+          const amt = catTotals[catId];
+          const percent = (amt / total) * 100;
+          catHTML += `
+          <div class="cat-row" style="margin-bottom:10px;">
+              <div class="cat-labels" style="display:flex; justify-content:space-between; font-size:13px; font-weight:bold; margin-bottom:4px; color:#334155;"><span>${cat.icon} ${cat.name}</span> <span>${fmt(amt)}</span></div>
+              <div class="cat-bar-bg" style="height:10px; background:#e2e8f0; border-radius:10px; overflow:hidden;"><div class="cat-bar-fill" style="height:100%; border-radius:10px; transition:width 0.5s ease; width: ${percent}%; background: ${cat.color};"></div></div>
+          </div>`;
+      });
+  }
+  $('catBreakdown').innerHTML = catHTML;
+
+  // 5. Render Table
+  filtered.sort((a,b) => b.date.localeCompare(a.date) || b.ts - a.ts);
   $('tableBody').innerHTML = filtered.map(d => {
-    const p = personMap[d.person] || personMap.home;
     const c = catMap[d.category] || catMap.other;
     return `<tr>
       <td>${formatDate(d.date)}</td>
-      <td><span class="badge" style="background:${p.color}15;color:${p.color}">${p.name}</span></td>
-      <td><span class="badge" style="background:#f1f5f9;color:#334155">${c.icon} ${c.name}</span></td>
-      <td style="color:#64748b;font-size:13px;">${d.note || '—'}</td>
+      <td><span class="badge" style="background:${c.color}15;color:${c.color}">${c.icon} ${c.name}</span></td>
+      <td style="color:#64748b;font-size:12px; max-width:100px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${d.note || ''}">${d.note || '—'}</td>
       <td style="text-align:right;font-weight:700;">${fmt(d.amount)}</td>
       <td>
-        <button class="icon-btn" onclick="editItem('${d.id}')">✏️</button>
-        <button class="icon-btn" onclick="deleteItem('${d.id}')">🗑️</button>
+        <div class="action-btns">
+            <button class="icon-btn" onclick="editItem('${d.id}')">✏️</button>
+            <button class="icon-btn del" onclick="deleteItem('${d.id}')">🗑️</button>
+        </div>
       </td>
     </tr>`;
   }).join('');
@@ -382,40 +673,179 @@ function render() {
 }
 
 window.editItem = id => {
-  const item = data.find(d => d.id === id);
-  if(!item) return;
-  $('date').value = item.date; $('person').value = item.person; 
-  $('category').value = item.category; $('amount').value = item.amount; $('note').value = item.note || '';
-  editingId = id; $('submitBtn').textContent = 'अपडेट गर्नुहोस्';
+  const item = data.find(d => d.id === id); if(!item) return;
+  $('date').value = item.date; $('category').value = item.category; $('amount').value = item.amount; $('note').value = item.note || '';
+  editingId = id; 
+  $('submitBtn').textContent = 'अपडेट गर्नुहोस्';
+  $('cancelEditBtn').style.display = 'block';
+  switchTab('tab-hisab', document.querySelectorAll('.nav-item')[0]);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
 window.deleteItem = async id => {
   if(!confirm('के तपाईं यो खर्च मेटाउन चाहनुहुन्छ?')) return;
   try {
-    await fetch(`${DB_URL}/${id}.json`, { method: 'DELETE' });
+    await fetch(`${EXPENSE_URL}/${id}.json`, { method: 'DELETE' });
     showToast('✓ रेकर्ड मेटियो!', '#f59e0b');
-    await loadCloudData();
+    loadCloudData();
   } catch(e) { alert("मेटाउन सकिएन।"); }
 };
 
-$('yearFilter').addEventListener('change', render);
-$('monthFilter').addEventListener('change', render);
-$('refreshBtn').addEventListener('click', loadCloudData);
+function cancelEdit() {
+    editingId = null;
+    $('amount').value = ''; $('note').value = ''; $('date').value = toISO(new Date());
+    $('submitBtn').textContent = 'हिसाब सेभ गर्नुहोस्';
+    $('cancelEditBtn').style.display = 'none';
+}
 
-$('exportBtn').addEventListener('click', () => {
-  if(!data.length) { alert('डाटा छैन।'); return; }
-  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-  a.download = `anjana-backup-${toISO(new Date())}.json`; a.click();
-  showToast('✓ ब्याकअप डाउनलोड भयो!');
-});
+function downloadCSV() {
+    if(data.length === 0) return alert("डाउनलोड गर्न डाटा छैन।");
+    let csvContent = "Date,Category,Amount,Note\n";
+    data.forEach(d => {
+        csvContent += `${d.date},${catMap[d.category]?.name || d.category},${d.amount},"${d.note || ''}"\n`;
+    });
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `Hisab_Backup_${toISO(new Date())}.csv`;
+    link.click();
+}
 
+/* ================= CHAT TAB ================= */
+const chatInput = $('chatInput'); const chatMessages = $('chatMessages');
+$('myRole').value = localStorage.getItem('myRole') || 'husband';
+$('myRole').addEventListener('change', (e) => localStorage.setItem('myRole', e.target.value));
+
+async function sendMessage() {
+    const text = chatInput.value.trim(); if(!text) return;
+    const msg = { sender: $('myRole').value, text: text, ts: Date.now() };
+    chatInput.value = ''; 
+    try {
+        await fetch(MSG_URL + ".json", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(msg) });
+        loadMessages(); 
+    } catch(e) { alert("म्यासेज पठाउन सकिएन।"); }
+}
+$('sendChatBtn').addEventListener('click', sendMessage);
+chatInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') sendMessage(); });
+
+let lastMsgCount = 0;
+async function loadMessages() {
+    try {
+        const res = await fetch(MSG_URL + ".json");
+        const json = await res.json();
+        let msgs = [];
+        if (json) { for (let key in json) { msgs.push(json[key]); } }
+        msgs.sort((a,b) => a.ts - b.ts);
+        
+        const isNew = msgs.length > lastMsgCount;
+        lastMsgCount = msgs.length;
+        const myRole = $('myRole').value;
+        
+        chatMessages.innerHTML = msgs.map(m => {
+            const isMe = m.sender === myRole;
+            return `<div class="message ${isMe ? 'me' : 'partner'}">
+                ${!isMe ? `<div style="font-size:10px; color:#075e54; font-weight:bold; margin-bottom:2px;">${m.sender === 'wife' ? 'पार्टनर' : 'पति'}</div>` : ''}
+                ${m.text}
+                <div class="time">${formatTime(m.ts)}</div>
+            </div>`;
+        }).join('');
+        
+        if (isNew && msgs.length > 0) {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            const lastMsg = msgs[msgs.length - 1];
+            if (lastMsg.sender !== myRole) {
+                showToast("💌 नयाँ प्रेम सन्देश आयो!", "#db2777");
+                if (navigator.vibrate) navigator.vibrate([200, 100, 200]); 
+            }
+        }
+    } catch(e) {}
+}
+
+/* ================= REELS TAB ================= */
+let reelsData = [];
+async function loadReels() {
+    try {
+        const res = await fetch(REELS_URL + ".json");
+        const json = await res.json();
+        reelsData = [];
+        if(json) { for(let key in json) { reelsData.push({id: key, ...json[key]}); } }
+        reelsData.sort((a,b) => b.ts - a.ts);
+        renderReels();
+    } catch(e) {}
+}
+
+async function addReel() {
+    const input = $('reelInput');
+    const url = input.value.trim();
+    if(!url) return;
+    input.value = '';
+    const myRole = $('myRole').value;
+    const newReel = { url: url, author: myRole, ts: Date.now() };
+    try {
+        await fetch(REELS_URL + ".json", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newReel) });
+        loadReels();
+        showToast("रिल्स थपियो! 🎬");
+    } catch(e) { alert("थप्न सकिएन।"); }
+}
+
+function getEmbedUrl(url) {
+    const ytRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i;
+    const match = url.match(ytRegex);
+    if (match && match[1]) return `https://www.youtube.com/embed/${match[1]}`;
+    if(url.endsWith('.mp4')) return url;
+    return null;
+}
+
+function renderReels() {
+    const feedEl = $('reelsFeed');
+    if(reelsData.length === 0) {
+        feedEl.innerHTML = `<p style="text-align:center; color:#94a3b8; font-size:14px; padding:20px;">कुनै रिल्स छैन। माथि लिङ्क राखेर थप्नुहोस्।</p>`;
+        return;
+    }
+    feedEl.innerHTML = reelsData.map(r => {
+        const embedUrl = getEmbedUrl(r.url);
+        let mediaHtml = '';
+        
+        if (embedUrl && embedUrl.includes('youtube.com')) {
+            mediaHtml = `<iframe class="reel-video" style="width:100%; height:300px; border:none;" src="${embedUrl}" allowfullscreen></iframe>`;
+        } else if (embedUrl && embedUrl.endsWith('.mp4')) {
+            mediaHtml = `<video style="width:100%; height:300px;" src="${embedUrl}" controls></video>`;
+        } else {
+            mediaHtml = `<div style="height: 150px; background: #e2e8f0; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <p style="font-size: 14px; margin-bottom: 10px;">यो लिङ्क सिधै प्ले गर्न मिल्दैन।</p>
+                <a href="${r.url}" target="_blank" style="background: #4f46e5; color: white; padding: 10px 15px; border-radius: 8px; text-decoration: none;">यहाँ क्लिक गरेर हेर्नुहोस्</a>
+            </div>`;
+        }
+
+        return `<div class="reel-card" style="margin-bottom:15px; background:#fff; border-radius:10px; overflow:hidden;">
+            ${mediaHtml}
+            <div style="padding:10px; display:flex; justify-content:space-between;">
+                <span>${r.author === 'wife' ? 'पार्टनर' : 'पति'} ले राख्नुभयो</span>
+                <button onclick="deleteReel('${r.id}')" style="background:transparent; color:#ef4444; border:none; font-size:16px;">🗑️</button>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+async function deleteReel(id) {
+    if(!confirm('यो रिल्स हटाउने हो?')) return;
+    try { await fetch(`${REELS_URL}/${id}.json`, { method: 'DELETE' }); loadReels(); } catch(e) {}
+}
+
+/* ================= INIT ================= */
 (function init() {
-  $('monthFilter').innerHTML = '<option value="all">सबै महिना</option>' + MONTHS_NE.map((m, i) => `<option value="${i}">${m}</option>`).join('');
   $('date').value = toISO(new Date());
+  
+  initHome();
   loadCloudData();
-  spawnBgRoses(); // ब्याकग्राउन्ड फूलहरू सुरु गर्ने
+  loadMessages();
+  spawnBgFlowers();
+
+  setInterval(() => {
+      if($('tab-chat').classList.contains('active')) loadMessages();
+      if($('tab-home').classList.contains('active')) loadMoods();
+  }, 5000);
+
 })();
 </script>
 </body>
