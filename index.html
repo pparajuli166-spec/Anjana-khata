@@ -5,150 +5,165 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Anjana & Prakash - Super Couple App</title>
+<title>Hamro Sansar - Family Finance</title>
 <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter@3.3.4/dist/nepali-date-converter.umd.js"></script>
 
 <style>
 :root{ 
-    --bg:#f1f5f9; --card:rgba(255,255,255,0.96); --text:#0f172a; --muted:#475569; 
-    --primary:#4f46e5; --border:#e2e8f0; --radius:16px; --shadow:0 4px 20px rgba(15,23,42,.1);
-    --nav-height: 65px;
+    --primary:#db2777; 
+    --secondary:#9333ea;
+    --green:#10b981;
+    --red:#ef4444;
+    --blue:#3b82f6;
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --text-main: #ffffff;
+    --text-muted: #cbd5e1;
+    --radius: 20px;
+    --nav-height: 70px;
 }
-*{box-sizing:border-box;margin:0;padding:0} 
-body{font-family:'Mukta',sans-serif;color:var(--text);padding:12px;padding-bottom:calc(var(--nav-height) + 20px);background-color:#1e293b;background-size:cover;background-position:center;background-attachment:fixed; overflow-x: hidden;}
-body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15, 23, 42, 0.75);z-index:-2;}
-.bg-flower { position: fixed; bottom: -50px; pointer-events: none; z-index: -1; animation: floatUp linear infinite; opacity: 0; }
-@keyframes floatUp { 0% { transform: translateY(0) rotate(-20deg) scale(0.8); opacity: 0; } 10% { opacity: 0.9; } 80% { opacity: 0.8; } 100% { transform: translateY(-110vh) rotate(30deg) scale(1.2); opacity: 0; } }
-.wrap{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:16px; position: relative; z-index: 1;}
-.top-header { display: flex; align-items: center; gap: 12px; background: linear-gradient(135deg,#4f46e5,#9333ea); padding: 15px; border-radius: var(--radius); color: white; box-shadow: 0 10px 20px rgba(79,70,229,.3); }
-.couple-photo-small { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-.header-text h1 { font-size: 20px; font-weight: 800; }
-.header-text p { font-size: 12px; opacity: 0.9; }
-.tab-content { display: none; animation: fadeIn 0.3s ease; }
-.tab-content.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-.card{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.5);backdrop-filter:blur(10px); margin-bottom: 16px;}
-.card-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px; color: #1e293b;}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:end;}
-.field{display:flex;flex-direction:column;gap:4px;}
-.field.full{grid-column: span 2;}
-.field label{font-size:12px;font-weight:600;color:#334155}
-.field input,.field select,.field textarea{font-family:inherit;font-size:14px;padding:10px;border:1.5px solid var(--border);border-radius:10px;background:#f8fafc;outline:none;width:100%;}
-button{font-family:inherit;cursor:pointer;border:none;transition:.18s}
-.btn-primary{background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;font-size:14px;font-weight:700;padding:12px;border-radius:10px;width:100%;}
-.btn-ghost{background:#fff;color:#334155;font-size:13px;font-weight:600;padding:8px 12px;border-radius:8px;border:1.5px solid var(--border);}
-.page-title { text-align: center; font-size: 22px; font-weight: 800; color: #db2777; margin-bottom: 15px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
-.filter-bar { display: flex; gap: 10px; margin-bottom: 15px; }
-.filter-bar select { flex: 1; padding: 10px; border-radius: 10px; border: 1.5px solid var(--border); font-weight: bold; color: var(--primary); background: #f8fafc; outline: none; }
-.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-.stat-card { background: #fff; border-radius: 14px; padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-left: 5px solid var(--primary); }
-.stat-card.green { border-left-color: #10b981; }
-.stat-card.red { border-left-color: #ef4444; }
-.stat-title { font-size: 12px; color: #64748b; font-weight: 700; text-transform: uppercase; }
-.stat-amount { font-size: 20px; font-weight: 900; color: #1e293b; margin-top: 5px; }
-.budget-card { background: linear-gradient(135deg, #fff7ed, #ffedd5); border: 2px solid #fdba74; }
-.budget-card .card-title { color: #c2410c; }
-.budget-input-area { display: flex; gap: 10px; margin-bottom: 10px; }
-.budget-input-area input { flex: 1; padding: 10px; border-radius: 8px; border: 1.5px solid #fdba74; outline: none; font-weight: bold; color: #c2410c; }
-.budget-input-area button { background: #c2410c; color: white; padding: 10px 15px; border-radius: 8px; font-weight: bold; }
-.budget-progress-bg { width: 100%; height: 16px; background: #fed7aa; border-radius: 10px; overflow: hidden; margin-bottom: 8px; }
-.budget-progress-fill { height: 100%; width: 0%; background: #f97316; transition: width 0.5s ease; border-radius: 10px; }
-.chart-card { background: #fff; border-radius: 14px; padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 16px;}
-.chart-container { display: flex; align-items: flex-end; height: 120px; gap: 4px; margin-top: 15px; padding-bottom: 20px; border-bottom: 1px solid #e2e8f0;}
-.chart-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; position: relative;}
-.chart-bar { width: 100%; background: #4f46e5; border-radius: 4px 4px 0 0; transition: height 0.5s ease; min-height: 2px;}
-.chart-bar.over-budget { background: #ef4444; }
-.chart-bar.highest { background: #10b981; }
-.chart-label { position: absolute; bottom: -20px; font-size: 9px; font-weight: bold; color: #64748b; }
-.analysis-text { font-size: 12px; color: #475569; margin-top: 15px; line-height: 1.6; padding: 10px; background: #f8fafc; border-radius: 8px;}
-table{width:100%;border-collapse:collapse;min-width:100%;}
-thead th{text-align:left;font-size:12px;font-weight:700;color:var(--muted);padding:8px;border-bottom:2px solid var(--border);}
-tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
-.table-scroll{overflow-x:auto; margin: 0 -16px; padding: 0 16px;}
-.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:2px 6px;border-radius:99px;}
-.action-btns { display: flex; gap: 5px; }
-.icon-btn{width:28px;height:28px;border-radius:6px;background:#f1f5f9;display:grid;place-items:center;font-size:12px;cursor:pointer; border:none;}
-.icon-btn.del { background: #fee2e2; color: #ef4444; }
-.love-counter-box { text-align: center; background: linear-gradient(135deg, #fdf2f8, #fce7f3); border-radius: 12px; padding: 15px; border: 1px solid #fbcfe8; margin-bottom: 15px;}
-.love-counter-box h3 { font-size: 14px; color: #be185d; margin-bottom: 5px;}
-.love-counter-box .days { font-size: 36px; font-weight: 900; color: #db2777; }
-.love-counter-box input { margin-top: 10px; padding: 8px; border-radius: 8px; border: 1px solid #fbcfe8; outline: none; text-align: center;}
-.hug-kiss-area { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
-.hug-btn, .kiss-btn { padding: 12px; border-radius: 50px; font-size: 16px; font-weight: bold; color: white; display: flex; align-items: center; gap: 8px; flex: 1; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
-.hug-btn { background: linear-gradient(45deg, #f59e0b, #fbbf24); }
-.kiss-btn { background: linear-gradient(45deg, #ec4899, #f43f5e); }
-.tod-box { text-align: center; padding: 20px; background: #1e293b; color: white; border-radius: 12px; margin-top: 10px;}
-.tod-box p { font-size: 16px; font-weight: bold; margin-bottom: 15px; min-height: 40px; display: flex; align-items: center; justify-content: center;}
-.tod-btns { display: flex; gap: 10px;}
-.btn-truth { background: #3b82f6; color: white; flex: 1; padding: 10px; border-radius: 8px; font-weight: bold;}
-.btn-dare { background: #ef4444; color: white; flex: 1; padding: 10px; border-radius: 8px; font-weight: bold;}
-.q-box { background: #e0e7ff; border-radius: 12px; padding: 15px; text-align: center; border: 1px solid #a5b4fc; margin-top: 10px;}
-.q-box p { font-size: 15px; font-weight: bold; color: #1e1b4b; margin-bottom: 10px; }
-.q-input-area { display: flex; gap: 8px; }
-.q-input-area input { flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #cbd5e1; outline: none; font-size: 13px;}
-.q-input-area button { background: #4f46e5; color: white; padding: 8px 12px; border-radius: 8px; font-weight: bold; }
-.notes-board { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px;}
-.sticky-note { padding: 15px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); position: relative; font-size: 14px; font-weight: 600; min-height: 100px; display: flex; flex-direction: column; justify-content: space-between; transform: rotate(-2deg); transition: transform 0.2s;}
-.sticky-note:nth-child(even) { transform: rotate(2deg); }
-.sticky-note:hover { transform: scale(1.05) rotate(0deg); }
-.sticky-note .author { font-size: 10px; color: #475569; text-align: right; margin-top: 10px; }
-.sticky-note .del-btn { position: absolute; top: 5px; right: 5px; background: transparent; border: none; font-size: 14px; cursor: pointer; opacity: 0.5; }
-.c1 { background: #fef08a; } .c2 { background: #bbf7d0; } .c3 { background: #bfdbfe; } .c4 { background: #fbcfe8; }
-.list-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid var(--border); }
-.list-item.done span { text-decoration: line-through; color: #94a3b8; }
-.list-item input[type="checkbox"] { width: 20px; height: 20px; accent-color: #4f46e5; cursor: pointer;}
-.list-item button { background: transparent; color: #ef4444; font-size: 16px;}
-.chat-container { display: flex; flex-direction: column; height: 400px; border-radius: 12px; overflow: hidden; background: #e5ddd5;}
-.chat-header { background: #075e54; color: white; padding: 10px; display: flex; align-items: center; gap: 10px; font-weight: 600;}
-.chat-messages { flex: 1; padding: 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;}
-.message { max-width: 85%; padding: 8px 12px; border-radius: 8px; font-size: 14px; line-height: 1.4; position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.1); word-wrap: break-word;}
-.message.partner { background: #fff; align-self: flex-start; border-top-left-radius: 0;}
-.message.me { background: #dcf8c6; align-self: flex-end; border-top-right-radius: 0;}
-.message .time { font-size: 10px; color: #888; text-align: right; margin-top: 4px;}
-.chat-input-area { display: flex; padding: 8px; background: #f0f0f0; gap: 8px;}
-.chat-input-area input { flex: 1; padding: 10px; border-radius: 20px; border: none; outline: none; font-size: 14px;}
-.chat-input-area button { background: #075e54; color: white; border-radius: 50%; width: 40px; height: 40px; font-size: 18px; display: flex; justify-content: center; align-items: center;}
-.call-btn { background: #10b981; color: white; border-radius: 50%; width: 40px; height: 40px; font-size: 18px; display: flex; justify-content: center; align-items: center; cursor: pointer;}
-.love-quote { text-align: center; font-style: italic; color: #db2777; font-weight: 600; padding: 10px; font-size: 15px; }
-.miss-btn { background: linear-gradient(45deg, #ff6b6b, #db2777); color: white; padding: 15px; border-radius: 12px; font-size: 18px; font-weight: 800; width: 100%; margin-top: 10px; box-shadow: 0 6px 15px rgba(219, 39, 119, 0.4); animation: pulse 2s infinite;}
-.clock-container { display: flex; justify-content: space-around; text-align: center; background: #f8fafc; border-radius: 12px; border: 1px dashed #cbd5e1; padding: 15px; margin: 10px 0; }
-.clock-box { flex: 1; }
-.clock-box .flag { font-size: 24px; margin-bottom: 2px; }
-.clock-box .country { font-size: 12px; color: #64748b; font-weight: 700; }
-.clock-box .time { font-size: 18px; font-weight: 800; color: #4f46e5; letter-spacing: 1px; }
-.clock-box .time.nepal { color: #db2777; }
-.anniversary-card { background: linear-gradient(135deg, #ffe4e6, #fbcfe8); border: 2px solid #fb7185; border-radius: 12px; padding: 15px; text-align: center; margin-top: 15px; box-shadow: 0 4px 10px rgba(251, 113, 133, 0.2); }
-.anniversary-card h3 { color: #be123c; font-size: 16px; font-weight: 800; margin-bottom: 5px; }
-.anniversary-card .days { font-size: 28px; font-weight: 900; color: #e11d48; }
-.mood-container { display: flex; justify-content: space-around; margin-top: 10px; background: #fff; padding: 10px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-.mood-item { text-align: center; cursor: pointer; transition: transform 0.2s; padding: 5px; border-radius: 8px;}
-.mood-item:hover { transform: scale(1.1); background: #f1f5f9;}
-.mood-item .emoji { font-size: 28px; }
-.mood-item .name { font-size: 11px; font-weight: bold; color: #475569; margin-top: 4px;}
-.big-couple-photo { width: 100%; max-width: 300px; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); border: 4px solid #fff; margin: 10px auto; display: block; }
-.bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: var(--nav-height); background: rgba(255, 255, 255, 0.98); display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 1000; overflow-x: auto; }
-.nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #94a3b8; font-size: 10px; font-weight: 600; cursor: pointer; width: 20%; min-width: 60px; height: 100%; gap: 2px;}
-.nav-item.active { color: var(--primary); }
-.nav-item span.icon { font-size: 20px; }
-#toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(100px);background:#16a34a;color:#fff;padding:10px 20px;border-radius:99px;font-weight:600;font-size:13px;z-index:10000;transition:transform .35s;box-shadow:0 8px 24px rgba(22,163,74,.4);}
-#toast.show{transform:translateX(-50%) translateY(0);}
-#musicBtn { position: fixed; bottom: 80px; right: 15px; background: linear-gradient(45deg, #ff6b6b, #9333ea); color: white; padding: 10px 16px; border-radius:30px; font-weight: 800; font-size: 13px; cursor: pointer; box-shadow: 0 6px 20px rgba(147, 51, 234, 0.6); z-index: 9999; display: flex; align-items: center; gap: 6px; border: 2px solid #fff; transition: all 0.3s ease; }
-#musicBtn.playing { background: linear-gradient(45deg, #10b981, #059669); animation: pulse 2s infinite; }
-@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+*{box-sizing:border-box;margin:0;padding:0; font-family: 'Mukta', sans-serif;} 
 
-/* Call Modal CSS */
+body{
+    color:var(--text-main);
+    padding:16px;
+    padding-bottom:calc(var(--nav-height) + 30px);
+    background: linear-gradient(135deg, #0f172a 0%, #2e1065 50%, #4c1d95 100%);
+    background-attachment: fixed;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.wrap{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:20px; position: relative; z-index: 1;}
+
+.top-header { 
+    display: flex; align-items: center; gap: 15px; 
+    padding: 20px; border-radius: var(--radius); 
+    background: linear-gradient(135deg, rgba(219, 39, 119, 0.8), rgba(147, 51, 234, 0.8));
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(219, 39, 119, 0.3);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+.couple-photo-small { width: 65px; height: 65px; border-radius: 50%; object-fit: cover; border: 3px solid #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+.header-text h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
+.header-text p { font-size: 13px; color: #fbcfe8; font-weight: 500;}
+
+.tab-content { display: none; animation: slideUp 0.4s ease; }
+.tab-content.active { display: block; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.card{ padding:20px; margin-bottom: 20px;}
+.card-title{font-size:18px;font-weight:700;margin-bottom:15px;display:flex;align-items:center;gap:10px; color: #fff;}
+
+.field{display:flex;flex-direction:column;gap:6px;}
+.field label{font-size:13px;font-weight:600;color:var(--text-muted)}
+.field input,.field select,.field textarea{
+    font-size:15px; padding:12px; border:1px solid var(--glass-border); border-radius:12px;
+    background:rgba(0,0,0,0.2); color: #fff; outline:none; transition: 0.3s;
+    -webkit-appearance: none; 
+}
+.field input:focus,.field select:focus { border-color: var(--primary); background: rgba(0,0,0,0.4); box-shadow: 0 0 10px rgba(219, 39, 119, 0.3); }
+.field select option { background: #1e1b4b; color: #fff; }
+
+button{font-family:inherit;cursor:pointer;border:none;transition:.2s;}
+.btn-primary{
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color:#fff;font-size:15px;font-weight:700;padding:14px;border-radius:12px;width:100%;
+    box-shadow: 0 6px 20px rgba(219, 39, 119, 0.4);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(219, 39, 119, 0.6); }
+.btn-ghost{background:rgba(255,255,255,0.1); color:#fff; font-size:14px;font-weight:600;padding:10px 15px;border-radius:10px;border:1px solid var(--glass-border);}
+.btn-ghost:hover { background: rgba(255,255,255,0.2); }
+
+.page-title { text-align: center; font-size: 26px; font-weight: 800; color: #fbcfe8; margin-bottom: 20px; text-shadow: 0 2px 10px rgba(219, 39, 119, 0.5); }
+
+.filter-bar { display: flex; gap: 12px; margin-bottom: 20px; }
+.filter-bar select { flex: 1; padding: 12px; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); color: #fff; font-weight: bold; outline: none; }
+
+/* Stats Grid */
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+.stat-card { padding: 15px; border-radius: 16px; border-left: 5px solid var(--primary); background: rgba(255,255,255,0.05);}
+.stat-title { font-size: 11px; color: var(--text-muted); font-weight: 700; text-transform: uppercase;}
+.stat-amount { font-size: 20px; font-weight: 900; margin-top: 4px; }
+
+/* Smart Insight Card */
+.insight-card { background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2)); border: 1px solid rgba(59, 130, 246, 0.4); padding: 15px; border-radius: 15px; margin-bottom: 20px; display: flex; align-items: center; gap: 15px;}
+.insight-icon { font-size: 30px; }
+.insight-text { font-size: 14px; line-height: 1.5; color: #e2e8f0; }
+
+/* Table */
+.table-scroll{overflow-x:auto; margin: 0 -20px; padding: 0 20px;}
+table{width:100%;border-collapse:collapse;min-width:100%;}
+thead th{text-align:left;font-size:12px;color:var(--text-muted);padding:10px;border-bottom:1px solid var(--glass-border);}
+tbody td{padding:12px 10px;font-size:14px;border-bottom:1px solid rgba(255,255,255,0.05);}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:4px 8px;border-radius:99px;}
+.action-btns { display: flex; gap: 8px; }
+.icon-btn{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,0.1);display:grid;place-items:center;font-size:14px;cursor:pointer; border:1px solid var(--glass-border);}
+
+/* Chat */
+.chat-container { display: flex; flex-direction: column; height: 520px; border-radius: 24px; overflow: hidden; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 15px 40px rgba(0,0,0,0.4); position: relative;}
+.chat-header { background: linear-gradient(135deg, rgba(219, 39, 119, 0.9), rgba(147, 51, 234, 0.9)); padding: 15px 20px; display: flex; align-items: center; gap: 15px; border-bottom: 1px solid rgba(255,255,255,0.2);}
+.chat-header-title { font-size: 20px; font-weight: 800; flex: 1; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);}
+.chat-messages { flex: 1; padding: 20px 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px;}
+.message { max-width: 80%; padding: 12px 18px; border-radius: 20px; font-size: 15px; line-height: 1.5; position: relative; word-wrap: break-word; box-shadow: 0 4px 15px rgba(0,0,0,0.1);}
+.message.partner { background: rgba(255, 255, 255, 0.9); align-self: flex-start; border-bottom-left-radius: 4px; color: #0f172a;}
+.message.me { background: linear-gradient(135deg, #db2777, #9333ea); align-self: flex-end; border-bottom-right-radius: 4px; color: white;}
+.message .time { font-size: 10px; opacity: 0.8; text-align: right; margin-top: 6px;}
+.chat-input-area { display: flex; padding: 12px 15px; background: rgba(0, 0, 0, 0.3); gap: 12px; align-items: center; border-top: 1px solid rgba(255,255,255,0.1);}
+.chat-input-area input { flex: 1; padding: 14px 20px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.2); outline: none; font-size: 15px; background: rgba(255, 255, 255, 0.1); color: white;}
+.chat-input-area input::placeholder { color: rgba(255,255,255,0.5); }
+.chat-input-area button { background: linear-gradient(135deg, #db2777, #9333ea); color: white; border-radius: 50%; width: 50px; height: 50px; font-size: 20px; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(219, 39, 119, 0.4);}
+
+.call-btn { background: linear-gradient(135deg, #10b981, #059669); color: white; border-radius: 50%; width: 55px; height: 55px; font-size: 24px; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); animation: pulse-green 2s infinite; border: 2px solid #fff; position: absolute; right: 50%; transform: translateX(50%); top: 10px; z-index: 10;}
+@keyframes pulse-green { 0% { transform: translateX(50%) scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); } 70% { transform: translateX(50%) scale(1); box-shadow: 0 0 0 20px rgba(16, 185, 129, 0); } 100% { transform: translateX(50%) scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }}
+
+/* Reels Feed */
+.reels-feed { height: calc(100vh - 180px); overflow-y: scroll; scroll-snap-type: y mandatory; border-radius: 20px; background: #000; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); position: relative;}
+.reels-feed::-webkit-scrollbar { display: none; }
+.reels-feed { -ms-overflow-style: none; scrollbar-width: none; }
+.reel-item { height: 100%; scroll-snap-align: start; position: relative; display: flex; justify-content: center; align-items: center; background: #000; overflow: hidden;}
+.reel-item video, .reel-item iframe { width: 100%; height: 100%; object-fit: cover;}
+.reel-overlay { position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: white; pointer-events: none;}
+.reel-overlay h3 { font-size: 20px; font-weight: 800; margin-bottom: 5px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
+.reel-overlay p { font-size: 14px; opacity: 0.9; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
+.reel-heart { position: absolute; right: 15px; bottom: 30px; font-size: 35px; cursor: pointer; pointer-events: auto; animation: heartbeat 1s infinite;}
+@keyframes heartbeat { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+/* Bottom Nav */
+.bottom-nav { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 550px; height: var(--nav-height); background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.15); border-radius: 25px; display: flex; justify-content: space-around; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 1000; }
+.nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #94a3b8; font-size: 11px; font-weight: 600; cursor: pointer; width: 20%; height: 100%; gap: 4px; transition: 0.3s;}
+.nav-item.active { color: #fbcfe8; transform: translateY(-5px); }
+.nav-item.active .icon { text-shadow: 0 0 10px rgba(219, 39, 119, 0.8); transform: scale(1.2);}
+.nav-item span.icon { font-size: 22px; transition: 0.3s;}
+
+#musicBtn { position: fixed; bottom: 100px; right: 20px; background: linear-gradient(45deg, #db2777, #9333ea); color: white; padding: 15px; border-radius: 50%; font-weight: 800; font-size: 18px; cursor: pointer; box-shadow: 0 6px 20px rgba(147, 51, 234, 0.6); z-index: 9999; display: flex; align-items: center; justify-content: center; border: 2px solid rgba(255,255,255,0.5); transition: all 0.3s ease; width: 55px; height: 55px;}
+#musicBtn.playing { background: linear-gradient(45deg, #10b981, #059669); animation: pulse 2s infinite; }
+
+.anniversary-card { background: linear-gradient(135deg, rgba(219, 39, 119, 0.2), rgba(147, 51, 234, 0.2)); border: 1px solid rgba(219, 39, 119, 0.5); border-radius: 16px; padding: 20px; text-align: center; margin-top: 20px; }
+.anniversary-card h3 { color: #fbcfe8; font-size: 18px; margin-bottom: 8px;}
+.anniversary-card .days { font-size: 36px; font-weight: 900; color: #fff; text-shadow: 0 0 15px rgba(219, 39, 119, 0.8);}
+.miss-btn { background: linear-gradient(45deg, #db2777, #9333ea); color: white; padding: 18px; border-radius: 16px; font-size: 20px; font-weight: 800; width: 100%; margin-top: 20px; box-shadow: 0 8px 25px rgba(219, 39, 119, 0.5); }
+.big-couple-photo { width: 100%; max-width: 100%; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.2); margin: 15px auto; display: block; object-fit: cover; height: 250px;}
+
 #callModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 99999; flex-direction: column; }
 #callIframe { flex: 1; width: 100%; height: 100%; border: none; }
-.close-call { position: absolute; top: 20px; right: 20px; background: red; color: white; border: none; padding: 10px 15px; border-radius: 8px; font-weight: bold; z-index: 100000; cursor: pointer; }
+.close-call { position: absolute; top: 30px; right: 20px; background: #ef4444; color: white; border: none; padding: 12px 20px; border-radius: 30px; font-weight: bold; z-index: 100000; cursor: pointer; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.5); }
 </style>
 </head>
 <body>
 
-<audio id="bgMusic" loop><source src="song.mp3" type="audio/mpeg"></audio>
-<div id="toast">✓ <span id="toastMsg"></span></div>
+<audio id="bgMusic" loop></audio>
 
-<!-- Call Modal -->
 <div id="callModal">
     <button class="close-call" onclick="endCall()">❌ कल अन्त्य गर्नुहोस्</button>
     <iframe id="callIframe" allow="camera; microphone; fullscreen; display-capture; autoplay"></iframe>
@@ -163,30 +178,62 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
     </div>
   </header>
 
-  <!-- 💰 Tab 1: ANJANA HISAB -->
+  <!-- 💰 Tab 1: ANJANA HISAB (Smart Family Finance) -->
   <div id="tab-hisab" class="tab-content active">
     <h2 class="page-title">🌸 अन्जना हिसाब 🌸</h2>
-    <div class="card budget-card">
-        <h2 class="card-title">🎯 मासिक खर्चको लक्ष्य (Target)</h2>
-        <div class="budget-input-area">
-            <input type="number" id="budgetInput" placeholder="जस्तै: ५०,०००">
-            <button onclick="saveBudget()">सेभ</button>
+    
+    <!-- 🎯 Family Goal (पारिवारिक लक्ष्य) -->
+    <div class="glass-card card" style="border-left: 4px solid #3b82f6;">
+        <h2 class="card-title" style="color:#3b82f6; justify-content:space-between;">
+            <span>🎯 पारिवारिक लक्ष्य (Family Goal)</span>
+        </h2>
+        <div style="display:flex; gap:10px; margin-bottom:15px;">
+            <input type="text" id="goalName" placeholder="लक्ष्य (जस्तै: घर बनाउने)" style="flex:2; padding:12px; border-radius:10px; border:none; outline:none; font-size:14px; background:rgba(255,255,255,0.9); color:#000;">
+            <input type="number" id="goalTarget" placeholder="लक्ष्य रकम" style="flex:1; padding:12px; border-radius:10px; border:none; outline:none; font-size:14px; background:rgba(255,255,255,0.9); color:#000;">
         </div>
-        <div id="budgetProgressArea" style="display:none;">
-            <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:bold; margin-bottom:5px;">
-                <span>यो महिनाको खर्च: <span id="budgetSpent" style="color:#ef4444;">रु. ०</span></span>
-                <span>लक्ष्य: <span id="budgetTarget" style="color:#c2410c;">रु. ०</span></span>
+        <div style="display:flex; gap:10px; align-items:center;">
+            <input type="number" id="goalCurrent" placeholder="अहिले जम्मा भएको" style="flex:1; padding:12px; border-radius:10px; border:none; outline:none; font-size:14px; background:rgba(255,255,255,0.9); color:#000;">
+            <button onclick="saveGoal()" style="background:#3b82f6; color:#fff; padding:12px 20px; border-radius:10px; font-weight:bold; font-size:15px;">सेभ</button>
+        </div>
+        <div style="margin-top: 15px;">
+            <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:bold; margin-bottom:5px;">
+                <span id="goalNameDisplay" style="color:#fbcfe8;">लक्ष्य छैन</span>
+                <span id="goalAmountDisplay" style="color:#fff;">रु. ० / रु. ०</span>
             </div>
-            <div class="budget-progress-bg">
-                <div id="budgetBar" class="budget-progress-fill"></div>
+            <div style="width:100%; height:12px; background:rgba(255,255,255,0.2); border-radius:10px; overflow:hidden;">
+                <div id="goalFill" style="height:100%; width:0%; background:linear-gradient(90deg, #3b82f6, #10b981); transition:width 0.5s ease; border-radius:10px;"></div>
             </div>
-            <p id="budgetMsg" style="font-size:12px; font-weight:bold; margin-top:8px; text-align:center;"></p>
         </div>
     </div>
 
+    <!-- 🎯 Budget Target -->
+    <div class="glass-card card" style="border-left: 4px solid #f59e0b;">
+        <h2 class="card-title" style="color:#f59e0b;">🎯 मासिक खर्चको लक्ष्य (Budget)</h2>
+        <div style="display:flex; gap:10px; margin-bottom:15px;">
+            <input type="number" id="budgetInput" placeholder="जस्तै: ५०,०००" style="flex:1; padding:12px; border-radius:10px; border:none; outline:none; font-size:16px; font-weight:bold; background:rgba(255,255,255,0.9); color:#000;">
+            <button onclick="saveBudget()" style="background:#f59e0b; color:#fff; padding:0 20px; border-radius:10px; font-weight:bold; font-size:15px;">सेभ</button>
+        </div>
+        <div id="budgetProgressArea" style="display:none;">
+            <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:bold; margin-bottom:8px;">
+                <span>खर्च: <span id="budgetSpent" style="color:#f87171;">रु. ०</span></span>
+                <span>लक्ष्य: <span id="budgetTarget" style="color:#fbbf24;">रु. ०</span></span>
+            </div>
+            <div style="width:100%; height:12px; background:rgba(255,255,255,0.2); border-radius:10px; overflow:hidden;">
+                <div id="budgetBar" style="height:100%; width:0%; background:#f59e0b; transition:width 0.5s ease; border-radius:10px;"></div>
+            </div>
+            <p id="budgetMsg" style="font-size:13px; font-weight:bold; margin-top:10px; text-align:center;"></p>
+        </div>
+    </div>
+
+    <!-- 💡 Smart Insight (स्मार्ट सुझाव) -->
+    <div class="insight-card">
+        <div class="insight-icon">💡</div>
+        <div class="insight-text" id="smartInsightText">लोड हुँदै...</div>
+    </div>
+
     <div class="filter-bar">
-        <select id="yearFilter" onchange="renderExpenses()"></select>
-        <select id="monthFilter" onchange="renderExpenses()">
+        <select id="yearFilter" onchange="renderHisab()"></select>
+        <select id="monthFilter" onchange="renderHisab()">
             <option value="all">सबै महिना</option>
             <option value="0">जनवरी</option><option value="1">फेब्रुअरी</option><option value="2">मार्च</option>
             <option value="3">अप्रिल</option><option value="4">मे</option><option value="5">जुन</option>
@@ -195,127 +242,149 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
         </select>
     </div>
 
-    <div class="chart-card">
-        <h2 class="card-title">📊 वार्षिक विश्लेषण</h2>
-        <div class="chart-container" id="yearlyChart"></div>
-        <div class="analysis-text" id="analysisText"></div>
-    </div>
-
+    <!-- Stats Grid: Income, Expense, Savings, Today -->
     <div class="stats-grid">
-        <div class="stat-card red">
-            <div class="stat-title">कुल खर्च (छानिएको)</div>
-            <div class="stat-amount" id="statTotal">रु. ०</div>
+        <div class="glass-card stat-card" style="border-left-color: #10b981;">
+            <div class="stat-title">कुल आम्दानी</div>
+            <div class="stat-amount" id="statIncome">रु. ०</div>
         </div>
-        <div class="stat-card green">
+        <div class="glass-card stat-card" style="border-left-color: #ef4444;">
+            <div class="stat-title">कुल खर्च</div>
+            <div class="stat-amount" id="statExpense">रु. ०</div>
+        </div>
+        <div class="glass-card stat-card" style="border-left-color: #3b82f6;">
+            <div class="stat-title">बचत (Savings)</div>
+            <div class="stat-amount" id="statSavings">रु. ०</div>
+        </div>
+        <div class="glass-card stat-card" style="border-left-color: #f59e0b;">
             <div class="stat-title">आजको खर्च</div>
             <div class="stat-amount" id="statToday">रु. ०</div>
         </div>
     </div>
 
-    <div class="cat-breakdown" id="catBreakdown" style="background:#fff; border-radius:14px; padding:15px; margin-bottom:16px; box-shadow:0 4px 10px rgba(0,0,0,0.05);"></div>
+    <div class="glass-card card">
+        <h2 class="card-title">📊 वार्षिक विश्लेषण (आम्दानी vs खर्च)</h2>
+        <div id="yearlyChart" style="display: flex; align-items: flex-end; height: 150px; gap: 8px; margin-top: 15px; padding-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.2);"></div>
+        <div id="analysisText" style="font-size: 13px; margin-top: 15px; line-height: 1.6; padding: 12px; background: rgba(0,0,0,0.2); border-radius: 10px;"></div>
+    </div>
 
-    <form id="expenseForm" class="card" style="border: 2px solid #4f46e5;">
-        <h2 class="card-title" style="color:#4f46e5;">➕ नयाँ खर्च थप्नुहोस्</h2>
-        <div class="form-grid">
-          <div class="field"><label>मिति</label><input type="date" id="date" required></div>
+    <div class="glass-card card" id="catBreakdown" style="padding:20px;"></div>
+
+    <!-- Transaction Form (Income/Expense) -->
+    <div class="glass-card card" style="border: 1px solid rgba(219, 39, 119, 0.5);">
+        <h2 class="card-title" style="color:var(--primary);">➕ नयाँ रेकर्ड थप्नुहोस्</h2>
+        <div class="form-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          
+          <div class="field" style="grid-column: span 2;">
+            <label>प्रकार (Type)</label>
+            <select id="txType" onchange="toggleCategories()" style="font-weight:bold; background: rgba(0,0,0,0.4);">
+                <option value="expense">🔴 खर्च (Expense)</option>
+                <option value="income">🟢 आम्दानी (Income)</option>
+            </select>
+          </div>
+
+          <div class="field"><label>मिति</label><input type="date" id="date" required min="1900-01-01" max="2200-12-31"></div>
           <div class="field"><label>रकम (रु.)</label><input type="number" id="amount" min="1" placeholder="0" required></div>
-          <div class="field full"><label>के को लागि? (कोटी)</label><select id="category" required></select></div>
-          <div class="field full"><label>विवरण (Note)</label><input type="text" id="note" placeholder="जस्तै: तेल र चामल किनेको"></div>
-          <div class="field full">
-             <button type="submit" class="btn-primary" id="submitBtn" style="background: linear-gradient(135deg,#4f46e5,#9333ea);">हिसाब सेभ गर्नुहोस्</button>
-             <button type="button" class="btn-ghost" id="cancelEditBtn" style="display:none; margin-top: 8px; width:100%;" onclick="cancelEdit()">रद्द गर्नुहोस्</button>
+          
+          <div class="field" style="grid-column: span 2;"><label>के को लागि? (कोटी)</label><select id="category" required></select></div>
+          <div class="field" style="grid-column: span 2;"><label>विवरण (Note)</label><input type="text" id="note" placeholder="जस्तै: तलब आयो / तेल किनेको"></div>
+          
+          <div class="field" style="grid-column: span 2;">
+             <button type="submit" class="btn-primary" id="submitBtn">रेकर्ड सेभ गर्नुहोस्</button>
+             <button type="button" class="btn-ghost" id="cancelEditBtn" style="display:none; margin-top: 10px; width:100%;" onclick="cancelEdit()">रद्द गर्नुहोस्</button>
           </div>
         </div>
-    </form>
+    </div>
 
-    <div class="card">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-            <h2 class="card-title" style="margin:0;">🧾 खर्चको सूची</h2>
-            <button class="btn-ghost" onclick="downloadCSV()" style="padding: 5px 10px; font-size:11px;">⬇️ CSV</button>
+    <div class="glass-card card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <h2 class="card-title" style="margin:0;">🧾 कारोबारको सूची</h2>
+            <button class="btn-ghost" onclick="downloadCSV()" style="padding: 6px 12px; font-size:12px;">⬇️ CSV</button>
         </div>
         <div class="table-scroll">
           <table>
-            <thead><tr><th>मिति</th><th>के को</th><th>विवरण</th><th>रकम</th><th>Action</th></tr></thead>
+            <thead><tr><th>मिति</th><th>प्रकार</th><th>विवरण</th><th style="text-align:right;">रकम</th><th></th></tr></thead>
             <tbody id="tableBody"></tbody>
           </table>
         </div>
-        <div id="tableEmpty" style="text-align:center;padding:24px;color:#64748b;display:none;">📭 यो अवधिमा कुनै खर्च भेटिएन।</div>
+        <div id="tableEmpty" style="text-align:center;padding:30px;color:var(--text-muted);display:none;">📭 यो अवधिमा कुनै रेकर्ड भेटिएन।</div>
     </div>
   </div>
 
   <!-- 💑 Tab 2: HAMI -->
   <div id="tab-us" class="tab-content">
     <h2 class="page-title">💑 अन्जना र प्रकाश 💑</h2>
-    <div class="card">
+    
+    <div class="glass-card card">
         <h2 class="card-title" style="justify-content:center;">⏳ हामी सँगै बसेको दिन</h2>
-        <div class="love-counter-box">
-            <h3>हामी सँगै छौं...</h3>
-            <div class="days" id="loveDays">--</div>
-            <p style="font-size:12px; color:#be185d;">दिन भइसक्यो</p>
-            <input type="date" id="loveStartDate" onchange="saveLoveDate(this.value)" style="font-size:12px;">
+        <div style="text-align: center;">
+            <h3 style="font-size: 14px; color: #fbcfe8; margin-bottom: 10px;">हामी सँगै छौं...</h3>
+            <div style="font-size: 48px; font-weight: 900; color: #fff; text-shadow: 0 0 20px rgba(219, 39, 119, 0.8);" id="loveDays">--</div>
+            <p style="font-size: 14px; color: #fbcfe8; margin-bottom: 15px;">दिन भइसक्यो</p>
+            <input type="date" id="loveStartDate" onchange="saveLoveDate(this.value)" style="padding: 10px; border-radius: 10px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); color: #fff; outline: none;">
         </div>
     </div>
 
-    <div class="card" style="text-align:center; background: linear-gradient(135deg, #fdf4ff, #fae8ff); border-color: #f0abfc;">
-        <h2 class="card-title" style="justify-content:center; color:#c026d3;">🤗 भर्चुअल माया</h2>
-        <div style="display:flex; justify-content:space-around; margin-bottom:10px;">
-            <div><span style="font-size:24px;">🤗</span><br><b id="hugCount">0</b> Hugs</div>
-            <div><span style="font-size:24px;">😘</span><br><b id="kissCount">0</b> Kisses</div>
+    <div class="glass-card card" style="text-align:center; border: 1px solid rgba(219, 39, 119, 0.5);">
+        <h2 class="card-title" style="justify-content:center; color:#fbcfe8;">🤗 भर्चुअल माया</h2>
+        <div style="display:flex; justify-content:space-around; margin-bottom:15px; font-size:16px;">
+            <div><span style="font-size:32px;">🤗</span><br><b id="hugCount" style="color:#fbbf24; font-size:20px;">0</b> Hugs</div>
+            <div><span style="font-size:32px;">😘</span><br><b id="kissCount" style="color:#f472b6; font-size:20px;">0</b> Kisses</div>
         </div>
-        <div class="hug-kiss-area">
-            <button class="hug-btn" onclick="sendLoveAction('hug')">🤗 हग</button>
-            <button class="kiss-btn" onclick="sendLoveAction('kiss')">😘 किस</button>
+        <div style="display: flex; gap: 12px;">
+            <button onclick="sendLoveAction('hug')" style="flex:1; padding:15px; border-radius:15px; background:linear-gradient(45deg, #f59e0b, #fbbf24); color:white; font-size:18px; font-weight:bold; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);">🤗 हग</button>
+            <button onclick="sendLoveAction('kiss')" style="flex:1; padding:15px; border-radius:15px; background:linear-gradient(45deg, #ec4899, #f43f5e); color:white; font-size:18px; font-weight:bold; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);">😘 किस</button>
         </div>
     </div>
 
-    <div class="card">
+    <div class="glass-card card">
         <h2 class="card-title">🎲 ट्रुथ वा डेयर</h2>
-        <div class="tod-box">
-            <p id="todText">खेल खेल्न तलको बटन थिच्नुहोस्!</p>
-            <div class="tod-btns">
-                <button class="btn-truth" onclick="playTOD('truth')">ट्रुथ (सत्य)</button>
-                <button class="btn-dare" onclick="playTOD('dare')">डेयर (चुनौती)</button>
+        <div style="text-align: center; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 15px;">
+            <p id="todText" style="font-size: 16px; font-weight: bold; margin-bottom: 20px; min-height: 40px; color: #fbcfe8;">खेल खेल्न तलको बटन थिच्नुहोस्!</p>
+            <div style="display: flex; gap: 12px;">
+                <button onclick="playTOD('truth')" style="background: #3b82f6; color: white; flex: 1; padding: 12px; border-radius: 10px; font-weight: bold; font-size:15px;">ट्रुथ</button>
+                <button onclick="playTOD('dare')" style="background: #ef4444; color: white; flex: 1; padding: 12px; border-radius: 10px; font-weight: bold; font-size:15px;">डेयर</button>
             </div>
         </div>
     </div>
 
-    <div class="card">
+    <div class="glass-card card">
         <h2 class="card-title">🤔 आजको प्रश्न</h2>
-        <div class="q-box">
-            <p id="dailyQuestionText">लोड हुँदै...</p>
-            <div class="q-input-area">
-                <input type="text" id="questionAnswerInput" placeholder="तपाईंको उत्तर...">
-                <button onclick="submitAnswer()">पठाउनुहोस्</button>
+        <div style="background: rgba(147, 51, 234, 0.2); border-radius: 15px; padding: 20px; text-align: center; border: 1px solid rgba(147, 51, 234, 0.5);">
+            <p id="dailyQuestionText" style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #fff;">लोड हुँदै...</p>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="questionAnswerInput" placeholder="तपाईंको उत्तर..." style="flex:1; padding:12px; border-radius:10px; border:none; outline:none; font-size:14px;">
+                <button onclick="submitAnswer()" style="background: #9333ea; color: white; padding: 0 20px; border-radius: 10px; font-weight: bold;">पठाउनुहोस्</button>
             </div>
-            <p style="font-size:12px; margin-top:8px; color:#4338ca;" id="partnerAnswerDisplay"></p>
+            <p style="font-size:13px; margin-top:12px; color:#cbd5e1;" id="partnerAnswerDisplay"></p>
         </div>
     </div>
 
-    <div class="card">
+    <div class="glass-card card">
         <h2 class="card-title">💌 मायाको चिठी</h2>
-        <div style="display:flex; gap:8px; margin-bottom:15px;">
-            <input type="text" id="noteInput" placeholder="छोटो मीठो सन्देश..." style="flex:1; padding:10px; border:1.5px solid #e2e8f0; border-radius:8px; outline:none;">
-            <button onclick="addLoveNote()" style="background:#db2777; color:white; padding:10px 15px; border-radius:8px; font-weight:bold;">+</button>
+        <div style="display:flex; gap:10px; margin-bottom:20px;">
+            <input type="text" id="noteInput" placeholder="छोटो मीठो सन्देश..." style="flex:1; padding:12px; border-radius:10px; border:1px solid var(--glass-border); background:rgba(0,0,0,0.2); color:#fff; outline:none;">
+            <button onclick="addLoveNote()" style="background:#db2777; color:white; padding:0 20px; border-radius:10px; font-weight:bold; font-size:20px;">+</button>
         </div>
-        <div class="notes-board" id="notesBoard"></div>
+        <div id="notesBoard" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;"></div>
     </div>
 
-    <div class="card">
+    <div class="glass-card card">
         <h2 class="card-title">🎯 साझा सपना (Bucket List)</h2>
-        <div style="display:flex; gap:8px; margin-bottom:15px;">
-            <input type="text" id="bucketInput" placeholder="सँगै गर्न चाहेको कुरा..." style="flex:1; padding:10px; border:1.5px solid #e2e8f0; border-radius:8px; outline:none;">
-            <button onclick="addBucketItem()" style="background:#4f46e5; color:white; padding:10px 15px; border-radius:8px; font-weight:bold;">+</button>
+        <div style="display:flex; gap:10px; margin-bottom:20px;">
+            <input type="text" id="bucketInput" placeholder="सँगै गर्न चाहेको कुरा..." style="flex:1; padding:12px; border-radius:10px; border:1px solid var(--glass-border); background:rgba(0,0,0,0.2); color:#fff; outline:none;">
+            <button onclick="addBucketItem()" style="background:#4f46e5; color:white; padding:0 20px; border-radius:10px; font-weight:bold; font-size:20px;">+</button>
         </div>
         <div id="bucketList"></div>
     </div>
 
-    <div class="card">
+    <div class="glass-card card">
         <h2 class="card-title">📸 सम्झनाको बाकस</h2>
-        <div style="display:flex; gap:8px; margin-bottom:15px; flex-direction:column;">
-            <input type="text" id="memoryTitle" placeholder="शीर्षक (जस्तै: पहिलो भेट)" style="padding:10px; border:1.5px solid #e2e8f0; border-radius:8px; outline:none;">
-            <div style="display:flex; gap:8px;">
-                <input type="text" id="memoryDesc" placeholder="के भएको थियो?" style="flex:1; padding:10px; border:1.5px solid #e2e8f0; border-radius:8px; outline:none;">
-                <button onclick="addMemory()" style="background:#f59e0b; color:white; padding:10px 15px; border-radius:8px; font-weight:bold;">+</button>
+        <div style="display:flex; gap:10px; margin-bottom:20px; flex-direction:column;">
+            <input type="text" id="memoryTitle" placeholder="शीर्षक (जस्तै: पहिलो भेट)" style="padding:12px; border-radius:10px; border:1px solid var(--glass-border); background:rgba(0,0,0,0.2); color:#fff; outline:none;">
+            <div style="display:flex; gap:10px;">
+                <input type="text" id="memoryDesc" placeholder="के भएको थियो?" style="flex:1; padding:12px; border-radius:10px; border:1px solid var(--glass-border); background:rgba(0,0,0,0.2); color:#fff; outline:none;">
+                <button onclick="addMemory()" style="background:#f59e0b; color:white; padding:0 20px; border-radius:10px; font-weight:bold; font-size:20px;">+</button>
             </div>
         </div>
         <div id="memoryList"></div>
@@ -325,77 +394,76 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
 
   <!-- 🏠 Tab 3: Home -->
   <div id="tab-home" class="tab-content">
-    <div class="card">
-        <h2 style="color: #4f46e5; margin-bottom: 5px; text-align:center;">नमस्ते! 🙏</h2>
-        <p style="color: #64748b; font-size: 15px; text-align:center; font-weight:bold;" id="todayDate">मिति लोड हुँदै...</p>
+    <div class="glass-card card" style="text-align: center;">
+        <h2 style="color: #fbcfe8; margin-bottom: 10px; font-size: 20px;">नमस्ते! 🙏</h2>
+        <p style="color: #cbd5e1; font-size: 16px; font-weight:bold; margin-bottom: 20px;" id="todayDate">मिति लोड हुँदै...</p>
         
         <img src="wife.jpg" alt="Hamro Photo" class="big-couple-photo">
 
         <div class="anniversary-card">
             <h3>💍 हाम्रो विवाह वार्षिकी (बैशाख ६) 💍</h3>
             <div class="days" id="anniversaryDays">--</div>
-            <p>दिन बाँकी छ</p>
+            <p style="font-size: 14px; color: #fbcfe8; margin-top: 5px;">दिन बाँकी छ</p>
         </div>
 
-        <div class="clock-container">
-            <div class="clock-box"><div class="flag">🇸🇦</div><div class="country">साउदी समय</div><div class="time" id="saudiTime">--:--:--</div></div>
-            <div class="clock-box"><div class="flag">🇳🇵</div><div class="country">नेपाल समय</div><div class="time nepal" id="nepalTime">--:--:--</div></div>
-        </div>
-
-        <div style="margin-top: 15px;">
-            <h3 style="font-size: 14px; color: #475569; margin-bottom: 5px;">आज तपाईंको मूड कस्तो छ?</h3>
-            <div class="mood-container">
-                <div class="mood-item" onclick="setMood('husband', '😊')"><div class="emoji">😊</div><div class="name">प्रकाश</div></div>
-                <div class="mood-item" onclick="setMood('wife', '😊')"><div class="emoji">😊</div><div class="name">अन्जना</div></div>
+        <div style="display: flex; justify-content: space-around; text-align: center; background: rgba(0,0,0,0.2); border-radius: 15px; padding: 15px; margin: 20px 0;">
+            <div style="flex: 1; border-right: 1px solid rgba(255,255,255,0.1);">
+                <div style="font-size: 24px; margin-bottom: 5px;">🇸🇦</div>
+                <div style="font-size: 12px; color: #cbd5e1; font-weight: bold;">साउदी समय</div>
+                <div style="font-size: 20px; font-weight: 800; color: #fbcfe8; margin-top: 5px;" id="saudiTime">--:--</div>
             </div>
-            <div style="display:flex; justify-content:space-between; margin-top:10px; font-size:13px; font-weight:bold;">
-                <div id="husbandMoodDisplay" style="color:#2563eb;">प्रकाश: 😊</div>
-                <div id="wifeMoodDisplay" style="color:#db2777;">अन्जना: 😊</div>
+            <div style="flex: 1;">
+                <div style="font-size: 24px; margin-bottom: 5px;">🇳🇵</div>
+                <div style="font-size: 12px; color: #cbd5e1; font-weight: bold;">नेपाल समय</div>
+                <div style="font-size: 20px; font-weight: 800; color: #fbcfe8; margin-top: 5px;" id="nepalTime">--:--</div>
             </div>
         </div>
 
-        <div class="love-quote" style="margin-top: 15px;">"तिमी टाढा छौ, तर मेरो मन सधैं तिमीसंगै छ। ❤️"</div>
+        <div style="margin-top: 20px; text-align: left;">
+            <h3 style="font-size: 15px; color: #fbcfe8; margin-bottom: 10px;">आज तपाईंको मूड कस्तो छ?</h3>
+            <div style="display: flex; justify-content: space-around; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px;">
+                <div onclick="setMood('husband', '😊')" style="text-align: center; cursor: pointer; padding: 10px; border-radius: 10px; background: rgba(0,0,0,0.2);"><div style="font-size: 28px;">😊</div><div style="font-size: 12px; font-weight: bold; margin-top: 5px;">प्रकाश</div></div>
+                <div onclick="setMood('wife', '😊')" style="text-align: center; cursor: pointer; padding: 10px; border-radius: 10px; background: rgba(0,0,0,0.2);"><div style="font-size: 28px;">😊</div><div style="font-size: 12px; font-weight: bold; margin-top: 5px;">अन्जना</div></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-top:15px; font-size:14px; font-weight:bold; padding: 0 10px;">
+                <div id="husbandMoodDisplay" style="color:#60a5fa;">प्रकाश: 😊</div>
+                <div id="wifeMoodDisplay" style="color:#f472b6;">अन्जना: 😊</div>
+            </div>
+        </div>
+
+        <div style="font-style: italic; color: #cbd5e1; font-weight: 600; padding: 20px 0; font-size: 16px;">"तिमी टाढा छौ, तर मेरो मन सधैं तिमीसंगै छ। ❤️"</div>
         <button class="miss-btn" onclick="sendMissYou()">❤️ I Miss You (मिस गर्छु)</button>
     </div>
   </div>
 
-  <!-- 💌 Tab 4: Chat -->
+  <!-- 💌 Tab 4: Chat (Special Design) -->
   <div id="tab-chat" class="tab-content">
-    <div class="card" style="padding:0;">
-        <div class="chat-container">
-          <div class="chat-header">
-            <span style="font-size: 20px;">💌</span> 
-            <div style="flex:1;">प्रेम सन्देश</div>
-            <button class="call-btn" onclick="startCall()" title="भिडियो कल गर्नुहोस्">📞</button>
-            <select id="myRole" style="background:rgba(255,255,255,0.2); color:white; border:none; padding:4px; border-radius:6px; font-size:12px; outline:none;">
-                <option value="husband">म प्रकाश हुँ</option>
-                <option value="wife">म अन्जना हुँ</option>
-            </select>
-          </div>
-          <div class="chat-messages" id="chatMessages"></div>
-          <div class="chat-input-area">
-            <input type="text" id="chatInput" placeholder="सन्देश लेख्नुहोस्...">
-            <button id="sendChatBtn">➤</button>
-          </div>
-        </div>
+    <div class="chat-container">
+      <div class="chat-header">
+        <div class="chat-header-title" style="text-align: left; margin-left: 10px;">अन्जना ❤️ प्रकाश</div>
+        
+        <button class="call-btn" onclick="startCall()" title="HD भिडियो कल गर्नुहोस्">📞</button>
+        
+        <select id="myRole" style="background:rgba(255,255,255,0.2); color:white; border:none; padding:8px; border-radius:10px; font-size:13px; outline:none; margin-left: 40px; font-weight: bold;">
+            <option value="husband">प्रकाश</option>
+            <option value="wife">अन्जना</option>
+        </select>
+      </div>
+      <div class="chat-messages" id="chatMessages"></div>
+      <div class="chat-input-area">
+        <input type="text" id="chatInput" placeholder="मायालु सन्देश लेख्नुहोस्...">
+        <button id="sendChatBtn">➤</button>
+      </div>
     </div>
   </div>
 
-  <!-- 🎬 Tab 5: Reels -->
+  <!-- 🎬 Tab 5: INSTAGRAM STYLE REELS -->
   <div id="tab-reels" class="tab-content">
-    <div class="card">
-        <h2 class="card-title">🎬 रिल्स / भिडियो हेर्नुहोस्</h2>
-        <div style="display:flex; gap:8px; margin-bottom: 10px;">
-            <input type="text" id="reelInput" placeholder="YouTube को लिङ्क यहाँ राख्नुहोस्" style="flex:1; padding:10px; border:1.5px solid #e2e8f0; border-radius:8px; outline:none; font-size:12px;">
-            <button onclick="addReel()" style="background:#ef4444; color:white; padding:10px 15px; border-radius:8px; font-weight:bold;">+</button>
-        </div>
-        <div id="reelsFeed"></div>
-    </div>
+    <div class="reels-feed" id="reelsContainer"></div>
   </div>
 
 </div>
 
-<!-- Bottom Navigation -->
 <nav class="bottom-nav">
     <div class="nav-item active" onclick="switchTab('tab-hisab', this)">
         <span class="icon">💰</span> हिसाब
@@ -422,10 +490,12 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
 /* ================= CONFIG ================= */
 const BASE_URL = "https://anjana-khata-default-rtdb.firebaseio.com/khata/";
 const EXPENSE_URL = BASE_URL + "expenses";
+const INCOME_URL = BASE_URL + "incomes";
 const MSG_URL = BASE_URL + "messages";
 const REELS_URL = BASE_URL + "reels";
 const MOOD_URL = BASE_URL + "mood";
 const BUDGET_URL = BASE_URL + "budget";
+const GOAL_URL = BASE_URL + "familyGoal"; // नयाँ: पारिवारिक लक्ष्य
 const NOTES_URL = BASE_URL + "loveNotes";
 const BUCKET_URL = BASE_URL + "bucketList";
 const LOVE_DATE_URL = BASE_URL + "loveStartDate";
@@ -433,19 +503,46 @@ const COUNTERS_URL = BASE_URL + "counters";
 const MEMORY_URL = BASE_URL + "memories";
 const QA_URL = BASE_URL + "dailyQ";
 
-// ---------------- Call Function ----------------
 function startCall() {
     document.getElementById('callModal').style.display = 'flex';
-    document.getElementById('callIframe').src = "https://meet.jit.si/HamroSansarAnjanaPrakash";
+    const jitsiRoom = "HamroSansarAnjanaPrakash";
+    const hdParams = "#config.startWithVideoMuted=false&config.startWithAudioMuted=false&config.prejoinPageEnabled=false&config.resolution=1080&config.constraints.video.height.ideal=1080";
+    document.getElementById('callIframe').src = `https://meet.jit.si/${jitsiRoom}${hdParams}`;
 }
-
 function endCall() {
     document.getElementById('callModal').style.display = 'none';
     document.getElementById('callIframe').src = "";
 }
 
-// ---------------- बाँकी कोड ----------------
-const CATEGORIES = [
+/* ================= 🎵 RANDOM SONGS ================= */
+const songs = ["song1.mp3", "song2.mp3", "song3.mp3", "song4.mp3"]; 
+let currentSongIndex = Math.floor(Math.random() * songs.length);
+const music = document.getElementById('bgMusic');
+music.src = songs[currentSongIndex];
+music.addEventListener('ended', function() {
+    let nextIndex;
+    do { nextIndex = Math.floor(Math.random() * songs.length); } 
+    while (nextIndex === currentSongIndex && songs.length > 1);
+    currentSongIndex = nextIndex;
+    music.src = songs[currentSongIndex];
+    music.play().catch(e => {});
+});
+let isPlaying = false;
+function playMusic() {
+  if (!isPlaying) {
+    music.play().then(() => { isPlaying = true; $('musicBtn').classList.add('playing'); $('musicIcon').textContent = '⏸️'; }).catch(e => {});
+  }
+}
+function toggleMusic(e) {
+  if(e) e.stopPropagation();
+  if (isPlaying) { music.pause(); isPlaying = false; $('musicBtn').classList.remove('playing'); $('musicIcon').textContent = '🎵'; } 
+  else { playMusic(); }
+}
+document.body.addEventListener('touchstart', function(e) { if (!e.target.closest('#musicBtn')) playMusic(); }, { passive: true });
+document.body.addEventListener('click', function(e) { if (!e.target.closest('#musicBtn')) playMusic(); });
+
+/* ================= CATEGORIES ================= */
+const EXPENSE_CATS = [
   { id:'khana', name:'खाना/किराना', icon:'🍚', color:'#f59e0b' }, 
   { id:'school_fee', name:'स्कुल फी', icon:'🏫', color:'#f97316' },
   { id:'bijuli', name:'बिजुली', icon:'💡', color:'#eab308' }, 
@@ -454,28 +551,30 @@ const CATEGORIES = [
   { id:'wifi', name:'वाइफाइ', icon:'📶', color:'#06b6d4' },
   { id:'shopping', name:'सपिङ/लुगा', icon:'🛍️', color:'#a855f7' }, 
   { id:'medical', name:'मेडिकल', icon:'💊', color:'#dc2626' },
-  { id:'other', name:'अन्य', icon:'📦', color:'#64748b' }
+  { id:'other_exp', name:'अन्य खर्च', icon:'📦', color:'#64748b' }
 ];
+
+const INCOME_CATS = [
+  { id:'salary', name:'तलब (Salary)', icon:'💼', color:'#10b981' },
+  { id:'business', name:'व्यापार (Business)', icon:'🏪', color:'#0ea5e9' },
+  { id:'gift', name:'उपहार (Gift)', icon:'🎁', color:'#8b5cf6' },
+  { id:'investment', name:'लगानी (Investment)', icon:'📈', color:'#f59e0b' },
+  { id:'other_inc', name:'अन्य आम्दानी', icon:'💰', color:'#14b8a6' }
+];
+
 const MONTHS_NE = ['जनवरी','फेब्रुअरी','मार्च','अप्रिल','मे','जुन','जुलाई','अगस्ट','सेप्टेम्बर','अक्टोबर','नोभेम्बर','डिसेम्बर'];
 const MONTHS_SHORT = ['जन','फेब','मार्च','अप्रि','मे','जुन','जुल','अग','सेप','अक्टो','नोभ','डिस'];
-
-const DAILY_QUESTIONS = [
-    "हामीले पहिलो पटक भेट्दा तपाईंलाई मेरो कुन कुरा मन पर्यो?",
-    "मेरो कुन बानीले तपाईंलाई सबैभन्दा धेरै खुसी बनाउँछ?",
-    "हामीले सँगै गरेको सबैभन्दा रमाइलो यात्रा कुन हो?",
-    "भविष्यमा हामीले सँगै गर्नुपर्ने एउटा सपना के हो?",
-    "मेरो कुन कुराले तपाईंलाई रिस उठ्छ?",
-    "आज मैले तपाईंलाई कसरी खुसी बनाउन सक्छु?"
-];
-
+const DAILY_QUESTIONS = ["हामीले पहिलो पटक भेट्दा तपाईंलाई मेरो कुन कुरा मन पर्यो?", "मेरो कुन बानीले तपाईंलाई सबैभन्दा धेरै खुसी बनाउँछ?", "हामीले सँगै गरेको सबैभन्दा रमाइलो यात्रा कुन हो?", "भविष्यमा हामीले सँगै गर्नुपर्ने एउटा सपना के हो?", "मेरो कुन कुराले तपाईंलाई रिस उठ्छ?", "आज मैले तपाईंलाई कसरी खुसी बनाउन सक्छु?"];
 const TRUTHS = ["तपाईंले मलाई पहिलो पटक देख्दा के सोच्नुभएको थियो?", "मेरो सबैभन्दा राम्रो कुरा के हो?", "तपाईंको सबैभन्दा ठूलो डर के हो?", "के तपाईंले कहिल्यै मलाई झुक्याउनुभएको छ?", "हाम्रो सम्बन्धमा तपाईंलाई सबैभन्दा मन पर्ने कुरा के हो?"];
 const DARES = ["मलाई एउटा मीठो गीत गाएर सुनाउनुहोस्।", "अर्को १ मिनेटसम्म मेरो आँखामा हेरेर बस्नुहोस्।", "मलाई एउटा मीठो कम्प्लिमेन्ट गर्नुहोस्।", "तपाईंको फोनको ग्यालरीबाट हाम्रो पहिलो फोटो देखाउनुहोस्।", "मलाई ५ सेकेन्डको भर्चुअल हग गर्नुहोस्।"];
 
-let data = [];
+let allTransactions = []; 
 let budgetData = 0;
+let familyGoal = { name: '', target: 0, current: 0 };
 let editingId = null;
+let editingType = null;
 const $ = id => document.getElementById(id);
-const catMap = Object.fromEntries(CATEGORIES.map(c => [c.id, c]));
+const allCatsMap = Object.fromEntries([...EXPENSE_CATS, ...INCOME_CATS].map(c => [c.id, c]));
 
 function fmt(n){ return 'रु. ' + (Number(n)||0).toLocaleString('en-IN'); }
 function toISO(d){ return d.toISOString().split('T')[0]; }
@@ -496,51 +595,365 @@ function switchTab(tabId, navEl) {
     $(tabId).classList.add('active');
     navEl.classList.add('active');
     if(tabId === 'tab-chat') { loadMessages(); }
-    if(tabId === 'tab-reels') { loadReels(); }
-    if(tabId === 'tab-hisab') { renderExpenses(); }
-    if(tabId === 'tab-us') { 
-        loadLoveNotes(); loadBucketList(); loadLoveDate(); loadCounters(); loadMemories(); loadDailyQ();
+    if(tabId === 'tab-reels') { initReels(); }
+    if(tabId === 'tab-hisab') { renderHisab(); }
+    if(tabId === 'tab-us') { loadLoveNotes(); loadBucketList(); loadLoveDate(); loadCounters(); loadMemories(); loadDailyQ(); }
+}
+
+/* ================= 🎬 REELS ================= */
+const reelVideos = [
+    { url: "video1.mp4", title: "हाम्रो पहिलो भिडियो ❤️", desc: "यो भिडियो हेर्दा मलाई सधैं तिम्रो याद आउँछ।" },
+    { url: "video2.mp4", title: "तिमीसंग बिताएका पलहरु 🌸", desc: "जिन्दगीको सबैभन्दा राम्रो समय।" },
+    { url: "video3.mp4", title: "मेरो मनको राजा 👑", desc: "सधैं खुसी रहनु है।" }
+];
+let reelsLoaded = false;
+function initReels() {
+    const container = document.getElementById('reelsContainer');
+    if (reelsLoaded && container.innerHTML !== "") return;
+    container.innerHTML = reelVideos.map((vid) => `
+        <div class="reel-item">
+            <video src="${vid.url}" loop playsinline muted></video>
+            <div class="reel-overlay"><h3>${vid.title}</h3><p>${vid.desc}</p></div>
+            <div class="reel-heart" onclick="this.style.color='red'; this.style.transform='scale(1.5)';">🤍</div>
+        </div>
+    `).join('');
+    reelsLoaded = true;
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const video = entry.target.querySelector('video');
+            if (entry.isIntersecting) { video.currentTime = 0; video.muted = false; video.play().catch(e => { video.muted = true; video.play(); }); } 
+            else { video.pause(); }
+        });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('.reel-item').forEach(item => observer.observe(item));
+}
+
+/* ================= 💰 HISAB LOGIC ================= */
+function toggleCategories() {
+    const type = $('txType').value;
+    const catSelect = $('category');
+    const cats = type === 'income' ? INCOME_CATS : EXPENSE_CATS;
+    catSelect.innerHTML = cats.map(c => `<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
+}
+
+async function loadCloudData() {
+  $('syncStatus').textContent = "☁️ सिंक हुँदै...";
+  try {
+    const expRes = await fetch(EXPENSE_URL + ".json");
+    const expJson = await expRes.json();
+    let expenses = [];
+    if (expJson) { for (let key in expJson) { expenses.push({ id: key, type: 'expense', ...expJson[key] }); } }
+    
+    const incRes = await fetch(INCOME_URL + ".json");
+    const incJson = await incRes.json();
+    let incomes = [];
+    if (incJson) { for (let key in incJson) { incomes.push({ id: key, type: 'income', ...incJson[key] }); } }
+
+    allTransactions = [...expenses, ...incomes];
+    
+    const bRes = await fetch(BUDGET_URL + ".json");
+    budgetData = await bRes.json() || 0;
+    $('budgetInput').value = budgetData > 0 ? budgetData : '';
+    
+    // लक्ष्य तान्ने
+    const gRes = await fetch(GOAL_URL + ".json");
+    const gJson = await gRes.json();
+    if(gJson) {
+        familyGoal = gJson;
+        $('goalName').value = familyGoal.name || '';
+        $('goalTarget').value = familyGoal.target || '';
+        $('goalCurrent').value = familyGoal.current || '';
+    } else {
+        familyGoal = { name: '', target: 0, current: 0 };
     }
+
+    $('syncStatus').textContent = `✓ सिंक भयो`;
+    
+    const currentYear = new Date().getFullYear();
+    const years = new Set();
+    for(let i = 1900; i <= 2200; i++) { years.add(i); }
+    allTransactions.forEach(d => { const y = +d.date.split('-')[0]; if(y) years.add(y); });
+    
+    const sortedYears = [...years].sort((a,b) => b-a);
+    $('yearFilter').innerHTML = sortedYears.map(y => `<option value="${y}">${y}</option>`).join('');
+    $('yearFilter').value = currentYear;
+    
+    renderHisab();
+  } catch(e) { $('syncStatus').textContent = "❌ अफलाइन"; }
 }
 
-/* ================= BG FLOWERS & MUSIC ================= */
-function spawnBgFlowers() {
-    const emojis = ['🌹', '🌸', '🌺', '✨', '❤️', '🌷'];
-    setInterval(() => {
-        const flower = document.createElement('div');
-        flower.className = 'bg-flower';
-        flower.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-        flower.style.left = Math.random() * 100 + 'vw';
-        flower.style.fontSize = (Math.random() * 20 + 15) + 'px'; 
-        flower.style.animationDuration = (Math.random() * 6 + 8) + 's';
-        document.body.appendChild(flower);
-        setTimeout(() => flower.remove(), 15000);
-    }, 600);
+async function saveGoal() {
+    const name = $('goalName').value.trim();
+    const target = Number($('goalTarget').value);
+    const current = Number($('goalCurrent').value);
+    if(!name || !target) return alert("लक्ष्यको नाम र रकम भर्नुहोस्।");
+    try {
+        await fetch(GOAL_URL + ".json", { method: 'PUT', body: JSON.stringify({ name, target, current }) });
+        showToast("✓ पारिवारिक लक्ष्य सेभ भयो!");
+        loadCloudData();
+    } catch(e) { alert("सेभ गर्न सकिएन।"); }
 }
 
-const music = $('bgMusic');
-let isPlaying = false;
-function playMusic() {
-  if (!isPlaying) {
-    music.play().then(() => {
-      isPlaying = true;
-      $('musicBtn').classList.add('playing');
-      $('musicIcon').textContent = '⏸️';
-    }).catch(e => {});
-  }
+async function saveBudget() {
+    const val = Number($('budgetInput').value);
+    if(!val) return alert('कृपया सही रकम हाल्नुहोस्।');
+    try {
+        await fetch(BUDGET_URL + ".json", { method: 'PUT', body: JSON.stringify(val) });
+        budgetData = val;
+        showToast('✓ बजेट सेभ भयो!');
+        renderHisab();
+    } catch(e) { alert("बजेट सेभ गर्न सकिएन।"); }
 }
-function toggleMusic(e) {
-  if(e) e.stopPropagation();
-  if (isPlaying) { 
-      music.pause(); isPlaying = false; $('musicBtn').classList.remove('playing'); $('musicIcon').textContent = '🎵'; 
-  } else { playMusic(); }
-}
-document.body.addEventListener('touchstart', function(e) {
-    if (!e.target.closest('#musicBtn')) playMusic();
-}, { passive: true });
-document.body.addEventListener('click', function(e) {
-    if (!e.target.closest('#musicBtn')) playMusic();
+
+$('expenseForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const type = $('txType').value;
+  const url = type === 'income' ? INCOME_URL : EXPENSE_URL;
+  
+  const newItem = {
+    date: $('date').value, category: $('category').value,
+    amount: Number($('amount').value), note: $('note').value.trim(), ts: Date.now()
+  };
+  
+  $('submitBtn').textContent = 'सेभ हुँदै...'; $('submitBtn').disabled = true;
+  
+  try {
+    if (editingId) {
+      await fetch(`${url}/${editingId}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newItem) });
+      editingId = null; $('submitBtn').textContent = 'रेकर्ड सेभ गर्नुहोस्'; $('cancelEditBtn').style.display = 'none';
+      showToast('✓ अपडेट भयो!');
+    } else {
+      await fetch(url + ".json", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newItem) });
+      showToast(type === 'income' ? '✓ आम्दानी सुरक्षित भयो!' : '✓ खर्च सुरक्षित भयो!');
+    }
+    $('amount').value = ''; $('note').value = ''; $('date').value = toISO(new Date());
+    loadCloudData();
+  } catch(err) { alert("सेभ गर्न सकिएन।"); } finally { $('submitBtn').textContent = 'रेकर्ड सेभ गर्नुहोस्'; $('submitBtn').disabled = false; }
 });
+
+function renderHisab() {
+  toggleCategories(); 
+
+  const y = +$('yearFilter').value || new Date().getFullYear(); 
+  const m = $('monthFilter').value;
+  
+  let filtered = allTransactions.filter(d => +d.date.split('-')[0] === y);
+  if (m !== 'all') {
+      filtered = filtered.filter(d => (+d.date.split('-')[1] - 1) === +m);
+  }
+
+  // === १. लक्ष्य अपडेट ===
+  if (familyGoal.target > 0) {
+      $('goalNameDisplay').textContent = familyGoal.name;
+      $('goalAmountDisplay').textContent = `${fmt(familyGoal.current)} / ${fmt(familyGoal.target)}`;
+      const gPercent = Math.min((familyGoal.current / familyGoal.target) * 100, 100);
+      $('goalFill').style.width = gPercent + '%';
+  } else {
+      $('goalNameDisplay').textContent = "लक्ष्य सेट गर्नुभएको छैन";
+      $('goalAmountDisplay').textContent = "रु. ० / रु. ०";
+      $('goalFill').style.width = '0%';
+  }
+
+  // === २. स्ट्याट्स ===
+  const totalIncome = filtered.filter(d => d.type === 'income').reduce((s,d) => s + d.amount, 0);
+  const totalExpense = filtered.filter(d => d.type === 'expense').reduce((s,d) => s + d.amount, 0);
+  const totalSavings = totalIncome - totalExpense;
+  
+  $('statIncome').textContent = fmt(totalIncome);
+  $('statExpense').textContent = fmt(totalExpense);
+  $('statSavings').textContent = fmt(totalSavings);
+  $('statSavings').style.color = totalSavings < 0 ? '#ef4444' : '#3b82f6';
+
+  const todayStr = toISO(new Date());
+  const todayExpense = allTransactions.filter(d => d.date === todayStr && d.type === 'expense').reduce((s,d) => s + d.amount, 0);
+  $('statToday').textContent = fmt(todayExpense);
+
+  // === ३. बजेट र स्मार्ट सुझाव ===
+  const now = new Date();
+  const currentMonthExpense = allTransactions.filter(d => +d.date.split('-')[0] === y && (+d.date.split('-')[1] - 1) === now.getMonth() && d.type === 'expense').reduce((s,d)=>s+d.amount, 0);
+  
+  if (budgetData > 0) {
+      $('budgetProgressArea').style.display = 'block';
+      $('budgetTarget').textContent = fmt(budgetData);
+      $('budgetSpent').textContent = fmt(currentMonthExpense);
+      
+      let percent = (currentMonthExpense / budgetData) * 100;
+      let barColor = '#f59e0b';
+      
+      // स्मार्ट सुझाव
+      const daysInMonth = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
+      const daysLeft = daysInMonth - now.getDate();
+      const remainingBudget = budgetData - currentMonthExpense;
+      
+      if (remainingBudget < 0) {
+          barColor = '#ef4444';
+          $('budgetMsg').innerHTML = `⚠️ बजेट भन्दा ${fmt(Math.abs(remainingBudget))} बढी खर्च भयो!`;
+          $('budgetMsg').style.color = '#ef4444';
+          $('smartInsightText').innerHTML = `तपाईंको यो महिनाको बजेट सकिएको छ। अब खर्च कम गर्नुपर्छ। अझै <b>${daysLeft}</b> दिन बाँकी छन्।`;
+      } else {
+          barColor = '#f59e0b';
+          $('budgetMsg').innerHTML = `✓ रु. ${(remainingBudget).toLocaleString('en-IN')} बचत गर्न सक्नुहुन्छ।`;
+          $('budgetMsg').style.color = '#10b981';
+          const dailyAllowance = daysLeft > 0 ? (remainingBudget / daysLeft).toFixed(0) : remainingBudget;
+          $('smartInsightText').innerHTML = `तपाईंसँग यो महिना अझै <b>रु. ${remainingBudget.toLocaleString('en-IN')}</b> बाँकी छ। अझै <b>${daysLeft}</b> दिन बाँकी छन्, दिनको करिब <b>रु. ${Number(dailyAllowance).toLocaleString('en-IN')}</b> खर्च गर्न सक्नुहुन्छ।`;
+      }
+      
+      $('budgetBar').style.width = Math.min(percent, 100) + '%';
+      $('budgetBar').style.background = barColor;
+  } else {
+      $('budgetProgressArea').style.display = 'none';
+      $('smartInsightText').innerHTML = `बजेट सेट गर्नुभएको छैन। मासिक बजेट सेट गर्नुहोस्, जसले गर्दा दैनिक कति खर्च गर्ने भनेर थाहा हुनेछ।`;
+  }
+
+  // === ४. चार्ट ===
+  const monthlyIncome = Array(12).fill(0);
+  const monthlyExpense = Array(12).fill(0);
+  
+  allTransactions.filter(d => +d.date.split('-')[0] === y).forEach(d => {
+      const monthIdx = +d.date.split('-')[1] - 1;
+      if (d.type === 'income') monthlyIncome[monthIdx] += d.amount;
+      else monthlyExpense[monthIdx] += d.amount;
+  });
+
+  const maxVal = Math.max(...monthlyIncome, ...monthlyExpense);
+  
+  let chartHTML = '';
+  for(let i=0; i<12; i++) {
+      const incH = maxVal > 0 ? (monthlyIncome[i] / maxVal) * 100 : 0;
+      const expH = maxVal > 0 ? (monthlyExpense[i] / maxVal) * 100 : 0;
+      
+      chartHTML += `
+      <div style="flex:1; display:flex; gap:2px; align-items:flex-end; justify-content:center; height:100%; position:relative;" title="${MONTHS_NE[i]}">
+          <div style="width:40%; background:#10b981; border-radius:2px 2px 0 0; height:${incH}%; min-height:${monthlyIncome[i]>0?'2px':'0'}; transition:height 0.5s ease;"></div>
+          <div style="width:40%; background:#db2777; border-radius:2px 2px 0 0; height:${expH}%; min-height:${monthlyExpense[i]>0?'2px':'0'}; transition:height 0.5s ease;"></div>
+          <span style="position:absolute; bottom:-20px; font-size:9px; font-weight:bold; color:#cbd5e1;">${MONTHS_SHORT[i]}</span>
+      </div>`;
+  }
+  $('yearlyChart').innerHTML = chartHTML;
+
+  let analysisStr = `<div style="display:flex; gap:15px; margin-bottom:10px;">
+    <div style="display:flex; align-items:center; gap:5px;"><div style="width:12px; height:12px; background:#10b981; border-radius:50%;"></div> <b>आम्दानी</b></div>
+    <div style="display:flex; align-items:center; gap:5px;"><div style="width:12px; height:12px; background:#db2777; border-radius:50%;"></div> <b>खर्च</b></div>
+  </div>`;
+  
+  if (totalSavings > 0) {
+      analysisStr += `✅ तपाईंले यो अवधिमा <b>${fmt(totalSavings)}</b> बचत गर्नुभएको छ।`;
+  } else if (totalSavings < 0) {
+      analysisStr += `⚠️ तपाईंको खर्च आम्दानी भन्दा <b>${fmt(Math.abs(totalSavings))}</b> बढी भएको छ।`;
+  } else {
+      analysisStr += `तपाईंको आम्दानी र खर्च बराबर छ।`;
+  }
+  $('analysisText').innerHTML = analysisStr;
+
+  // === ५. कोटी अनुसार ===
+  const expByCat = {};
+  const incByCat = {};
+  filtered.forEach(d => {
+      if (d.type === 'income') incByCat[d.category] = (incByCat[d.category] || 0) + d.amount;
+      else expByCat[d.category] = (expByCat[d.category] || 0) + d.amount;
+  });
+  
+  let catHTML = '<div style="font-size:15px; font-weight:bold; margin-bottom:15px; color:#fff;">कोटी अनुसार विश्लेषण</div>';
+  
+  if (totalIncome > 0) {
+    catHTML += '<div style="font-size:13px; color:#10b981; font-weight:bold; margin-bottom:8px;">🟢 आम्दानीको स्रोत</div>';
+    const sortedInc = Object.keys(incByCat).sort((a,b) => incByCat[b] - incByCat[a]);
+    sortedInc.forEach(catId => {
+        const cat = allCatsMap[catId] || allCatsMap['other_inc'];
+        const amt = incByCat[catId];
+        const percent = (amt / totalIncome) * 100;
+        catHTML += `
+        <div style="margin-bottom:10px;">
+            <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:bold; margin-bottom:4px;"><span>${cat.icon} ${cat.name}</span> <span>${fmt(amt)}</span></div>
+            <div style="height:6px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden;"><div style="height:100%; border-radius:10px; width: ${percent}%; background: ${cat.color};"></div></div>
+        </div>`;
+    });
+    catHTML += '<hr style="border:none; border-top:1px solid rgba(255,255,255,0.1); margin:15px 0;">';
+  }
+
+  if (totalExpense > 0) {
+    catHTML += '<div style="font-size:13px; color:#f472b6; font-weight:bold; margin-bottom:8px;">🔴 खर्चको स्रोत</div>';
+    const sortedExp = Object.keys(expByCat).sort((a,b) => expByCat[b] - expByCat[a]);
+    sortedExp.forEach(catId => {
+        const cat = allCatsMap[catId] || allCatsMap['other_exp'];
+        const amt = expByCat[catId];
+        const percent = (amt / totalExpense) * 100;
+        catHTML += `
+        <div style="margin-bottom:10px;">
+            <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:bold; margin-bottom:4px;"><span>${cat.icon} ${cat.name}</span> <span>${fmt(amt)}</span></div>
+            <div style="height:6px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden;"><div style="height:100%; border-radius:10px; width: ${percent}%; background: ${cat.color};"></div></div>
+        </div>`;
+    });
+  }
+  
+  if (Object.keys(expByCat).length === 0 && Object.keys(incByCat).length === 0) {
+      catHTML += `<div style="font-size:13px; color:#cbd5e1; text-align:center;">कुनै डाटा छैन।</div>`;
+  }
+  $('catBreakdown').innerHTML = catHTML;
+
+  // === ६. टेबल ===
+  filtered.sort((a,b) => b.date.localeCompare(a.date) || b.ts - a.ts);
+  $('tableBody').innerHTML = filtered.map(d => {
+    const c = allCatsMap[d.category] || { icon:'📦', name: d.category, color:'#64748b' };
+    const isInc = d.type === 'income';
+    
+    return `<tr>
+      <td>${formatDate(d.date)}</td>
+      <td><span class="badge" style="background:${isInc?'#10b98120':'#ef444420'}; color:${isInc?'#10b981':'#ef4444'}; border:1px solid ${isInc?'#10b981':'#ef4444'};">${isInc?'आम्दानी':'खर्च'}</span></td>
+      <td style="color:#cbd5e1;font-size:12px; max-width:100px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${d.note || ''}">${c.icon} ${c.name} ${d.note ? '- '+d.note : ''}</td>
+      <td style="text-align:right;font-weight:700; color:${isInc?'#10b981':'#fff'};">${isInc?'+':'-'} ${fmt(d.amount)}</td>
+      <td>
+        <div class="action-btns">
+            <button class="icon-btn" onclick="editItem('${d.id}', '${d.type}')">✏️</button>
+            <button class="icon-btn del" style="color:#ef4444;" onclick="deleteItem('${d.id}', '${d.type}')">🗑️</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+  $('tableEmpty').style.display = filtered.length === 0 ? 'block' : 'none';
+}
+
+window.editItem = (id, type) => {
+  const item = allTransactions.find(d => d.id === id); if(!item) return;
+  $('txType').value = type;
+  toggleCategories();
+  $('date').value = item.date; $('category').value = item.category; $('amount').value = item.amount; $('note').value = item.note || '';
+  editingId = id; 
+  $('submitBtn').textContent = 'अपडेट गर्नुहोस्';
+  $('cancelEditBtn').style.display = 'block';
+  switchTab('tab-hisab', document.querySelectorAll('.nav-item')[0]);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+window.deleteItem = async (id, type) => {
+  if(!confirm('के तपाईं यो रेकर्ड मेटाउन चाहनुहुन्छ?')) return;
+  const url = type === 'income' ? INCOME_URL : EXPENSE_URL;
+  try {
+    await fetch(`${url}/${id}.json`, { method: 'DELETE' });
+    showToast('✓ रेकर्ड मेटियो!', '#f59e0b');
+    loadCloudData();
+  } catch(e) { alert("मेटाउन सकिएन।"); }
+};
+
+function cancelEdit() {
+    editingId = null;
+    $('amount').value = ''; $('note').value = ''; $('date').value = toISO(new Date());
+    $('submitBtn').textContent = 'रेकर्ड सेभ गर्नुहोस्';
+    $('cancelEditBtn').style.display = 'none';
+}
+
+function downloadCSV() {
+    if(allTransactions.length === 0) return alert("डाउनलोड गर्न डाटा छैन।");
+    let csvContent = "Date,Type,Category,Amount,Note\n";
+    allTransactions.forEach(d => {
+        csvContent += `${d.date},${d.type},${allCatsMap[d.category]?.name || d.category},${d.amount},"${d.note || ''}"\n`;
+    });
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `Hisab_Backup_${toISO(new Date())}.csv`;
+    link.click();
+}
 
 /* ================= "HAMI" TAB ================= */
 async function saveLoveDate(dateVal) {
@@ -638,14 +1051,14 @@ async function loadLoveNotes() {
         
         const board = $('notesBoard');
         if(notesData.length === 0) {
-            board.innerHTML = `<p style="text-align:center; color:#94a3b8; font-size:14px; grid-column: span 2;">कुनै चिठी छैन।</p>`;
+            board.innerHTML = `<p style="text-align:center; color:#cbd5e1; font-size:14px; grid-column: span 2;">कुनै चिठी छैन।</p>`;
         } else {
-            const colors = ['c1', 'c2', 'c3', 'c4'];
+            const colors = ['#fef08a', '#bbf7d0', '#bfdbfe', '#fbcfe8'];
             board.innerHTML = notesData.map((n, i) => `
-                <div class="sticky-note ${colors[i % 4]}">
-                    <button class="del-btn" onclick="deleteLoveNote('${n.id}')">✖</button>
+                <div style="background: ${colors[i % 4]}; color: #1e293b; padding: 15px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); position: relative; font-size: 14px; font-weight: 600; min-height: 100px; display: flex; flex-direction: column; justify-content: space-between; transform: rotate(${i%2===0?'-2':'2'}deg);">
+                    <button style="position: absolute; top: 5px; right: 5px; background: transparent; border: none; font-size: 14px; cursor: pointer; opacity: 0.5;" onclick="deleteLoveNote('${n.id}')">✖</button>
                     <div>${n.text}</div>
-                    <div class="author">${n.author === 'wife' ? 'अन्जना' : 'प्रकाश'}</div>
+                    <div style="font-size: 10px; text-align: right; margin-top: 10px; color: #475569;">${n.author === 'wife' ? 'अन्जना' : 'प्रकाश'}</div>
                 </div>
             `).join('');
         }
@@ -675,15 +1088,15 @@ async function loadBucketList() {
         
         const listEl = $('bucketList');
         if(bucketData.length === 0) {
-            listEl.innerHTML = `<p style="text-align:center; color:#94a3b8; font-size:14px;">लिस्ट खाली छ।</p>`;
+            listEl.innerHTML = `<p style="text-align:center; color:#cbd5e1; font-size:14px;">लिस्ट खाली छ।</p>`;
         } else {
             listEl.innerHTML = bucketData.map(item => `
-                <div class="list-item ${item.done ? 'done' : ''}">
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <input type="checkbox" ${item.done ? 'checked' : ''} onchange="toggleBucketItem('${item.id}', ${item.done})">
-                        <span style="font-size: 14px; font-weight: 600; color: #334155;">${item.text}</span>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); ${item.done ? 'opacity: 0.5;' : ''}">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <input type="checkbox" ${item.done ? 'checked' : ''} onchange="toggleBucketItem('${item.id}', ${item.done})" style="width: 20px; height: 20px; accent-color: #db2777;">
+                        <span style="font-size: 15px; font-weight: 600; ${item.done ? 'text-decoration: line-through;' : ''}">${item.text}</span>
                     </div>
-                    <button onclick="deleteBucketItem('${item.id}')">🗑️</button>
+                    <button onclick="deleteBucketItem('${item.id}')" style="background: transparent; color: #ef4444; font-size: 18px;">🗑️</button>
                 </div>
             `).join('');
         }
@@ -716,13 +1129,13 @@ async function loadMemories() {
         
         const listEl = $('memoryList');
         if(memoryData.length === 0) {
-            listEl.innerHTML = `<p style="text-align:center; color:#94a3b8; font-size:14px;">कुनै सम्झना छैन।</p>`;
+            listEl.innerHTML = `<p style="text-align:center; color:#cbd5e1; font-size:14px;">कुनै सम्झना छैन।</p>`;
         } else {
             listEl.innerHTML = memoryData.map(item => `
-                <div class="list-item" style="align-items: flex-start; flex-direction: column; position: relative;">
-                    <b style="color:#db2777; font-size:14px; margin-bottom:4px;">${item.title}</b>
-                    <span style="font-size: 13px; color: #475569;">${item.desc}</span>
-                    <button onclick="deleteMemory('${item.id}')" style="position:absolute; right:10px; top:10px;">🗑️</button>
+                <div style="display: flex; flex-direction: column; padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative; background: rgba(255,255,255,0.05); border-radius: 10px; margin-bottom: 10px;">
+                    <b style="color:#f472b6; font-size:16px; margin-bottom:6px;">${item.title}</b>
+                    <span style="font-size: 14px; color: #cbd5e1;">${item.desc}</span>
+                    <button onclick="deleteMemory('${item.id}')" style="position:absolute; right:10px; top:10px; background:transparent; border:none; color:#ef4444; font-size:16px;">🗑️</button>
                 </div>
             `).join('');
         }
@@ -796,239 +1209,6 @@ async function sendMissYou() {
     } catch(e) { alert("इन्टरनेट चेक गर्नुहोस्।"); }
 }
 
-/* ================= MAIN HISAB & BUDGET LOGIC ================= */
-async function loadCloudData() {
-  $('syncStatus').textContent = "☁️ सिंक हुँदै...";
-  try {
-    const res = await fetch(EXPENSE_URL + ".json");
-    const json = await res.json();
-    data = [];
-    if (json) { for (let key in json) { data.push({ id: key, ...json[key] }); } }
-    
-    const bRes = await fetch(BUDGET_URL + ".json");
-    budgetData = await bRes.json() || 0;
-    $('budgetInput').value = budgetData > 0 ? budgetData : '';
-    
-    $('syncStatus').textContent = `✓ सिंक भयो`;
-    
-    const years = new Set(data.map(d => +d.date.split('-')[0]));
-    const currentYear = new Date().getFullYear();
-    years.add(currentYear);
-    const sortedYears = [...years].sort((a,b) => b-a);
-    $('yearFilter').innerHTML = sortedYears.map(y => `<option value="${y}">${y}</option>`).join('');
-    $('yearFilter').value = currentYear;
-    
-    renderExpenses();
-  } catch(e) { $('syncStatus').textContent = "❌ अफलाइन"; }
-}
-
-async function saveBudget() {
-    const val = Number($('budgetInput').value);
-    if(!val) return alert('कृपया सही रकम हाल्नुहोस्।');
-    try {
-        await fetch(BUDGET_URL + ".json", { method: 'PUT', body: JSON.stringify(val) });
-        budgetData = val;
-        showToast('✓ बजेट सेभ भयो!');
-        renderExpenses();
-    } catch(e) { alert("बजेट सेभ गर्न सकिएन।"); }
-}
-
-$('expenseForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const newItem = {
-    date: $('date').value, category: $('category').value,
-    amount: Number($('amount').value), note: $('note').value.trim(), ts: Date.now()
-  };
-  $('submitBtn').textContent = 'सेभ हुँदै...'; $('submitBtn').disabled = true;
-  
-  try {
-    if (editingId) {
-      await fetch(`${EXPENSE_URL}/${editingId}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newItem) });
-      editingId = null; $('submitBtn').textContent = 'हिसाब सेभ गर्नुहोस्'; $('cancelEditBtn').style.display = 'none';
-      showToast('✓ अपडेट भयो!');
-    } else {
-      await fetch(EXPENSE_URL + ".json", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newItem) });
-      showToast('✓ हिसाब सुरक्षित भयो!');
-    }
-    $('amount').value = ''; $('note').value = ''; $('date').value = toISO(new Date());
-    loadCloudData();
-  } catch(err) { alert("सेभ गर्न सकिएन।"); } finally { $('submitBtn').textContent = 'हिसाब सेभ गर्नुहोस्'; $('submitBtn').disabled = false; }
-});
-
-function renderExpenses() {
-  $('category').innerHTML = CATEGORIES.map(c => `<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
-
-  const y = +$('yearFilter').value || new Date().getFullYear(); 
-  const m = $('monthFilter').value;
-  
-  let filtered = data.filter(d => +d.date.split('-')[0] === y);
-  if (m !== 'all') {
-      filtered = filtered.filter(d => (+d.date.split('-')[1] - 1) === +m);
-  }
-
-  const total = filtered.reduce((s,d) => s + d.amount, 0);
-  $('statTotal').textContent = fmt(total);
-  
-  const todayStr = toISO(new Date());
-  const todayTotal = data.filter(d => d.date === todayStr).reduce((s,d) => s + d.amount, 0);
-  $('statToday').textContent = fmt(todayTotal);
-
-  const now = new Date();
-  const currentMonthSpent = data.filter(d => +d.date.split('-')[0] === y && (+d.date.split('-')[1] - 1) === now.getMonth()).reduce((s,d)=>s+d.amount, 0);
-  
-  if (budgetData > 0) {
-      $('budgetProgressArea').style.display = 'block';
-      $('budgetTarget').textContent = fmt(budgetData);
-      $('budgetSpent').textContent = fmt(currentMonthSpent);
-      
-      let percent = (currentMonthSpent / budgetData) * 100;
-      let barColor = '#f97316';
-      
-      if (percent > 100) {
-          percent = 100;
-          barColor = '#ef4444';
-          $('budgetMsg').innerHTML = `⚠️ तपाईंले यो महिना बजेट भन्दा ${fmt(currentMonthSpent - budgetData)} बढी खर्च गर्नुभयो!`;
-          $('budgetMsg').style.color = '#ef4444';
-      } else {
-          $('budgetMsg').innerHTML = `✓ तपाईंले यो महिना रु. ${(budgetData - currentMonthSpent).toLocaleString('en-IN')} बचत गर्न सक्नुहुन्छ।`;
-          $('budgetMsg').style.color = '#16a34a';
-      }
-      $('budgetBar').style.width = percent + '%';
-      $('budgetBar').style.background = barColor;
-  } else {
-      $('budgetProgressArea').style.display = 'none';
-  }
-
-  const monthlyTotals = Array(12).fill(0);
-  const yearData = data.filter(d => +d.date.split('-')[0] === y);
-  yearData.forEach(d => {
-      const monthIdx = +d.date.split('-')[1] - 1;
-      monthlyTotals[monthIdx] += d.amount;
-  });
-
-  const maxMonthVal = Math.max(...monthlyTotals);
-  const highestMonthIdx = monthlyTotals.indexOf(maxMonthVal);
-  
-  let chartHTML = '';
-  let overBudgetMonths = [];
-  
-  for(let i=0; i<12; i++) {
-      const amt = monthlyTotals[i];
-      let heightPercent = maxMonthVal > 0 ? (amt / maxMonthVal) * 100 : 0;
-      if (heightPercent < 2 && amt > 0) heightPercent = 2;
-      
-      let barClass = '';
-      if (budgetData > 0 && amt > budgetData) {
-          barClass = 'over-budget';
-          overBudgetMonths.push(MONTHS_SHORT[i]);
-      } else if (i === highestMonthIdx && amt > 0) {
-          barClass = 'highest';
-      }
-      
-      chartHTML += `
-      <div class="chart-bar-wrap" title="${MONTHS_NE[i]}: ${fmt(amt)}">
-          <div class="chart-bar ${barClass}" style="height: ${heightPercent}%"></div>
-          <span class="chart-label">${MONTHS_SHORT[i]}</span>
-      </div>`;
-  }
-  $('yearlyChart').innerHTML = chartHTML;
-
-  let analysisStr = "";
-  if (maxMonthVal > 0) {
-      analysisStr += `🔴 <b>सबैभन्दा धेरै खर्च:</b> ${MONTHS_NE[highestMonthIdx]} महिनामा (${fmt(maxMonthVal)}) भएको छ।<br>`;
-  }
-  if (budgetData > 0) {
-      if (overBudgetMonths.length > 0) {
-          analysisStr += `⚠️ <b>बजेट नाघेका महिना:</b> ${overBudgetMonths.join(', ')} (यी महिनाहरूमा रु. ${budgetData.toLocaleString('en-IN')} भन्दा बढी खर्च भयो)।`;
-      } else {
-          analysisStr += `✅ <b>राम्रो खबर:</b> यो वर्ष कुनै पनि महिनामा बजेट नाघेको छैन।`;
-      }
-  } else {
-      analysisStr += `<i>(बजेट सेट गर्नुभएको छैन। माथि गएर बजेट सेट गर्नुहोस्, जसले गर्दा कुन महिना बजेट नाघ्यो थाहा हुनेछ।)</i>`;
-  }
-  $('analysisText').innerHTML = analysisStr;
-
-  const catTotals = {};
-  filtered.forEach(d => {
-      catTotals[d.category] = (catTotals[d.category] || 0) + d.amount;
-  });
-  
-  let catHTML = '<div style="font-size:13px; font-weight:bold; margin-bottom:10px; color:#475569;">कुन कोटीमा कति खर्च भयो?</div>';
-  if (Object.keys(catTotals).length === 0) {
-      catHTML += `<div style="font-size:12px; color:#94a3b8; text-align:center;">कुनै खर्च छैन।</div>`;
-  } else {
-      const sortedCats = Object.keys(catTotals).sort((a,b) => catTotals[b] - catTotals[a]);
-      sortedCats.forEach(catId => {
-          const cat = catMap[catId] || catMap.other;
-          const amt = catTotals[catId];
-          const percent = (amt / total) * 100;
-          catHTML += `
-          <div class="cat-row" style="margin-bottom:10px;">
-              <div class="cat-labels" style="display:flex; justify-content:space-between; font-size:13px; font-weight:bold; margin-bottom:4px; color:#334155;"><span>${cat.icon} ${cat.name}</span> <span>${fmt(amt)}</span></div>
-              <div class="cat-bar-bg" style="height:10px; background:#e2e8f0; border-radius:10px; overflow:hidden;"><div class="cat-bar-fill" style="height:100%; border-radius:10px; transition:width 0.5s ease; width: ${percent}%; background: ${cat.color};"></div></div>
-          </div>`;
-      });
-  }
-  $('catBreakdown').innerHTML = catHTML;
-
-  filtered.sort((a,b) => b.date.localeCompare(a.date) || b.ts - a.ts);
-  $('tableBody').innerHTML = filtered.map(d => {
-    const c = catMap[d.category] || catMap.other;
-    return `<tr>
-      <td>${formatDate(d.date)}</td>
-      <td><span class="badge" style="background:${c.color}15;color:${c.color}">${c.icon} ${c.name}</span></td>
-      <td style="color:#64748b;font-size:12px; max-width:100px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${d.note || ''}">${d.note || '—'}</td>
-      <td style="text-align:right;font-weight:700;">${fmt(d.amount)}</td>
-      <td>
-        <div class="action-btns">
-            <button class="icon-btn" onclick="editItem('${d.id}')">✏️</button>
-            <button class="icon-btn del" onclick="deleteItem('${d.id}')">🗑️</button>
-        </div>
-      </td>
-    </tr>`;
-  }).join('');
-  $('tableEmpty').style.display = filtered.length === 0 ? 'block' : 'none';
-}
-
-window.editItem = id => {
-  const item = data.find(d => d.id === id); if(!item) return;
-  $('date').value = item.date; $('category').value = item.category; $('amount').value = item.amount; $('note').value = item.note || '';
-  editingId = id; 
-  $('submitBtn').textContent = 'अपडेट गर्नुहोस्';
-  $('cancelEditBtn').style.display = 'block';
-  switchTab('tab-hisab', document.querySelectorAll('.nav-item')[0]);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
-
-window.deleteItem = async id => {
-  if(!confirm('के तपाईं यो खर्च मेटाउन चाहनुहुन्छ?')) return;
-  try {
-    await fetch(`${EXPENSE_URL}/${id}.json`, { method: 'DELETE' });
-    showToast('✓ रेकर्ड मेटियो!', '#f59e0b');
-    loadCloudData();
-  } catch(e) { alert("मेटाउन सकिएन।"); }
-};
-
-function cancelEdit() {
-    editingId = null;
-    $('amount').value = ''; $('note').value = ''; $('date').value = toISO(new Date());
-    $('submitBtn').textContent = 'हिसाब सेभ गर्नुहोस्';
-    $('cancelEditBtn').style.display = 'none';
-}
-
-function downloadCSV() {
-    if(data.length === 0) return alert("डाउनलोड गर्न डाटा छैन।");
-    let csvContent = "Date,Category,Amount,Note\n";
-    data.forEach(d => {
-        csvContent += `${d.date},${catMap[d.category]?.name || d.category},${d.amount},"${d.note || ''}"\n`;
-    });
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = `Hisab_Backup_${toISO(new Date())}.csv`;
-    link.click();
-}
-
 /* ================= CHAT TAB ================= */
 const chatInput = $('chatInput'); const chatMessages = $('chatMessages');
 $('myRole').value = localStorage.getItem('myRole') || 'husband';
@@ -1062,7 +1242,7 @@ async function loadMessages() {
         chatMessages.innerHTML = msgs.map(m => {
             const isMe = m.sender === myRole;
             return `<div class="message ${isMe ? 'me' : 'partner'}">
-                ${!isMe ? `<div style="font-size:10px; color:#075e54; font-weight:bold; margin-bottom:2px;">${m.sender === 'wife' ? 'अन्जना' : 'प्रकाश'}</div>` : ''}
+                ${!isMe ? `<div style="font-size:11px; color:#db2777; font-weight:bold; margin-bottom:4px;">${m.sender === 'wife' ? 'अन्जना' : 'प्रकाश'}</div>` : ''}
                 ${m.text}
                 <div class="time">${formatTime(m.ts)}</div>
             </div>`;
@@ -1079,86 +1259,14 @@ async function loadMessages() {
     } catch(e) {}
 }
 
-/* ================= REELS TAB ================= */
-let reelsData = [];
-async function loadReels() {
-    try {
-        const res = await fetch(REELS_URL + ".json");
-        const json = await res.json();
-        reelsData = [];
-        if(json) { for(let key in json) { reelsData.push({id: key, ...json[key]}); } }
-        reelsData.sort((a,b) => b.ts - a.ts);
-        renderReels();
-    } catch(e) {}
-}
-
-async function addReel() {
-    const input = $('reelInput');
-    const url = input.value.trim();
-    if(!url) return;
-    input.value = '';
-    const myRole = $('myRole').value;
-    const newReel = { url: url, author: myRole, ts: Date.now() };
-    try {
-        await fetch(REELS_URL + ".json", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newReel) });
-        loadReels();
-        showToast("रिल्स थपियो! 🎬");
-    } catch(e) { alert("थप्न सकिएन।"); }
-}
-
-function getEmbedUrl(url) {
-    const ytRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i;
-    const match = url.match(ytRegex);
-    if (match && match[1]) return `https://www.youtube.com/embed/${match[1]}`;
-    if(url.endsWith('.mp4')) return url;
-    return null;
-}
-
-function renderReels() {
-    const feedEl = $('reelsFeed');
-    if(reelsData.length === 0) {
-        feedEl.innerHTML = `<p style="text-align:center; color:#94a3b8; font-size:14px; padding:20px;">कुनै रिल्स छैन। माथि लिङ्क राखेर थप्नुहोस्।</p>`;
-        return;
-    }
-    feedEl.innerHTML = reelsData.map(r => {
-        const embedUrl = getEmbedUrl(r.url);
-        let mediaHtml = '';
-        
-        if (embedUrl && embedUrl.includes('youtube.com')) {
-            mediaHtml = `<iframe class="reel-video" style="width:100%; height:300px; border:none;" src="${embedUrl}" allowfullscreen></iframe>`;
-        } else if (embedUrl && embedUrl.endsWith('.mp4')) {
-            mediaHtml = `<video style="width:100%; height:300px;" src="${embedUrl}" controls></video>`;
-        } else {
-            mediaHtml = `<div style="height: 150px; background: #e2e8f0; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                <p style="font-size: 14px; margin-bottom: 10px;">यो लिङ्क सिधै प्ले गर्न मिल्दैन।</p>
-                <a href="${r.url}" target="_blank" style="background: #4f46e5; color: white; padding: 10px 15px; border-radius: 8px; text-decoration: none;">यहाँ क्लिक गरेर हेर्नुहोस्</a>
-            </div>`;
-        }
-
-        return `<div class="reel-card" style="margin-bottom:15px; background:#fff; border-radius:10px; overflow:hidden;">
-            ${mediaHtml}
-            <div style="padding:10px; display:flex; justify-content:space-between;">
-                <span>${r.author === 'wife' ? 'अन्जना' : 'प्रकाश'} ले राख्नुभयो</span>
-                <button onclick="deleteReel('${r.id}')" style="background:transparent; color:#ef4444; border:none; font-size:16px;">🗑️</button>
-            </div>
-        </div>`;
-    }).join('');
-}
-
-async function deleteReel(id) {
-    if(!confirm('यो रिल्स हटाउने हो?')) return;
-    try { await fetch(`${REELS_URL}/${id}.json`, { method: 'DELETE' }); loadReels(); } catch(e) {}
-}
-
 /* ================= INIT ================= */
 (function init() {
   $('date').value = toISO(new Date());
+  toggleCategories(); 
   
   initHome();
   loadCloudData();
   loadMessages();
-  spawnBgFlowers();
-  
   loadLoveDate();
   loadCounters();
   loadMemories();
