@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hamro Sansar - Main Hisab</title>
+<title>Anjana & Prakash - Super Couple App</title>
 <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter@3.3.4/dist/nepali-date-converter.umd.js"></script>
 
@@ -46,23 +46,20 @@ body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100%;backg
 .field.full{grid-column: span 2;}
 .field label{font-size:12px;font-weight:600;color:#334155}
 .field input,.field select,.field textarea{font-family:inherit;font-size:14px;padding:10px;border:1.5px solid var(--border);border-radius:10px;background:#f8fafc;outline:none;width:100%;}
-textarea { resize: vertical; min-height: 60px; }
 button{font-family:inherit;cursor:pointer;border:none;transition:.18s}
 .btn-primary{background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;font-size:14px;font-weight:700;padding:12px;border-radius:10px;width:100%;}
 .btn-ghost{background:#fff;color:#334155;font-size:13px;font-weight:600;padding:8px 12px;border-radius:8px;border:1.5px solid var(--border);}
 
 /* 💰 HISAB SPECIFIC STYLES */
+.page-title { text-align: center; font-size: 22px; font-weight: 800; color: #db2777; margin-bottom: 15px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
 .filter-bar { display: flex; gap: 10px; margin-bottom: 15px; }
 .filter-bar select { flex: 1; padding: 10px; border-radius: 10px; border: 1.5px solid var(--border); font-weight: bold; color: var(--primary); background: #f8fafc; outline: none; }
-
 .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
 .stat-card { background: #fff; border-radius: 14px; padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-left: 5px solid var(--primary); }
 .stat-card.green { border-left-color: #10b981; }
 .stat-card.red { border-left-color: #ef4444; }
 .stat-title { font-size: 12px; color: #64748b; font-weight: 700; text-transform: uppercase; }
 .stat-amount { font-size: 20px; font-weight: 900; color: #1e293b; margin-top: 5px; }
-
-/* Budget Card */
 .budget-card { background: linear-gradient(135deg, #fff7ed, #ffedd5); border: 2px solid #fdba74; }
 .budget-card .card-title { color: #c2410c; }
 .budget-input-area { display: flex; gap: 10px; margin-bottom: 10px; }
@@ -70,8 +67,6 @@ button{font-family:inherit;cursor:pointer;border:none;transition:.18s}
 .budget-input-area button { background: #c2410c; color: white; padding: 10px 15px; border-radius: 8px; font-weight: bold; }
 .budget-progress-bg { width: 100%; height: 16px; background: #fed7aa; border-radius: 10px; overflow: hidden; margin-bottom: 8px; }
 .budget-progress-fill { height: 100%; width: 0%; background: #f97316; transition: width 0.5s ease; border-radius: 10px; }
-
-/* Yearly Chart Section */
 .chart-card { background: #fff; border-radius: 14px; padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 16px;}
 .chart-container { display: flex; align-items: flex-end; height: 120px; gap: 4px; margin-top: 15px; padding-bottom: 20px; border-bottom: 1px solid #e2e8f0;}
 .chart-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; position: relative;}
@@ -80,8 +75,6 @@ button{font-family:inherit;cursor:pointer;border:none;transition:.18s}
 .chart-bar.highest { background: #10b981; }
 .chart-label { position: absolute; bottom: -20px; font-size: 9px; font-weight: bold; color: #64748b; }
 .analysis-text { font-size: 12px; color: #475569; margin-top: 15px; line-height: 1.6; padding: 10px; background: #f8fafc; border-radius: 8px;}
-
-/* Table */
 table{width:100%;border-collapse:collapse;min-width:100%;}
 thead th{text-align:left;font-size:12px;font-weight:700;color:var(--muted);padding:8px;border-bottom:2px solid var(--border);}
 tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
@@ -90,6 +83,46 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
 .action-btns { display: flex; gap: 5px; }
 .icon-btn{width:28px;height:28px;border-radius:6px;background:#f1f5f9;display:grid;place-items:center;font-size:12px;cursor:pointer; border:none;}
 .icon-btn.del { background: #fee2e2; color: #ef4444; }
+
+/* 💑 "Hami" (Us) Tab Styles */
+.love-counter-box { text-align: center; background: linear-gradient(135deg, #fdf2f8, #fce7f3); border-radius: 12px; padding: 15px; border: 1px solid #fbcfe8; margin-bottom: 15px;}
+.love-counter-box h3 { font-size: 14px; color: #be185d; margin-bottom: 5px;}
+.love-counter-box .days { font-size: 36px; font-weight: 900; color: #db2777; }
+.love-counter-box input { margin-top: 10px; padding: 8px; border-radius: 8px; border: 1px solid #fbcfe8; outline: none; text-align: center;}
+
+.hug-kiss-area { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
+.hug-btn, .kiss-btn { padding: 12px; border-radius: 50px; font-size: 16px; font-weight: bold; color: white; display: flex; align-items: center; gap: 8px; flex: 1; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+.hug-btn { background: linear-gradient(45deg, #f59e0b, #fbbf24); }
+.kiss-btn { background: linear-gradient(45deg, #ec4899, #f43f5e); }
+
+/* Truth or Dare */
+.tod-box { text-align: center; padding: 20px; background: #1e293b; color: white; border-radius: 12px; margin-top: 10px;}
+.tod-box p { font-size: 16px; font-weight: bold; margin-bottom: 15px; min-height: 40px; display: flex; align-items: center; justify-content: center;}
+.tod-btns { display: flex; gap: 10px;}
+.btn-truth { background: #3b82f6; color: white; flex: 1; padding: 10px; border-radius: 8px; font-weight: bold;}
+.btn-dare { background: #ef4444; color: white; flex: 1; padding: 10px; border-radius: 8px; font-weight: bold;}
+
+/* Daily Q */
+.q-box { background: #e0e7ff; border-radius: 12px; padding: 15px; text-align: center; border: 1px solid #a5b4fc; margin-top: 10px;}
+.q-box p { font-size: 15px; font-weight: bold; color: #1e1b4b; margin-bottom: 10px; }
+.q-input-area { display: flex; gap: 8px; }
+.q-input-area input { flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #cbd5e1; outline: none; font-size: 13px;}
+.q-input-area button { background: #4f46e5; color: white; padding: 8px 12px; border-radius: 8px; font-weight: bold; }
+
+/* Sticky Notes */
+.notes-board { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px;}
+.sticky-note { padding: 15px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); position: relative; font-size: 14px; font-weight: 600; min-height: 100px; display: flex; flex-direction: column; justify-content: space-between; transform: rotate(-2deg); transition: transform 0.2s;}
+.sticky-note:nth-child(even) { transform: rotate(2deg); }
+.sticky-note:hover { transform: scale(1.05) rotate(0deg); }
+.sticky-note .author { font-size: 10px; color: #475569; text-align: right; margin-top: 10px; }
+.sticky-note .del-btn { position: absolute; top: 5px; right: 5px; background: transparent; border: none; font-size: 14px; cursor: pointer; opacity: 0.5; }
+.c1 { background: #fef08a; } .c2 { background: #bbf7d0; } .c3 { background: #bfdbfe; } .c4 { background: #fbcfe8; }
+
+/* Bucket List & Memory Jar */
+.list-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid var(--border); }
+.list-item.done span { text-decoration: line-through; color: #94a3b8; }
+.list-item input[type="checkbox"] { width: 20px; height: 20px; accent-color: #4f46e5; cursor: pointer;}
+.list-item button { background: transparent; color: #ef4444; font-size: 16px;}
 
 /* Chat */
 .chat-container { display: flex; flex-direction: column; height: 400px; border-radius: 12px; overflow: hidden; background: #e5ddd5;}
@@ -106,29 +139,20 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
 /* Home Specifics */
 .love-quote { text-align: center; font-style: italic; color: #db2777; font-weight: 600; padding: 10px; font-size: 15px; }
 .miss-btn { background: linear-gradient(45deg, #ff6b6b, #db2777); color: white; padding: 15px; border-radius: 12px; font-size: 18px; font-weight: 800; width: 100%; margin-top: 10px; box-shadow: 0 6px 15px rgba(219, 39, 119, 0.4); animation: pulse 2s infinite;}
-
-/* Live Clock */
 .clock-container { display: flex; justify-content: space-around; text-align: center; background: #f8fafc; border-radius: 12px; border: 1px dashed #cbd5e1; padding: 15px; margin: 10px 0; }
 .clock-box { flex: 1; }
 .clock-box .flag { font-size: 24px; margin-bottom: 2px; }
 .clock-box .country { font-size: 12px; color: #64748b; font-weight: 700; }
 .clock-box .time { font-size: 18px; font-weight: 800; color: #4f46e5; letter-spacing: 1px; }
 .clock-box .time.nepal { color: #db2777; }
-
-/* Special Anniversary Banner */
 .anniversary-card { background: linear-gradient(135deg, #ffe4e6, #fbcfe8); border: 2px solid #fb7185; border-radius: 12px; padding: 15px; text-align: center; margin-top: 15px; box-shadow: 0 4px 10px rgba(251, 113, 133, 0.2); }
 .anniversary-card h3 { color: #be123c; font-size: 16px; font-weight: 800; margin-bottom: 5px; }
 .anniversary-card .days { font-size: 28px; font-weight: 900; color: #e11d48; }
-.anniversary-card p { font-size: 12px; color: #9f1239; margin-top: 5px; }
-
-/* Mood Tracker */
 .mood-container { display: flex; justify-content: space-around; margin-top: 10px; background: #fff; padding: 10px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
 .mood-item { text-align: center; cursor: pointer; transition: transform 0.2s; padding: 5px; border-radius: 8px;}
 .mood-item:hover { transform: scale(1.1); background: #f1f5f9;}
 .mood-item .emoji { font-size: 28px; }
 .mood-item .name { font-size: 11px; font-weight: bold; color: #475569; margin-top: 4px;}
-
-/* Big Couple Photo */
 .big-couple-photo { width: 100%; max-width: 300px; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); border: 4px solid #fff; margin: 10px auto; display: block; }
 
 /* Bottom Navigation */
@@ -159,10 +183,11 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
     </div>
   </header>
 
-  <!-- 💰 Tab 1: MAIN HISAB (Expense Tracker) -->
+  <!-- 💰 Tab 1: ANJANA HISAB (Expense Tracker) -->
   <div id="tab-hisab" class="tab-content active">
-    
-    <!-- 🎯 Target / Budget Card -->
+    <!-- नयाँ थपिएको शीर्षक -->
+    <h2 class="page-title">🌸 अन्जना हिसाब 🌸</h2>
+
     <div class="card budget-card">
         <h2 class="card-title">🎯 मासिक खर्चको लक्ष्य (Target)</h2>
         <div class="budget-input-area">
@@ -181,7 +206,6 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
         </div>
     </div>
 
-    <!-- Filters -->
     <div class="filter-bar">
         <select id="yearFilter" onchange="renderExpenses()"></select>
         <select id="monthFilter" onchange="renderExpenses()">
@@ -193,18 +217,12 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
         </select>
     </div>
 
-    <!-- 📊 Yearly Analysis Chart -->
     <div class="chart-card">
         <h2 class="card-title">📊 वार्षिक विश्लेषण (Yearly Analysis)</h2>
-        <div class="chart-container" id="yearlyChart">
-            <!-- Bars will be injected here -->
-        </div>
-        <div class="analysis-text" id="analysisText">
-            <!-- Summary Text -->
-        </div>
+        <div class="chart-container" id="yearlyChart"></div>
+        <div class="analysis-text" id="analysisText"></div>
     </div>
 
-    <!-- Dashboard Stats -->
     <div class="stats-grid">
         <div class="stat-card red">
             <div class="stat-title">कुल खर्च (छानिएको)</div>
@@ -216,12 +234,8 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
         </div>
     </div>
 
-    <!-- Category Breakdown -->
-    <div class="cat-breakdown" id="catBreakdown" style="background:#fff; border-radius:14px; padding:15px; margin-bottom:16px; box-shadow:0 4px 10px rgba(0,0,0,0.05);">
-        <!-- Bars will be injected here via JS -->
-    </div>
+    <div class="cat-breakdown" id="catBreakdown" style="background:#fff; border-radius:14px; padding:15px; margin-bottom:16px; box-shadow:0 4px 10px rgba(0,0,0,0.05);"></div>
 
-    <!-- Add Expense Form -->
     <form id="expenseForm" class="card" style="border: 2px solid #4f46e5;">
         <h2 class="card-title" style="color:#4f46e5;">➕ नयाँ खर्च थप्नुहोस्</h2>
         <div class="form-grid">
@@ -236,7 +250,6 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
         </div>
     </form>
 
-    <!-- Expenses List -->
     <div class="card">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
             <h2 class="card-title" style="margin:0;">🧾 खर्चको सूची</h2>
@@ -252,7 +265,96 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
     </div>
   </div>
 
-  <!-- 🏠 Tab 2: Home -->
+  <!-- 💑 Tab 2: HAMI (Anjana & Prakash) -->
+  <div id="tab-us" class="tab-content">
+    <!-- नयाँ थपिएको शीर्षक -->
+    <h2 class="page-title">💑 अन्जना र प्रकाश 💑</h2>
+
+    <!-- Love Counter -->
+    <div class="card">
+        <h2 class="card-title" style="justify-content:center;">⏳ हामी सँगै बसेको दिन</h2>
+        <div class="love-counter-box">
+            <h3>हामी सँगै छौं...</h3>
+            <div class="days" id="loveDays">--</div>
+            <p style="font-size:12px; color:#be185d;">दिन भइसक्यो</p>
+            <input type="date" id="loveStartDate" onchange="saveLoveDate(this.value)" style="font-size:12px;">
+        </div>
+    </div>
+
+    <!-- Hugs & Kisses -->
+    <div class="card" style="text-align:center; background: linear-gradient(135deg, #fdf4ff, #fae8ff); border-color: #f0abfc;">
+        <h2 class="card-title" style="justify-content:center; color:#c026d3;">🤗 भर्चुअल माया</h2>
+        <div style="display:flex; justify-content:space-around; margin-bottom:10px;">
+            <div><span style="font-size:24px;">🤗</span><br><b id="hugCount">0</b> Hugs</div>
+            <div><span style="font-size:24px;">😘</span><br><b id="kissCount">0</b> Kisses</div>
+        </div>
+        <div class="hug-kiss-area">
+            <button class="hug-btn" onclick="sendLoveAction('hug')">🤗 हग</button>
+            <button class="kiss-btn" onclick="sendLoveAction('kiss')">😘 किस</button>
+        </div>
+    </div>
+
+    <!-- Truth or Dare -->
+    <div class="card">
+        <h2 class="card-title">🎲 ट्रुथ वा डेयर (खेल)</h2>
+        <div class="tod-box">
+            <p id="todText">खेल खेल्न तलको बटन थिच्नुहोस्!</p>
+            <div class="tod-btns">
+                <button class="btn-truth" onclick="playTOD('truth')">ट्रुथ (सत्य)</button>
+                <button class="btn-dare" onclick="playTOD('dare')">डेयर (चुनौती)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Daily Question -->
+    <div class="card">
+        <h2 class="card-title">🤔 आजको प्रश्न</h2>
+        <div class="q-box">
+            <p id="dailyQuestionText">लोड हुँदै...</p>
+            <div class="q-input-area">
+                <input type="text" id="questionAnswerInput" placeholder="तपाईंको उत्तर...">
+                <button onclick="submitAnswer()">पठाउनुहोस्</button>
+            </div>
+            <p style="font-size:12px; margin-top:8px; color:#4338ca;" id="partnerAnswerDisplay"></p>
+        </div>
+    </div>
+
+    <!-- Love Notes -->
+    <div class="card">
+        <h2 class="card-title">💌 मायाको चिठी (Sticky Notes)</h2>
+        <div style="display:flex; gap:8px; margin-bottom:15px;">
+            <input type="text" id="noteInput" placeholder="छोटो मीठो सन्देश..." style="flex:1; padding:10px; border:1.5px solid #e2e8f0; border-radius:8px; outline:none;">
+            <button onclick="addLoveNote()" style="background:#db2777; color:white; padding:10px 15px; border-radius:8px; font-weight:bold;">+</button>
+        </div>
+        <div class="notes-board" id="notesBoard"></div>
+    </div>
+
+    <!-- Bucket List -->
+    <div class="card">
+        <h2 class="card-title">🎯 साझा सपना (Bucket List)</h2>
+        <div style="display:flex; gap:8px; margin-bottom:15px;">
+            <input type="text" id="bucketInput" placeholder="सँगै गर्न चाहेको कुरा..." style="flex:1; padding:10px; border:1.5px solid #e2e8f0; border-radius:8px; outline:none;">
+            <button onclick="addBucketItem()" style="background:#4f46e5; color:white; padding:10px 15px; border-radius:8px; font-weight:bold;">+</button>
+        </div>
+        <div id="bucketList"></div>
+    </div>
+
+    <!-- Memory Jar -->
+    <div class="card">
+        <h2 class="card-title">📸 सम्झनाको बाकस (Memory Jar)</h2>
+        <div style="display:flex; gap:8px; margin-bottom:15px; flex-direction:column;">
+            <input type="text" id="memoryTitle" placeholder="शीर्षक (जस्तै: पहिलो भेट)" style="padding:10px; border:1.5px solid #e2e8f0; border-radius:8px; outline:none;">
+            <div style="display:flex; gap:8px;">
+                <input type="text" id="memoryDesc" placeholder="के भएको थियो?" style="flex:1; padding:10px; border:1.5px solid #e2e8f0; border-radius:8px; outline:none;">
+                <button onclick="addMemory()" style="background:#f59e0b; color:white; padding:10px 15px; border-radius:8px; font-weight:bold;">+</button>
+            </div>
+        </div>
+        <div id="memoryList"></div>
+    </div>
+
+  </div>
+
+  <!-- 🏠 Tab 3: Home -->
   <div id="tab-home" class="tab-content">
     <div class="card">
         <h2 style="color: #4f46e5; margin-bottom: 5px; text-align:center;">नमस्ते! 🙏</h2>
@@ -274,12 +376,12 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
         <div style="margin-top: 15px;">
             <h3 style="font-size: 14px; color: #475569; margin-bottom: 5px;">आज तपाईंको मूड कस्तो छ?</h3>
             <div class="mood-container">
-                <div class="mood-item" onclick="setMood('husband', '😊')"><div class="emoji">😊</div><div class="name">पति</div></div>
-                <div class="mood-item" onclick="setMood('wife', '😊')"><div class="emoji">😊</div><div class="name">पार्टनर</div></div>
+                <div class="mood-item" onclick="setMood('husband', '😊')"><div class="emoji">😊</div><div class="name">प्रकाश</div></div>
+                <div class="mood-item" onclick="setMood('wife', '😊')"><div class="emoji">😊</div><div class="name">अन्जना</div></div>
             </div>
             <div style="display:flex; justify-content:space-between; margin-top:10px; font-size:13px; font-weight:bold;">
-                <div id="husbandMoodDisplay" style="color:#2563eb;">पति: 😊</div>
-                <div id="wifeMoodDisplay" style="color:#db2777;">पार्टनर: 😊</div>
+                <div id="husbandMoodDisplay" style="color:#2563eb;">प्रकाश: 😊</div>
+                <div id="wifeMoodDisplay" style="color:#db2777;">अन्जना: 😊</div>
             </div>
         </div>
 
@@ -288,7 +390,7 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
     </div>
   </div>
 
-  <!-- 💌 Tab 3: Chat -->
+  <!-- 💌 Tab 4: Chat -->
   <div id="tab-chat" class="tab-content">
     <div class="card" style="padding:0;">
         <div class="chat-container">
@@ -296,8 +398,8 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
             <span style="font-size: 20px;">💌</span> 
             <div style="flex:1;">प्रेम सन्देश</div>
             <select id="myRole" style="background:rgba(255,255,255,0.2); color:white; border:none; padding:4px; border-radius:6px; font-size:12px; outline:none;">
-                <option value="husband">म पति हुँ</option>
-                <option value="wife">म पार्टनर हुँ</option>
+                <option value="husband">म प्रकाश हुँ</option>
+                <option value="wife">म अन्जना हुँ</option>
             </select>
           </div>
           <div class="chat-messages" id="chatMessages"></div>
@@ -309,7 +411,7 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
     </div>
   </div>
 
-  <!-- 🎬 Tab 4: Reels -->
+  <!-- 🎬 Tab 5: Reels -->
   <div id="tab-reels" class="tab-content">
     <div class="card">
         <h2 class="card-title">🎬 रिल्स / भिडियो हेर्नुहोस्</h2>
@@ -326,7 +428,10 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
 <!-- Bottom Navigation -->
 <nav class="bottom-nav">
     <div class="nav-item active" onclick="switchTab('tab-hisab', this)">
-        <span class="icon">💰</span> मुख्य हिसाब
+        <span class="icon">💰</span> हिसाब
+    </div>
+    <div class="nav-item" onclick="switchTab('tab-us', this)">
+        <span class="icon">💑</span> हामी
     </div>
     <div class="nav-item" onclick="switchTab('tab-home', this)">
         <span class="icon">🏠</span> होम
@@ -351,6 +456,12 @@ const MSG_URL = BASE_URL + "messages";
 const REELS_URL = BASE_URL + "reels";
 const MOOD_URL = BASE_URL + "mood";
 const BUDGET_URL = BASE_URL + "budget";
+const NOTES_URL = BASE_URL + "loveNotes";
+const BUCKET_URL = BASE_URL + "bucketList";
+const LOVE_DATE_URL = BASE_URL + "loveStartDate";
+const COUNTERS_URL = BASE_URL + "counters";
+const MEMORY_URL = BASE_URL + "memories";
+const QA_URL = BASE_URL + "dailyQ";
 
 const CATEGORIES = [
   { id:'khana', name:'खाना/किराना', icon:'🍚', color:'#f59e0b' }, 
@@ -365,6 +476,18 @@ const CATEGORIES = [
 ];
 const MONTHS_NE = ['जनवरी','फेब्रुअरी','मार्च','अप्रिल','मे','जुन','जुलाई','अगस्ट','सेप्टेम्बर','अक्टोबर','नोभेम्बर','डिसेम्बर'];
 const MONTHS_SHORT = ['जन','फेब','मार्च','अप्रि','मे','जुन','जुल','अग','सेप','अक्टो','नोभ','डिस'];
+
+const DAILY_QUESTIONS = [
+    "हामीले पहिलो पटक भेट्दा तपाईंलाई मेरो कुन कुरा मन पर्यो?",
+    "मेरो कुन बानीले तपाईंलाई सबैभन्दा धेरै खुसी बनाउँछ?",
+    "हामीले सँगै गरेको सबैभन्दा रमाइलो यात्रा कुन हो?",
+    "भविष्यमा हामीले सँगै गर्नुपर्ने एउटा सपना के हो?",
+    "मेरो कुन कुराले तपाईंलाई रिस उठ्छ?",
+    "आज मैले तपाईंलाई कसरी खुसी बनाउन सक्छु?"
+];
+
+const TRUTHS = ["तपाईंले मलाई पहिलो पटक देख्दा के सोच्नुभएको थियो?", "मेरो सबैभन्दा राम्रो कुरा के हो?", "तपाईंको सबैभन्दा ठूलो डर के हो?", "के तपाईंले कहिल्यै मलाई झुक्याउनुभएको छ?", "हाम्रो सम्बन्धमा तपाईंलाई सबैभन्दा मन पर्ने कुरा के हो?"];
+const DARES = ["मलाई एउटा मीठो गीत गाएर सुनाउनुहोस्।", "अर्को १ मिनेटसम्म मेरो आँखामा हेरेर बस्नुहोस्।", "मलाई एउटा मीठो कम्प्लिमेन्ट गर्नुहोस्।", "तपाईंको फोनको ग्यालरीबाट हाम्रो पहिलो फोटो देखाउनुहोस्।", "मलाई ५ सेकेन्डको भर्चुअल हग गर्नुहोस्।"];
 
 let data = [];
 let budgetData = 0;
@@ -393,6 +516,9 @@ function switchTab(tabId, navEl) {
     if(tabId === 'tab-chat') { loadMessages(); }
     if(tabId === 'tab-reels') { loadReels(); }
     if(tabId === 'tab-hisab') { renderExpenses(); }
+    if(tabId === 'tab-us') { 
+        loadLoveNotes(); loadBucketList(); loadLoveDate(); loadCounters(); loadMemories(); loadDailyQ();
+    }
 }
 
 /* ================= BG FLOWERS & MUSIC ================= */
@@ -412,44 +538,236 @@ function spawnBgFlowers() {
 
 const music = $('bgMusic');
 let isPlaying = false;
-
-// 🎵 गीत बजाउने लजिक
 function playMusic() {
   if (!isPlaying) {
     music.play().then(() => {
       isPlaying = true;
       $('musicBtn').classList.add('playing');
       $('musicIcon').textContent = '⏸️';
-    }).catch(e => {}); // ब्राउजरले रोक्यो भने केही नगर्ने
+    }).catch(e => {});
   }
 }
-
-// गीत अन/अफ गर्ने बटन
 function toggleMusic(e) {
   if(e) e.stopPropagation();
   if (isPlaying) { 
-      music.pause(); 
-      isPlaying = false; 
-      $('musicBtn').classList.remove('playing'); 
-      $('musicIcon').textContent = '🎵'; 
-  } else { 
-      playMusic(); 
-  }
+      music.pause(); isPlaying = false; $('musicBtn').classList.remove('playing'); $('musicIcon').textContent = '🎵'; 
+  } else { playMusic(); }
+}
+document.body.addEventListener('touchstart', function(e) {
+    if (!e.target.closest('#musicBtn')) playMusic();
+}, { passive: true });
+document.body.addEventListener('click', function(e) {
+    if (!e.target.closest('#musicBtn')) playMusic();
+});
+
+/* ================= "HAMI" TAB (Super Couple Features) ================= */
+
+// 1. Love Counter
+async function saveLoveDate(dateVal) {
+    if(!dateVal) return;
+    await fetch(LOVE_DATE_URL + ".json", { method: 'PUT', body: JSON.stringify(dateVal) });
+    loadLoveDate();
+}
+async function loadLoveDate() {
+    const res = await fetch(LOVE_DATE_URL + ".json");
+    const dateStr = await res.json();
+    if(dateStr) {
+        $('loveStartDate').value = dateStr;
+        const start = new Date(dateStr);
+        const now = new Date();
+        const diff = now - start;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        $('loveDays').textContent = days > 0 ? days : 0;
+    } else {
+        $('loveDays').textContent = "--";
+    }
 }
 
-// 🌟 स्क्रिनमा जहाँ पनि टच/क्लिक गर्दा गीत बज्ने लजिक
-document.body.addEventListener('touchstart', function(e) {
-    // यदि म्युजिक बटन आफैंमा टच गरेको छैन भने मात्र गीत बजाउने
-    if (!e.target.closest('#musicBtn')) {
-        playMusic();
-    }
-}, { passive: true });
+// 2. Hugs & Kisses
+async function sendLoveAction(type) {
+    const myRole = $('myRole').value;
+    let msgText = type === 'hug' ? "🤗 (Virtual Hug) मैले तिमीलाई अँगालो हालेको छु!" : "😘 (Virtual Kiss) मेरो तर्फबाट मीठो चुम्बन!";
+    
+    try {
+        const res = await fetch(COUNTERS_URL + `/${type}.json`);
+        let count = await res.json() || 0;
+        await fetch(COUNTERS_URL + `/${type}.json`, { method: 'PUT', body: JSON.stringify(count + 1) });
+    } catch(e) {}
 
-document.body.addEventListener('click', function(e) {
-    if (!e.target.closest('#musicBtn')) {
-        playMusic();
-    }
-});
+    const msg = { sender: myRole, text: msgText, ts: Date.now() };
+    try {
+        await fetch(MSG_URL + ".json", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(msg) });
+        showToast(`तपाईंको ${type} पठाइयो! ❤️`, type === 'hug' ? '#f59e0b' : '#ec4899');
+        if(navigator.vibrate) navigator.vibrate([200, 100, 200]); 
+        loadCounters();
+    } catch(e) { alert("इन्टरनेट चेक गर्नुहोस्।"); }
+}
+async function loadCounters() {
+    try {
+        const res = await fetch(COUNTERS_URL + ".json");
+        const data = await res.json();
+        if(data) {
+            $('hugCount').textContent = data.hug || 0;
+            $('kissCount').textContent = data.kiss || 0;
+        }
+    } catch(e) {}
+}
+
+// 3. Truth or Dare
+function playTOD(type) {
+    const arr = type === 'truth' ? TRUTHS : DARES;
+    const random = arr[Math.floor(Math.random() * arr.length)];
+    $('todText').textContent = random;
+}
+
+// 4. Daily Questions
+function getDayOfYear() {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    return Math.floor((now - start) / (1000 * 60 * 60 * 24));
+}
+async function loadDailyQ() {
+    const dayIndex = getDayOfYear() % DAILY_QUESTIONS.length;
+    $('dailyQuestionText').textContent = DAILY_QUESTIONS[dayIndex];
+
+    try {
+        const res = await fetch(QA_URL + `/${dayIndex}.json`);
+        const json = await res.json();
+        const myRole = $('myRole').value;
+        if(json) {
+            if(json[myRole]) $('questionAnswerInput').value = json[myRole];
+            const partnerRole = myRole === 'husband' ? 'wife' : 'husband';
+            if(json[partnerRole]) $('partnerAnswerDisplay').textContent = `पार्टनरको उत्तर: "${json[partnerRole]}"`;
+            else $('partnerAnswerDisplay').textContent = "";
+        }
+    } catch(e) {}
+}
+async function submitAnswer() {
+    const answer = $('questionAnswerInput').value.trim(); if(!answer) return;
+    const dayIndex = getDayOfYear() % DAILY_QUESTIONS.length;
+    await fetch(QA_URL + `/${dayIndex}/${$('myRole').value}.json`, { method: 'PUT', body: JSON.stringify(answer) });
+    showToast("उत्तर सेभ भयो! ❤️");
+    loadDailyQ();
+}
+
+// 5. Sticky Notes
+let notesData = [];
+async function loadLoveNotes() {
+    try {
+        const res = await fetch(NOTES_URL + ".json");
+        const json = await res.json();
+        notesData = [];
+        if(json) { for(let key in json) { notesData.push({id: key, ...json[key]}); } }
+        notesData.sort((a,b) => b.ts - a.ts);
+        
+        const board = $('notesBoard');
+        if(notesData.length === 0) {
+            board.innerHTML = `<p style="text-align:center; color:#94a3b8; font-size:14px; grid-column: span 2;">कुनै चिठी छैन।</p>`;
+        } else {
+            const colors = ['c1', 'c2', 'c3', 'c4'];
+            board.innerHTML = notesData.map((n, i) => `
+                <div class="sticky-note ${colors[i % 4]}">
+                    <button class="del-btn" onclick="deleteLoveNote('${n.id}')">✖</button>
+                    <div>${n.text}</div>
+                    <div class="author">${n.author === 'wife' ? 'अन्जना' : 'प्रकाश'}</div>
+                </div>
+            `).join('');
+        }
+    } catch(e) {}
+}
+async function addLoveNote() {
+    const input = $('noteInput'); const text = input.value.trim(); if(!text) return;
+    input.value = '';
+    await fetch(NOTES_URL + ".json", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: text, author: $('myRole').value, ts: Date.now() }) });
+    loadLoveNotes();
+    showToast("चिठी टाँसियो! 💌");
+}
+async function deleteLoveNote(id) {
+    if(!confirm('यो चिठी हटाउने हो?')) return;
+    await fetch(`${NOTES_URL}/${id}.json`, { method: 'DELETE' });
+    loadLoveNotes();
+}
+
+// 6. Bucket List
+let bucketData = [];
+async function loadBucketList() {
+    try {
+        const res = await fetch(BUCKET_URL + ".json");
+        const json = await res.json();
+        bucketData = [];
+        if(json) { for(let key in json) { bucketData.push({id: key, ...json[key]}); } }
+        bucketData.sort((a,b) => a.ts - b.ts);
+        
+        const listEl = $('bucketList');
+        if(bucketData.length === 0) {
+            listEl.innerHTML = `<p style="text-align:center; color:#94a3b8; font-size:14px;">लिस्ट खाली छ।</p>`;
+        } else {
+            listEl.innerHTML = bucketData.map(item => `
+                <div class="list-item ${item.done ? 'done' : ''}">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <input type="checkbox" ${item.done ? 'checked' : ''} onchange="toggleBucketItem('${item.id}', ${item.done})">
+                        <span style="font-size: 14px; font-weight: 600; color: #334155;">${item.text}</span>
+                    </div>
+                    <button onclick="deleteBucketItem('${item.id}')">🗑️</button>
+                </div>
+            `).join('');
+        }
+    } catch(e) {}
+}
+async function addBucketItem() {
+    const input = $('bucketInput'); const text = input.value.trim(); if(!text) return;
+    input.value = '';
+    await fetch(BUCKET_URL + ".json", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: text, done: false, ts: Date.now() }) });
+    loadBucketList();
+}
+async function toggleBucketItem(id, currentDone) {
+    await fetch(`${BUCKET_URL}/${id}.json`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ done: !currentDone }) });
+    loadBucketList();
+}
+async function deleteBucketItem(id) {
+    if(!confirm('मेटाउने हो?')) return;
+    await fetch(`${BUCKET_URL}/${id}.json`, { method: 'DELETE' });
+    loadBucketList();
+}
+
+// 7. Memory Jar
+let memoryData = [];
+async function loadMemories() {
+    try {
+        const res = await fetch(MEMORY_URL + ".json");
+        const json = await res.json();
+        memoryData = [];
+        if(json) { for(let key in json) { memoryData.push({id: key, ...json[key]}); } }
+        memoryData.sort((a,b) => b.ts - a.ts);
+        
+        const listEl = $('memoryList');
+        if(memoryData.length === 0) {
+            listEl.innerHTML = `<p style="text-align:center; color:#94a3b8; font-size:14px;">कुनै सम्झना छैन।</p>`;
+        } else {
+            listEl.innerHTML = memoryData.map(item => `
+                <div class="list-item" style="align-items: flex-start; flex-direction: column; position: relative;">
+                    <b style="color:#db2777; font-size:14px; margin-bottom:4px;">${item.title}</b>
+                    <span style="font-size: 13px; color: #475569;">${item.desc}</span>
+                    <button onclick="deleteMemory('${item.id}')" style="position:absolute; right:10px; top:10px;">🗑️</button>
+                </div>
+            `).join('');
+        }
+    } catch(e) {}
+}
+async function addMemory() {
+    const title = $('memoryTitle').value.trim();
+    const desc = $('memoryDesc').value.trim();
+    if(!title || !desc) return alert('शीर्षक र विवरण दुवै भर्नुहोस्।');
+    $('memoryTitle').value = ''; $('memoryDesc').value = '';
+    await fetch(MEMORY_URL + ".json", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title: title, desc: desc, ts: Date.now() }) });
+    loadMemories();
+    showToast("सम्झना सेभ भयो! 📸");
+}
+async function deleteMemory(id) {
+    if(!confirm('मेटाउने हो?')) return;
+    await fetch(`${MEMORY_URL}/${id}.json`, { method: 'DELETE' });
+    loadMemories();
+}
 
 
 /* ================= HOME TAB ================= */
@@ -489,8 +807,8 @@ async function loadMoods() {
         const res = await fetch(MOOD_URL + ".json");
         const json = await res.json();
         if(json) {
-            if(json.husband) $('husbandMoodDisplay').textContent = `पति: ${json.husband}`;
-            if(json.wife) $('wifeMoodDisplay').textContent = `पार्टनर: ${json.wife}`;
+            if(json.husband) $('husbandMoodDisplay').textContent = `प्रकाश: ${json.husband}`;
+            if(json.wife) $('wifeMoodDisplay').textContent = `अन्जना: ${json.wife}`;
         }
     } catch(e) {}
 }
@@ -771,7 +1089,7 @@ async function loadMessages() {
         chatMessages.innerHTML = msgs.map(m => {
             const isMe = m.sender === myRole;
             return `<div class="message ${isMe ? 'me' : 'partner'}">
-                ${!isMe ? `<div style="font-size:10px; color:#075e54; font-weight:bold; margin-bottom:2px;">${m.sender === 'wife' ? 'पार्टनर' : 'पति'}</div>` : ''}
+                ${!isMe ? `<div style="font-size:10px; color:#075e54; font-weight:bold; margin-bottom:2px;">${m.sender === 'wife' ? 'अन्जना' : 'प्रकाश'}</div>` : ''}
                 ${m.text}
                 <div class="time">${formatTime(m.ts)}</div>
             </div>`;
@@ -847,7 +1165,7 @@ function renderReels() {
         return `<div class="reel-card" style="margin-bottom:15px; background:#fff; border-radius:10px; overflow:hidden;">
             ${mediaHtml}
             <div style="padding:10px; display:flex; justify-content:space-between;">
-                <span>${r.author === 'wife' ? 'पार्टनर' : 'पति'} ले राख्नुभयो</span>
+                <span>${r.author === 'wife' ? 'अन्जना' : 'प्रकाश'} ले राख्नुभयो</span>
                 <button onclick="deleteReel('${r.id}')" style="background:transparent; color:#ef4444; border:none; font-size:16px;">🗑️</button>
             </div>
         </div>`;
@@ -867,10 +1185,15 @@ async function deleteReel(id) {
   loadCloudData();
   loadMessages();
   spawnBgFlowers();
+  
+  loadLoveDate();
+  loadCounters();
+  loadMemories();
 
   setInterval(() => {
       if($('tab-chat').classList.contains('active')) loadMessages();
       if($('tab-home').classList.contains('active')) loadMoods();
+      if($('tab-us').classList.contains('active')) { loadLoveNotes(); loadBucketList(); loadCounters(); loadMemories(); }
   }, 5000);
 
 })();
