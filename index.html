@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anjana Hisab Khata - Secure Cloud</title>
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{ --bg:#f1f5f9; --card:rgba(255,255,255,0.95); --text:#0f172a; --muted:#475569; --primary:#4f46e5; --border:#e2e8f0; --radius:16px; --shadow:0 4px 20px rgba(15,23,42,.1); }
+*{box-sizing:border-box;margin:0;padding:0} 
+body{font-family:'Mukta',sans-serif;color:var(--text);padding:16px;padding-bottom:70px;background-color:#1e293b;background-size:cover;background-position:center;background-attachment:fixed;}
+body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:-1;}
+.wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.hero{background:linear-gradient(135deg,#4f46e5,#9333ea);color:#fff;border-radius:var(--radius);padding:26px;text-align:center;box-shadow:0 10px 28px rgba(79,70,229,.3);}
+.hero h1{font-size:26px;font-weight:800}
+.hero p{font-size:14px;opacity:.9;margin-top:6px}
+.card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.5);backdrop-filter:blur(10px);}
+.card-title{font-size:16.5px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;align-items:end;}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:13px;font-weight:600;color:#334155}
+.field input,.field select{font-family:inherit;font-size:15px;padding:10px;border:1.5px solid var(--border);border-radius:10px;background:#f8fafc;outline:none;width:100%;}
+button{font-family:inherit;cursor:pointer;border:none;transition:.18s}
+.btn-primary{background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;font-size:15px;font-weight:700;padding:11px;border-radius:10px;width:100%;}
+.btn-primary:hover{transform:translateY(-1px);}
+.btn-ghost{background:#fff;color:#334155;font-size:13.5px;font-weight:600;padding:9px 14px;border-radius:10px;border:1.5px solid var(--border);}
+.filter-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:var(--card);border-radius:var(--radius);padding:14px 18px;box-shadow:var(--shadow);}
+.filter-bar select{font-family:inherit;font-size:14.5px;padding:8px 12px;border:1.5px solid var(--border);border-radius:9px;background:#f8fafc;outline:none;}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;}
+.stat{background:var(--card);border-radius:14px;padding:16px;box-shadow:var(--shadow);border-left:4px solid var(--primary);}
+.stat .lbl{font-size:12.5px;color:var(--muted);font-weight:600}
+.stat .val{font-size:21px;font-weight:800;margin-top:4px}
+table{width:100%;border-collapse:collapse;min-width:650px;}
+thead th{text-align:left;font-size:12.5px;font-weight:700;color:var(--muted);padding:8px 10px;border-bottom:2px solid var(--border);}
+tbody td{padding:11px 10px;font-size:14.5px;border-bottom:1px solid #f1f5f9;}
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:3px 8px;border-radius:99px;}
+.table-scroll{overflow-x:auto;margin:0 -20px;padding:0 20px}
+.icon-btn{width:30px;height:30px;border-radius:8px;background:#f1f5f9;display:grid;place-items:center;font-size:14px;cursor:pointer;}
+.icon-btn:hover{background:#e2e8f0}
+.hint{text-align:center;font-size:12.5px;color:#f8fafc;background:rgba(15,23,42,0.8);padding:10px;border-radius:8px;line-height:1.6;}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:#16a34a;color:#fff;padding:12px 24px;border-radius:99px;font-weight:600;font-size:14px;z-index:10000;transition:transform .35s;box-shadow:0 8px 24px rgba(22,163,74,.4);}
+#toast.show{transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<div id="toast">✓ <span id="toastMsg"></span></div>
+
+<div class="wrap">
+  <header class="hero">
+    <h1>🌸 Anjana Hisab Khata</h1>
+    <p>☁️ 100% Secure Cloud Sync — सबै फोनमा सेभ हुने</p>
+    <div id="syncStatus" style="margin-top:10px;font-size:12px;background:rgba(255,255,255,0.2);display:inline-block;padding:4px 12px;border-radius:99px;">इन्टरनेट जोडिँदै...</div>
+  </header>
+
+  <form id="expenseForm" class="card">
+    <h2 class="card-title">➕ नयाँ खर्च थप्नुहोस्</h2>
+    <div class="form-grid">
+      <div class="field"><label>मिति</label><input type="date" id="date" required min="1990-01-01" max="2060-12-31"></div>
+      <div class="field"><label>कसको लागि?</label><select id="person" required></select></div>
+      <div class="field"><label>के को लागि?</label><select id="category" required></select></div>
+      <div class="field"><label>रकम (रु.)</label><input type="number" id="amount" min="1" step="1" placeholder="0" required></div>
+      <div class="field"><label>विवरण</label><input type="text" id="note" placeholder="वैकल्पिक"></div>
+      <div class="field"><label>&nbsp;</label><button type="submit" class="btn-primary" id="submitBtn">थप्नुहोस्</button></div>
+    </div>
+  </form>
+
+  <div class="filter-bar">
+    <label>वर्ष:</label> <select id="yearFilter"></select>
+    <label>महिना:</label> <select id="monthFilter"><option value="all">सबै महिना</option></select>
+    <div style="flex:1"></div>
+    <button type="button" class="btn-ghost" id="refreshBtn">🔄 रिफ्रेस</button>
+    <button type="button" class="btn-ghost" id="exportBtn">⬇️ ब्याकअप</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="lbl" id="statPeriodLabel">यो महिनाको खर्च</div><div class="val" id="statPeriod">रु. ०</div></div>
+    <div class="stat"><div class="lbl" id="statYearLabel">यो वर्षको खर्च</div><div class="val" id="statYear">रु. ०</div></div>
+    <div class="stat"><div class="lbl">आजको खर्च</div><div class="val" id="statToday">रु. ०</div></div>
+    <div class="stat"><div class="lbl">कुल रेकर्ड</div><div class="val" id="statCount">० वटा</div></div>
+  </div>
+
+  <div class="card">
+    <h2 class="card-title">🧾 खर्चको सूची <span style="font-size:12px;font-weight:400;color:#64748b;margin-left:auto;" id="listSub"></span></h2>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>मिति</th><th>कसको</th><th>के को</th><th>विवरण</th><th style="text-align:right">रकम</th><th></th></tr></thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+    <div id="tableEmpty" style="text-align:center;padding:34px;color:#64748b;display:none;">📭 यो अवधिमा कुनै खर्च छैन।</div>
+  </div>
+
+  <p class="hint">🛡️ डाटा गुगलको सर्भरमा सुरक्षित छ। श्रीमतीले घरबाट हाल्नुभयो भने तपाईंले विदेशबाट पनि रिफ्रेस गरेर हेर्न सक्नुहुनेछ।</p>
+</div>
+
+<script>
+/* =========================================================
+   १. तपाईंको Firebase Realtime Database URL
+========================================================= */
+const DB_URL = "https://anjana-khata-default-rtdb.firebaseio.com/khata/expenses";
+
+/* =========================================================
+   २. कन्फिगरेसन
+========================================================= */
+const PERSONS = [
+  { id:'priyanshu', name:'प्रियांशु (Priyanshu)', color:'#2563eb' },
+  { id:'priyans',   name:'प्रियांस (Priyans)',    color:'#16a34a' },
+  { id:'anjana',    name:'अन्जना (Anjana)',       color:'#db2777' },
+  { id:'home',      name:'होम (Home)',            color:'#475569' }
+];
+
+const CATEGORIES = [
+  { id:'khana',      name:'खाना/किराना',    icon:'🍚' },
+  { id:'school_fee', name:'स्कुल/कलेज फी',   icon:'🏫' },
+  { id:'books',      name:'किताब/स्टेशनरी',   icon:'📚' },
+  { id:'transport',  name:'यातायात/स्कुल बस', icon:'🚌' },
+  { id:'bijuli',     name:'बिजुली बिल',      icon:'💡' },
+  { id:'pani',       name:'पानी बिल',        icon:'💧' },
+  { id:'gas',        name:'ग्यास सिलिन्डर',   icon:'🔥' },
+  { id:'wifi',       name:'वाइफाइ/इन्टरनेट',  icon:'📶' },
+  { id:'mobile',     name:'मोबाइल रिचार्ज',   icon:'📱' },
+  { id:'shopping',   name:'सपिङ/लुगाफाटा',   icon:'🛍️' },
+  { id:'medical',    name:'औषधि/मेडिकल',     icon:'💊' },
+  { id:'hospital',   name:'डाक्टर/अस्पताल',   icon:'🏥' },
+  { id:'fuel',       name:'पेट्रोल/डिजेल',    icon:'⛽' },
+  { id:'home_items', name:'घर मर्मत/सामान',  icon:'🛠️' },
+  { id:'fun',        name:'मनोरञ्जन/घुम्न',   icon:'🎬' },
+  { id:'puja',       name:'दान/पूजा',        icon:'🙏' },
+  { id:'other',      name:'अन्य',            icon:'📦' }
+];
+
+const MONTHS_NE = ['जनवरी','फेब्रुअरी','मार्च','अप्रिल','मे','जुन','जुलाई','अगस्ट','सेप्टेम्बर','अक्टोबर','नोभेम्बर','डिसेम्बर'];
+
+let data = [];
+let editingId = null;
+
+const $ = id => document.getElementById(id);
+const catMap = Object.fromEntries(CATEGORIES.map(c => [c.id, c]));
+const personMap = Object.fromEntries(PERSONS.map(p => [p.id, p]));
+
+function fmt(n){ return 'रु. ' + (Number(n)||0).toLocaleString('en-IN'); }
+function toISO(d){ return d.toISOString().split('T')[0]; }
+function formatDate(iso){ const [y,m,d] = iso.split('-'); return `${+d} ${MONTHS_NE[+m-1]} ${y}`; }
+
+let toastTimer;
+function showToast(msg, color='#16a34a'){
+  const t = $('toast'); $('toastMsg').textContent = msg; t.style.background = color;
+  t.classList.add('show'); clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+/* =========================================================
+   ३. Cloud Sync: डाटा तान्ने (GET)
+========================================================= */
+async function loadCloudData() {
+  $('syncStatus').textContent = "☁️ डाटा तानिँदै...";
+  try {
+    const res = await fetch(DB_URL + ".json");
+    const json = await res.json();
+    
+    data = [];
+    if (json) {
+      for (let key in json) {
+        data.push({ id: key, ...json[key] });
+      }
+    }
+    $('syncStatus').textContent = `✓ Cloud Synced (${data.length} रेकर्ड)`;
+    render();
+  } catch(e) {
+    console.error(e);
+    $('syncStatus').textContent = "❌ इन्टरनेट चेक गर्नुहोस्";
+    showToast("डाटा लोड गर्न सकिएन। इन्टरनेट चेक गर्नुहोस्।", "#ef4444");
+  }
+}
+
+/* =========================================================
+   ४. फर्म सबमिट (POST / PUT)
+========================================================= */
+$('expenseForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const newItem = {
+    date: $('date').value,
+    person: $('person').value,
+    category: $('category').value,
+    amount: Number($('amount').value),
+    note: $('note').value.trim(),
+    ts: Date.now()
+  };
+
+  $('submitBtn').textContent = 'सेभ हुँदै...';
+  $('submitBtn').disabled = true;
+
+  try {
+    if (editingId) {
+      // अपडेट गर्ने (PUT)
+      await fetch(`${DB_URL}/${editingId}.json`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newItem)
+      });
+      showToast('✓ अपडेट भयो!');
+      editingId = null;
+      $('submitBtn').textContent = 'थप्नुहोस्';
+    } else {
+      // नयाँ थप्ने (POST)
+      const res = await fetch(DB_URL + ".json", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newItem)
+      });
+      const resData = await res.json();
+      newItem.id = resData.name;
+      showToast('✓ क्लाउडमा सुरक्षित भयो!');
+    }
+    
+    // फर्म खाली गर्ने
+    $('amount').value = ''; 
+    $('note').value = '';
+    $('date').value = toISO(new Date());
+    
+    // तुरुन्तै लोड गरेर देखाउने
+    await loadCloudData();
+    
+  } catch(err) {
+    alert("सेभ गर्न सकिएन। इन्टरनेट चेक गर्नुहोस्।");
+  } finally {
+    $('submitBtn').textContent = 'थप्नुहोस्';
+    $('submitBtn').disabled = false;
+  }
+});
+
+/* =========================================================
+   ५. रेन्डर र फिल्टर
+========================================================= */
+function render() {
+  $('person').innerHTML = PERSONS.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+  $('category').innerHTML = CATEGORIES.map(c => `<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
+
+  const years = new Set(data.map(d => +d.date.split('-')[0]));
+  const cy = new Date().getFullYear(); years.add(cy);
+  const sortedYears = [...years].sort((a,b) => b-a);
+  $('yearFilter').innerHTML = sortedYears.map(y => `<option value="${y}">${y}</option>`).join('');
+  
+  const y = +$('yearFilter').value || cy;
+  const m = $('monthFilter').value;
+  
+  let filtered = data.filter(d => +d.date.split('-')[0] === y);
+  if (m !== 'all') filtered = filtered.filter(d => (+d.date.split('-')[1] - 1) === +m);
+
+  const total = filtered.reduce((s,d) => s + d.amount, 0);
+  $('statPeriod').textContent = fmt(total);
+  $('statYear').textContent = fmt(data.filter(d => +d.date.split('-')[0] === y).reduce((s,d) => s + d.amount, 0));
+  $('statToday').textContent = fmt(data.filter(d => d.date === toISO(new Date())).reduce((s,d) => s + d.amount, 0));
+  $('statCount').textContent = filtered.length + ' वटा';
+
+  filtered.sort((a,b) => b.date.localeCompare(a.date));
+
+  $('tableBody').innerHTML = filtered.map(d => {
+    const p = personMap[d.person] || personMap.home;
+    const c = catMap[d.category] || catMap.other;
+    return `<tr>
+      <td>${formatDate(d.date)}</td>
+      <td><span class="badge" style="background:${p.color}15;color:${p.color}">${p.name}</span></td>
+      <td><span class="badge" style="background:#f1f5f9;color:#334155">${c.icon} ${c.name}</span></td>
+      <td style="color:#64748b;font-size:13px;">${d.note || '—'}</td>
+      <td style="text-align:right;font-weight:700;">${fmt(d.amount)}</td>
+      <td>
+        <button class="icon-btn" onclick="editItem('${d.id}')">✏️</button>
+        <button class="icon-btn" onclick="deleteItem('${d.id}')">🗑️</button>
+      </td>
+    </tr>`;
+  }).join('');
+  $('tableEmpty').style.display = filtered.length === 0 ? 'block' : 'none';
+}
+
+/* =========================================================
+   ६. एडिट र डिलिट (DELETE)
+========================================================= */
+window.editItem = id => {
+  const item = data.find(d => d.id === id);
+  if(!item) return;
+  $('date').value = item.date; $('person').value = item.person; 
+  $('category').value = item.category; $('amount').value = item.amount; $('note').value = item.note || '';
+  editingId = id; $('submitBtn').textContent = 'अपडेट गर्नुहोस्';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+window.deleteItem = async id => {
+  if(!confirm('के तपाईं यो खर्च मेटाउन चाहनुहुन्छ?')) return;
+  try {
+    await fetch(`${DB_URL}/${id}.json`, { method: 'DELETE' });
+    showToast('✓ रेकर्ड मेटियो!', '#f59e0b');
+    await loadCloudData();
+  } catch(e) {
+    alert("मेटाउन सकिएन। इन्टरनेट चेक गर्नुहोस्।");
+  }
+};
+
+/* =========================================================
+   ७. इभेन्ट र ब्याकअप
+========================================================= */
+$('yearFilter').addEventListener('change', render);
+$('monthFilter').addEventListener('change', render);
+$('refreshBtn').addEventListener('click', loadCloudData);
+
+$('exportBtn').addEventListener('click', () => {
+  if(!data.length) { alert('डाटा छैन।'); return; }
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = `anjana-backup-${toISO(new Date())}.json`; a.click();
+  showToast('✓ ब्याकअप डाउनलोड भयो!');
+});
+
+// सुरु गर्ने
+(function init() {
+  const now = new Date();
+  $('date').value = toISO(now);
+  loadCloudData();
+})();
+</script>
+</body>
+</html>
