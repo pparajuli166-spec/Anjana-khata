@@ -40,18 +40,56 @@ tbody td{padding:11px 10px;font-size:14.5px;border-bottom:1px solid #f1f5f9;}
 .hint{text-align:center;font-size:12.5px;color:#f8fafc;background:rgba(15,23,42,0.8);padding:10px;border-radius:8px;line-height:1.6;}
 #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:#16a34a;color:#fff;padding:12px 24px;border-radius:99px;font-weight:600;font-size:14px;z-index:10000;transition:transform .35s;box-shadow:0 8px 24px rgba(22,163,74,.4);}
 #toast.show{transform:translateX(-50%) translateY(0);}
+
+/* --- श्रीमतीको माया (गीत बटन) को डिजाइन --- */
+.love-container {
+    text-align: center;
+    margin: 5px 0;
+}
+.love-sign {
+    background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-weight: 800;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+    transition: all 0.3s ease;
+    display: inline-block;
+    animation: pulse 2s infinite;
+    border: 2px solid #fff;
+}
+.love-sign:hover { transform: scale(1.05); }
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(255, 107, 107, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); }
+}
 </style>
 </head>
 <body>
+
+<!-- गीत बजाउने अडियो ट्याग -->
+<audio id="bgMusic" loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
 
 <div id="toast">✓ <span id="toastMsg"></span></div>
 
 <div class="wrap">
   <header class="hero">
     <h1>🌸 Anjana Hisab Khata</h1>
-    <p>☁️ 100% Secure Cloud Sync — सबै फोनमा सेभ हुने</p>
+    <p>☁️ 100% Secure Cloud Sync</p>
     <div id="syncStatus" style="margin-top:10px;font-size:12px;background:rgba(255,255,255,0.2);display:inline-block;padding:4px 12px;border-radius:99px;">इन्टरनेट जोडिँदै...</div>
   </header>
+
+  <!-- यहाँ छ श्रीमतीको माया (गीत बजाउने बटन) -->
+  <div class="love-container">
+      <div id="loveSign" class="love-sign" onclick="toggleMusic()">
+          ❤️ श्रीमतीको माया (यहाँ थिच्नुहोस्) ❤️
+      </div>
+  </div>
 
   <form id="expenseForm" class="card">
     <h2 class="card-title">➕ नयाँ खर्च थप्नुहोस्</h2>
@@ -91,14 +129,14 @@ tbody td{padding:11px 10px;font-size:14.5px;border-bottom:1px solid #f1f5f9;}
     <div id="tableEmpty" style="text-align:center;padding:34px;color:#64748b;display:none;">📭 यो अवधिमा कुनै खर्च छैन।</div>
   </div>
 
-  <p class="hint">🛡️ डाटा गुगलको सर्भरमा सुरक्षित छ। श्रीमतीले घरबाट हाल्नुभयो भने तपाईंले विदेशबाट पनि रिफ्रेस गरेर हेर्न सक्नुहुनेछ।</p>
+  <p class="hint">🛡️ डाटा गुगलको सर्भरमा सुरक्षित छ।</p>
 </div>
 
 <script>
 /* =========================================================
    १. तपाईंको Firebase Realtime Database URL
 ========================================================= */
-const DB_URL = "https://anjana-khata-default-rtdb.firebaseio.com/mero-gopya-naam-123/expenses";
+const DB_URL = "https://anjana-khata-default-rtdb.firebaseio.com/khata/expenses";
 
 /* =========================================================
    २. कन्फिगरेसन
@@ -151,6 +189,44 @@ function showToast(msg, color='#16a34a'){
 }
 
 /* =========================================================
+   🎵 गीत बजाउने लजिक (Music Player Logic)
+========================================================= */
+const music = document.getElementById('bgMusic');
+const loveSign = document.getElementById('loveSign');
+let isPlaying = false;
+
+function toggleMusic() {
+  if (isPlaying) {
+    music.pause();
+    isPlaying = false;
+    loveSign.innerHTML = '🎵 श्रीमतीको माया (गीत सुन्न यहाँ थिच्नुहोस्) 🎵';
+    loveSign.style.animation = 'none';
+    loveSign.style.background = 'linear-gradient(45deg, #ff6b6b, #ff8e8e)';
+  } else {
+    music.play().then(() => {
+      isPlaying = true;
+      loveSign.innerHTML = '⏸️ गीत चल्दैछ (रोक्न यहाँ थिच्नुहोस्) ⏸️';
+      loveSign.style.animation = 'pulse 2s infinite';
+      loveSign.style.background = 'linear-gradient(45deg, #4f46e5, #9333ea)'; // रंग परिवर्तन
+    }).catch(err => {
+      alert('गीत फाइल भेटिएन। song.mp3 अपलोड गर्नुभयो कि?');
+    });
+  }
+}
+
+// जब डाटा सेभ (थप्नुहोस्) थिच्छ, तब पनि गीत बजाउने
+function playMusicOnSave() {
+  if (!isPlaying) {
+    music.play().then(() => {
+      isPlaying = true;
+      loveSign.innerHTML = '⏸️ गीत चल्दैछ (रोक्न यहाँ थिच्नुहोस्) ⏸️';
+      loveSign.style.animation = 'pulse 2s infinite';
+      loveSign.style.background = 'linear-gradient(45deg, #4f46e5, #9333ea)';
+    }).catch(e => {});
+  }
+}
+
+/* =========================================================
    ३. Cloud Sync: डाटा तान्ने (GET)
 ========================================================= */
 async function loadCloudData() {
@@ -180,6 +256,8 @@ async function loadCloudData() {
 $('expenseForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   
+  playMusicOnSave(); // 🌟 यहाँ गीत बजाउने फङ्सनलाई बोलाइयो
+
   const newItem = {
     date: $('date').value,
     person: $('person').value,
@@ -194,7 +272,6 @@ $('expenseForm').addEventListener('submit', async (e) => {
 
   try {
     if (editingId) {
-      // अपडेट गर्ने (PUT)
       await fetch(`${DB_URL}/${editingId}.json`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -204,7 +281,6 @@ $('expenseForm').addEventListener('submit', async (e) => {
       editingId = null;
       $('submitBtn').textContent = 'थप्नुहोस्';
     } else {
-      // नयाँ थप्ने (POST)
       const res = await fetch(DB_URL + ".json", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -215,12 +291,10 @@ $('expenseForm').addEventListener('submit', async (e) => {
       showToast('✓ क्लाउडमा सुरक्षित भयो!');
     }
     
-    // फर्म खाली गर्ने
     $('amount').value = ''; 
     $('note').value = '';
     $('date').value = toISO(new Date());
     
-    // तुरुन्तै लोड गरेर देखाउने
     await loadCloudData();
     
   } catch(err) {
@@ -251,6 +325,9 @@ function render() {
 
   const total = filtered.reduce((s,d) => s + d.amount, 0);
   $('statPeriod').textContent = fmt(total);
+  
+  $('statPeriodLabel').textContent = m === 'all' ? `${y} वर्षको खर्च` : `${MONTHS_NE[m]} ${y} को खर्च`;
+  
   $('statYear').textContent = fmt(data.filter(d => +d.date.split('-')[0] === y).reduce((s,d) => s + d.amount, 0));
   $('statToday').textContent = fmt(data.filter(d => d.date === toISO(new Date())).reduce((s,d) => s + d.amount, 0));
   $('statCount').textContent = filtered.length + ' वटा';
@@ -276,7 +353,7 @@ function render() {
 }
 
 /* =========================================================
-   ६. एडिट र डिलिट (DELETE)
+   ६. एडिट र डिलिट
 ========================================================= */
 window.editItem = id => {
   const item = data.find(d => d.id === id);
@@ -315,6 +392,7 @@ $('exportBtn').addEventListener('click', () => {
 
 // सुरु गर्ने
 (function init() {
+  $('monthFilter').innerHTML = '<option value="all">सबै महिना</option>' + MONTHS_NE.map((m, i) => `<option value="${i}">${m}</option>`).join('');
   const now = new Date();
   $('date').value = toISO(now);
   loadCloudData();
