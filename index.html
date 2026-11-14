@@ -2,17 +2,14 @@
 <html lang="ne">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Anjana & Prakash - Super Couple App</title>
-<!-- Manifest र Firebase को लिङ्क -->
-<link rel="manifest" href="manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter@3.3.4/dist/nepali-date-converter.umd.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js"></script>
 
 <style>
-/* ====== CSS (सबै डिजाइन) ====== */
 :root{ 
     --bg:#f1f5f9; --card:rgba(255,255,255,0.96); --text:#0f172a; --muted:#475569; 
     --primary:#4f46e5; --border:#e2e8f0; --radius:16px; --shadow:0 4px 20px rgba(15,23,42,.1);
@@ -164,7 +161,6 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
         <h1>हाम्रो संसार</h1>
         <p id="syncStatus">इन्टरनेट जोडिँदै...</p>
     </div>
-    <button onclick="requestNotificationPermission()" style="background:rgba(255,255,255,0.2); color:white; border:none; padding:8px; border-radius:50%; font-size:20px;" title="नोटिफिकेसन अन गर्नुहोस्">🔔</button>
   </header>
 
   <!-- 💰 Tab 1: ANJANA HISAB -->
@@ -437,23 +433,6 @@ const COUNTERS_URL = BASE_URL + "counters";
 const MEMORY_URL = BASE_URL + "memories";
 const QA_URL = BASE_URL + "dailyQ";
 
-/* 🔑 तपाईंको Firebase Config */
-const firebaseConfig = {
-  apiKey: "AIzaSyAdK7SrmltojLLMZLoq4Yrhv1sy0ohWQMc",
-  authDomain: "anjana-khata.firebaseapp.com",
-  databaseURL: "https://anjana-khata-default-rtdb.firebaseio.com",
-  projectId: "anjana-khata",
-  storageBucket: "anjana-khata.firebasestorage.app",
-  messagingSenderId: "812686172144",
-  appId: "1:812686172144:web:7a2db5e4fd50e675fa8735",
-  measurementId: "G-CK447WVEPB"
-};
-firebase.initializeApp(firebaseConfig);
-const messaging = firebase.messaging();
-
-/* 🔑 तपाईंको VAPID Key */
-const VAPID_KEY = "BM4jDalZH9iSuKz91oFvhSAT9ptqcACJJtXBID_-slWNRXfg1qmpe7ed4u2kR5OckjJW5q6kPy4tCjsGMplc9Pk"; 
-
 // ---------------- Call Function ----------------
 function startCall() {
     document.getElementById('callModal').style.display = 'flex';
@@ -463,49 +442,6 @@ function startCall() {
 function endCall() {
     document.getElementById('callModal').style.display = 'none';
     document.getElementById('callIframe').src = "";
-}
-
-// ---------------- Notification Function ----------------
-async function requestNotificationPermission() {
-    try {
-        const permission = await Notification.requestPermission();
-        if (permission === 'granted') {
-            const token = await messaging.getToken({ vapidKey: VAPID_KEY });
-            if (token) {
-                await fetch(BASE_URL + "fcmTokens.json", {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ token: token, time: Date.now() })
-                });
-                showToast("🔔 नोटिफिकेसन अन भयो!", "#16a34a");
-            }
-            
-            // एप खुला छँदा नोटिफिकेसन देखाउने
-            messaging.onMessage((payload) => {
-                new Notification(payload.notification.title || "नयाँ सन्देश आयो!", {
-                    body: payload.notification.body,
-                    icon: 'wife.jpg'
-                });
-            });
-            
-        } else {
-            alert("नोटिफिकेसनको अनुमति दिनुभएन।");
-        }
-    } catch (e) {
-        console.error("Notification error:", e);
-        alert("नोटिफिकेसन अन गर्न समस्या आयो।");
-    }
-}
-
-// Service Worker रेजिस्टर गर्ने (यसले ब्याकग्राउन्डमा काम गर्छ)
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('firebase-messaging-sw.js')
-    .then((registration) => {
-        console.log('Service Worker registered');
-        messaging.useServiceWorker(registration);
-    }).catch((err) => {
-        console.log('Service Worker error: ', err);
-    });
 }
 
 // ---------------- बाँकी कोड ----------------
