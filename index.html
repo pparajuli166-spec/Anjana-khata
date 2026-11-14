@@ -4,12 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Anjana & Prakash - Super Couple App</title>
-<!-- यो लाइनले एप जस्तो बनाउन मद्दत गर्छ -->
+<!-- Manifest र Firebase को लिङ्क -->
 <link rel="manifest" href="manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter@3.3.4/dist/nepali-date-converter.umd.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js"></script>
 
 <style>
+/* ====== CSS (सबै डिजाइन) ====== */
 :root{ 
     --bg:#f1f5f9; --card:rgba(255,255,255,0.96); --text:#0f172a; --muted:#475569; 
     --primary:#4f46e5; --border:#e2e8f0; --radius:16px; --shadow:0 4px 20px rgba(15,23,42,.1);
@@ -18,29 +21,16 @@
 *{box-sizing:border-box;margin:0;padding:0} 
 body{font-family:'Mukta',sans-serif;color:var(--text);padding:12px;padding-bottom:calc(var(--nav-height) + 20px);background-color:#1e293b;background-size:cover;background-position:center;background-attachment:fixed; overflow-x: hidden;}
 body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15, 23, 42, 0.75);z-index:-2;}
-
-/* 🌸 ब्याकग्राउन्ड फूल */
 .bg-flower { position: fixed; bottom: -50px; pointer-events: none; z-index: -1; animation: floatUp linear infinite; opacity: 0; }
-@keyframes floatUp {
-    0% { transform: translateY(0) rotate(-20deg) scale(0.8); opacity: 0; }
-    10% { opacity: 0.9; } 80% { opacity: 0.8; }
-    100% { transform: translateY(-110vh) rotate(30deg) scale(1.2); opacity: 0; }
-}
-
+@keyframes floatUp { 0% { transform: translateY(0) rotate(-20deg) scale(0.8); opacity: 0; } 10% { opacity: 0.9; } 80% { opacity: 0.8; } 100% { transform: translateY(-110vh) rotate(30deg) scale(1.2); opacity: 0; } }
 .wrap{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:16px; position: relative; z-index: 1;}
-
-/* Top Header */
 .top-header { display: flex; align-items: center; gap: 12px; background: linear-gradient(135deg,#4f46e5,#9333ea); padding: 15px; border-radius: var(--radius); color: white; box-shadow: 0 10px 20px rgba(79,70,229,.3); }
 .couple-photo-small { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 .header-text h1 { font-size: 20px; font-weight: 800; }
 .header-text p { font-size: 12px; opacity: 0.9; }
-
-/* Tab System */
 .tab-content { display: none; animation: fadeIn 0.3s ease; }
 .tab-content.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-/* Cards & UI Elements */
 .card{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.5);backdrop-filter:blur(10px); margin-bottom: 16px;}
 .card-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px; color: #1e293b;}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:end;}
@@ -51,8 +41,6 @@ body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100%;backg
 button{font-family:inherit;cursor:pointer;border:none;transition:.18s}
 .btn-primary{background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;font-size:14px;font-weight:700;padding:12px;border-radius:10px;width:100%;}
 .btn-ghost{background:#fff;color:#334155;font-size:13px;font-weight:600;padding:8px 12px;border-radius:8px;border:1.5px solid var(--border);}
-
-/* 💰 HISAB SPECIFIC STYLES */
 .page-title { text-align: center; font-size: 22px; font-weight: 800; color: #db2777; margin-bottom: 15px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
 .filter-bar { display: flex; gap: 10px; margin-bottom: 15px; }
 .filter-bar select { flex: 1; padding: 10px; border-radius: 10px; border: 1.5px solid var(--border); font-weight: bold; color: var(--primary); background: #f8fafc; outline: none; }
@@ -85,33 +73,24 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
 .action-btns { display: flex; gap: 5px; }
 .icon-btn{width:28px;height:28px;border-radius:6px;background:#f1f5f9;display:grid;place-items:center;font-size:12px;cursor:pointer; border:none;}
 .icon-btn.del { background: #fee2e2; color: #ef4444; }
-
-/* 💑 "Hami" (Us) Tab Styles */
 .love-counter-box { text-align: center; background: linear-gradient(135deg, #fdf2f8, #fce7f3); border-radius: 12px; padding: 15px; border: 1px solid #fbcfe8; margin-bottom: 15px;}
 .love-counter-box h3 { font-size: 14px; color: #be185d; margin-bottom: 5px;}
 .love-counter-box .days { font-size: 36px; font-weight: 900; color: #db2777; }
 .love-counter-box input { margin-top: 10px; padding: 8px; border-radius: 8px; border: 1px solid #fbcfe8; outline: none; text-align: center;}
-
 .hug-kiss-area { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
 .hug-btn, .kiss-btn { padding: 12px; border-radius: 50px; font-size: 16px; font-weight: bold; color: white; display: flex; align-items: center; gap: 8px; flex: 1; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
 .hug-btn { background: linear-gradient(45deg, #f59e0b, #fbbf24); }
 .kiss-btn { background: linear-gradient(45deg, #ec4899, #f43f5e); }
-
-/* Truth or Dare */
 .tod-box { text-align: center; padding: 20px; background: #1e293b; color: white; border-radius: 12px; margin-top: 10px;}
 .tod-box p { font-size: 16px; font-weight: bold; margin-bottom: 15px; min-height: 40px; display: flex; align-items: center; justify-content: center;}
 .tod-btns { display: flex; gap: 10px;}
 .btn-truth { background: #3b82f6; color: white; flex: 1; padding: 10px; border-radius: 8px; font-weight: bold;}
 .btn-dare { background: #ef4444; color: white; flex: 1; padding: 10px; border-radius: 8px; font-weight: bold;}
-
-/* Daily Q */
 .q-box { background: #e0e7ff; border-radius: 12px; padding: 15px; text-align: center; border: 1px solid #a5b4fc; margin-top: 10px;}
 .q-box p { font-size: 15px; font-weight: bold; color: #1e1b4b; margin-bottom: 10px; }
 .q-input-area { display: flex; gap: 8px; }
 .q-input-area input { flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #cbd5e1; outline: none; font-size: 13px;}
 .q-input-area button { background: #4f46e5; color: white; padding: 8px 12px; border-radius: 8px; font-weight: bold; }
-
-/* Sticky Notes */
 .notes-board { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px;}
 .sticky-note { padding: 15px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); position: relative; font-size: 14px; font-weight: 600; min-height: 100px; display: flex; flex-direction: column; justify-content: space-between; transform: rotate(-2deg); transition: transform 0.2s;}
 .sticky-note:nth-child(even) { transform: rotate(2deg); }
@@ -119,14 +98,10 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
 .sticky-note .author { font-size: 10px; color: #475569; text-align: right; margin-top: 10px; }
 .sticky-note .del-btn { position: absolute; top: 5px; right: 5px; background: transparent; border: none; font-size: 14px; cursor: pointer; opacity: 0.5; }
 .c1 { background: #fef08a; } .c2 { background: #bbf7d0; } .c3 { background: #bfdbfe; } .c4 { background: #fbcfe8; }
-
-/* Bucket List & Memory Jar */
 .list-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid var(--border); }
 .list-item.done span { text-decoration: line-through; color: #94a3b8; }
 .list-item input[type="checkbox"] { width: 20px; height: 20px; accent-color: #4f46e5; cursor: pointer;}
 .list-item button { background: transparent; color: #ef4444; font-size: 16px;}
-
-/* Chat */
 .chat-container { display: flex; flex-direction: column; height: 400px; border-radius: 12px; overflow: hidden; background: #e5ddd5;}
 .chat-header { background: #075e54; color: white; padding: 10px; display: flex; align-items: center; gap: 10px; font-weight: 600;}
 .chat-messages { flex: 1; padding: 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;}
@@ -137,8 +112,7 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
 .chat-input-area { display: flex; padding: 8px; background: #f0f0f0; gap: 8px;}
 .chat-input-area input { flex: 1; padding: 10px; border-radius: 20px; border: none; outline: none; font-size: 14px;}
 .chat-input-area button { background: #075e54; color: white; border-radius: 50%; width: 40px; height: 40px; font-size: 18px; display: flex; justify-content: center; align-items: center;}
-
-/* Home Specifics */
+.call-btn { background: #10b981; color: white; border-radius: 50%; width: 40px; height: 40px; font-size: 18px; display: flex; justify-content: center; align-items: center; cursor: pointer;}
 .love-quote { text-align: center; font-style: italic; color: #db2777; font-weight: 600; padding: 10px; font-size: 15px; }
 .miss-btn { background: linear-gradient(45deg, #ff6b6b, #db2777); color: white; padding: 15px; border-radius: 12px; font-size: 18px; font-weight: 800; width: 100%; margin-top: 10px; box-shadow: 0 6px 15px rgba(219, 39, 119, 0.4); animation: pulse 2s infinite;}
 .clock-container { display: flex; justify-content: space-around; text-align: center; background: #f8fafc; border-radius: 12px; border: 1px dashed #cbd5e1; padding: 15px; margin: 10px 0; }
@@ -156,25 +130,32 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
 .mood-item .emoji { font-size: 28px; }
 .mood-item .name { font-size: 11px; font-weight: bold; color: #475569; margin-top: 4px;}
 .big-couple-photo { width: 100%; max-width: 300px; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); border: 4px solid #fff; margin: 10px auto; display: block; }
-
-/* Bottom Navigation */
 .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: var(--nav-height); background: rgba(255, 255, 255, 0.98); display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 1000; overflow-x: auto; }
 .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #94a3b8; font-size: 10px; font-weight: 600; cursor: pointer; width: 20%; min-width: 60px; height: 100%; gap: 2px;}
 .nav-item.active { color: var(--primary); }
 .nav-item span.icon { font-size: 20px; }
-
 #toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(100px);background:#16a34a;color:#fff;padding:10px 20px;border-radius:99px;font-weight:600;font-size:13px;z-index:10000;transition:transform .35s;box-shadow:0 8px 24px rgba(22,163,74,.4);}
 #toast.show{transform:translateX(-50%) translateY(0);}
-
 #musicBtn { position: fixed; bottom: 80px; right: 15px; background: linear-gradient(45deg, #ff6b6b, #9333ea); color: white; padding: 10px 16px; border-radius:30px; font-weight: 800; font-size: 13px; cursor: pointer; box-shadow: 0 6px 20px rgba(147, 51, 234, 0.6); z-index: 9999; display: flex; align-items: center; gap: 6px; border: 2px solid #fff; transition: all 0.3s ease; }
 #musicBtn.playing { background: linear-gradient(45deg, #10b981, #059669); animation: pulse 2s infinite; }
 @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+/* Call Modal CSS */
+#callModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 99999; flex-direction: column; }
+#callIframe { flex: 1; width: 100%; height: 100%; border: none; }
+.close-call { position: absolute; top: 20px; right: 20px; background: red; color: white; border: none; padding: 10px 15px; border-radius: 8px; font-weight: bold; z-index: 100000; cursor: pointer; }
 </style>
 </head>
 <body>
 
 <audio id="bgMusic" loop><source src="song.mp3" type="audio/mpeg"></audio>
 <div id="toast">✓ <span id="toastMsg"></span></div>
+
+<!-- Call Modal -->
+<div id="callModal">
+    <button class="close-call" onclick="endCall()">❌ कल अन्त्य गर्नुहोस्</button>
+    <iframe id="callIframe" allow="camera; microphone; fullscreen; display-capture; autoplay"></iframe>
+</div>
 
 <div class="wrap">
   <header class="top-header">
@@ -183,12 +164,12 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
         <h1>हाम्रो संसार</h1>
         <p id="syncStatus">इन्टरनेट जोडिँदै...</p>
     </div>
+    <button onclick="requestNotificationPermission()" style="background:rgba(255,255,255,0.2); color:white; border:none; padding:8px; border-radius:50%; font-size:20px;" title="नोटिफिकेसन अन गर्नुहोस्">🔔</button>
   </header>
 
   <!-- 💰 Tab 1: ANJANA HISAB -->
   <div id="tab-hisab" class="tab-content active">
     <h2 class="page-title">🌸 अन्जना हिसाब 🌸</h2>
-
     <div class="card budget-card">
         <h2 class="card-title">🎯 मासिक खर्चको लक्ष्य (Target)</h2>
         <div class="budget-input-area">
@@ -269,7 +250,6 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
   <!-- 💑 Tab 2: HAMI -->
   <div id="tab-us" class="tab-content">
     <h2 class="page-title">💑 अन्जना र प्रकाश 💑</h2>
-
     <div class="card">
         <h2 class="card-title" style="justify-content:center;">⏳ हामी सँगै बसेको दिन</h2>
         <div class="love-counter-box">
@@ -390,6 +370,7 @@ tbody td{padding:10px 8px;font-size:13.5px;border-bottom:1px solid #f1f5f9;}
           <div class="chat-header">
             <span style="font-size: 20px;">💌</span> 
             <div style="flex:1;">प्रेम सन्देश</div>
+            <button class="call-btn" onclick="startCall()" title="भिडियो कल गर्नुहोस्">📞</button>
             <select id="myRole" style="background:rgba(255,255,255,0.2); color:white; border:none; padding:4px; border-radius:6px; font-size:12px; outline:none;">
                 <option value="husband">म प्रकाश हुँ</option>
                 <option value="wife">म अन्जना हुँ</option>
@@ -456,6 +437,78 @@ const COUNTERS_URL = BASE_URL + "counters";
 const MEMORY_URL = BASE_URL + "memories";
 const QA_URL = BASE_URL + "dailyQ";
 
+/* 🔑 तपाईंको Firebase Config */
+const firebaseConfig = {
+  apiKey: "AIzaSyAdK7SrmltojLLMZLoq4Yrhv1sy0ohWQMc",
+  authDomain: "anjana-khata.firebaseapp.com",
+  databaseURL: "https://anjana-khata-default-rtdb.firebaseio.com",
+  projectId: "anjana-khata",
+  storageBucket: "anjana-khata.firebasestorage.app",
+  messagingSenderId: "812686172144",
+  appId: "1:812686172144:web:7a2db5e4fd50e675fa8735",
+  measurementId: "G-CK447WVEPB"
+};
+firebase.initializeApp(firebaseConfig);
+const messaging = firebase.messaging();
+
+/* 🔑 तपाईंको VAPID Key */
+const VAPID_KEY = "BM4jDalZH9iSuKz91oFvhSAT9ptqcACJJtXBID_-slWNRXfg1qmpe7ed4u2kR5OckjJW5q6kPy4tCjsGMplc9Pk"; 
+
+// ---------------- Call Function ----------------
+function startCall() {
+    document.getElementById('callModal').style.display = 'flex';
+    document.getElementById('callIframe').src = "https://meet.jit.si/HamroSansarAnjanaPrakash";
+}
+
+function endCall() {
+    document.getElementById('callModal').style.display = 'none';
+    document.getElementById('callIframe').src = "";
+}
+
+// ---------------- Notification Function ----------------
+async function requestNotificationPermission() {
+    try {
+        const permission = await Notification.requestPermission();
+        if (permission === 'granted') {
+            const token = await messaging.getToken({ vapidKey: VAPID_KEY });
+            if (token) {
+                await fetch(BASE_URL + "fcmTokens.json", {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token: token, time: Date.now() })
+                });
+                showToast("🔔 नोटिफिकेसन अन भयो!", "#16a34a");
+            }
+            
+            // एप खुला छँदा नोटिफिकेसन देखाउने
+            messaging.onMessage((payload) => {
+                new Notification(payload.notification.title || "नयाँ सन्देश आयो!", {
+                    body: payload.notification.body,
+                    icon: 'wife.jpg'
+                });
+            });
+            
+        } else {
+            alert("नोटिफिकेसनको अनुमति दिनुभएन।");
+        }
+    } catch (e) {
+        console.error("Notification error:", e);
+        alert("नोटिफिकेसन अन गर्न समस्या आयो।");
+    }
+}
+
+// Service Worker रेजिस्टर गर्ने (यसले ब्याकग्राउन्डमा काम गर्छ)
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('firebase-messaging-sw.js')
+    .then((registration) => {
+        console.log('Service Worker registered');
+        messaging.useServiceWorker(registration);
+    }).catch((err) => {
+        console.log('Service Worker error: ', err);
+    });
+}
+
+// ---------------- बाँकी कोड ----------------
 const CATEGORIES = [
   { id:'khana', name:'खाना/किराना', icon:'🍚', color:'#f59e0b' }, 
   { id:'school_fee', name:'स्कुल फी', icon:'🏫', color:'#f97316' },
@@ -753,7 +806,6 @@ async function deleteMemory(id) {
     await fetch(`${MEMORY_URL}/${id}.json`, { method: 'DELETE' });
     loadMemories();
 }
-
 
 /* ================= HOME TAB ================= */
 function initHome() {
