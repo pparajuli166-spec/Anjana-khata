@@ -92,10 +92,24 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
 }
 .header-left{display:flex;align-items:center;gap:12px;min-width:0;flex:1;}
 .couple-photo{
-    width:48px;height:48px;border-radius:50%;object-fit:cover;
+    width:52px;height:52px;border-radius:50%;object-fit:cover;
     border:2.5px solid rgba(255,255,255,0.92); cursor:pointer; flex-shrink:0;
     transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
     box-shadow:0 4px 12px rgba(0,0,0,0.3);
+    background:linear-gradient(135deg, #ec4899, #a855f7);
+    position:relative;
+}
+.couple-photo::after{
+    content:'📷';
+    position:absolute;
+    bottom:-2px;right:-2px;
+    width:18px;height:18px;
+    background:#fff;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:9px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.3);
+    border:1.5px solid #ec4899;
 }
 .couple-photo:hover{transform:scale(1.08) rotate(-3deg);}
 .header-info{min-width:0;flex:1;}
@@ -126,8 +140,7 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
     background:rgba(255,255,255,0.15);
     border:1px solid rgba(255,255,255,0.25);
     color:#fff;border-radius:11px;font-size:16px;cursor:pointer;
-    transition:all 0.2s;
-    touch-action:manipulation;
+    transition:all 0.2s; touch-action:manipulation;
 }
 .btn-ic:hover{background:rgba(255,255,255,0.28);}
 .btn-ic:active{transform:scale(0.92);}
@@ -136,40 +149,22 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
     display:grid;
     grid-template-columns:1fr 1px 1fr;
     align-items:center;
-    padding:14px 10px;
-    gap:8px;
+    padding:14px 10px; gap:8px;
     background:var(--glass);
     backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
     border:1px solid var(--line);
     border-radius:var(--radius-lg);
     box-shadow:0 1px 0 rgba(255,255,255,0.06) inset, 0 12px 30px -15px rgba(0,0,0,0.5);
 }
-.clock-item{
-    display:flex; flex-direction:column; align-items:center;
-    gap:2px; min-width:0;
-}
+.clock-item{display:flex; flex-direction:column; align-items:center; gap:2px; min-width:0;}
 .clock-item .flag{ font-size:22px; line-height:1; margin-bottom:3px; }
-.clock-item .lbl{
-    font-size:9.5px; font-weight:700;
-    color:var(--txt-3);
-    text-transform:uppercase; letter-spacing:0.08em;
-}
+.clock-item .lbl{font-size:9.5px; font-weight:700; color:var(--txt-3); text-transform:uppercase; letter-spacing:0.08em;}
 .clock-item .val{
-    font-family:'Plus Jakarta Sans',sans-serif;
-    font-size:15px; font-weight:800;
-    color:#fff;
-    font-variant-numeric:tabular-nums;
-    letter-spacing:-0.02em;
-    white-space:nowrap;
-    margin-top:2px;
+    font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; font-weight:800;
+    color:#fff; font-variant-numeric:tabular-nums; letter-spacing:-0.02em;
+    white-space:nowrap; margin-top:2px;
 }
-.clock-item .date{
-    font-size:10px;
-    color:var(--txt-2);
-    font-weight:600;
-    margin-top:1px;
-    white-space:nowrap;
-}
+.clock-item .date{font-size:10px; color:var(--txt-2); font-weight:600; margin-top:1px; white-space:nowrap;}
 .clock-divider{
     width:1px; height:52px;
     background:linear-gradient(180deg, transparent, var(--line-hi), transparent);
@@ -206,9 +201,7 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
 }
 .hero-value.negative{background:linear-gradient(135deg,#fff,#fda4af 100%);-webkit-background-clip:text;background-clip:text;}
 .hero-sub{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
+    display:grid; grid-template-columns:1fr 1fr; gap:12px;
     margin-top:14px; padding-top:14px;
     border-top:1px solid rgba(255,255,255,0.1);
 }
@@ -259,11 +252,11 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
 .field select option{background:#1e1240;color:#fff;}
 .field input[type="date"]{color-scheme:dark;}
 
-.h-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px;}
+.h-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
 
 .h-result{
     display:flex; align-items:center; justify-content:space-between; gap:10px;
-    padding:16px 18px;
+    padding:16px 18px; margin-top:14px;
     background:linear-gradient(135deg, rgba(245,158,11,0.15), rgba(251,191,36,0.08));
     border:1px solid rgba(245,158,11,0.35);
     border-radius:var(--radius);
@@ -282,8 +275,7 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
 .h-result .label{
     font-size:12px; font-weight:800; color:#fef3c7;
     text-transform:uppercase; letter-spacing:0.06em;
-    display:flex; align-items:center; gap:6px;
-    position:relative;
+    display:flex; align-items:center; gap:6px; position:relative;
 }
 .h-result.negative .label{color:#fee2e2;}
 .h-result .amount{
@@ -295,6 +287,83 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
     white-space:nowrap;
 }
 .h-result.negative .amount{color:#fb7185; text-shadow:0 0 20px rgba(244,63,94,0.4);}
+
+.h-totals{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:6px;
+    margin-top:10px;
+    padding:12px;
+    background:rgba(0,0,0,0.2);
+    border:1px solid var(--line);
+    border-radius:var(--radius-sm);
+}
+.h-totals-item{display:flex; flex-direction:column; gap:2px; text-align:center; min-width:0;}
+.h-totals-item .l{
+    font-size:9.5px; color:var(--txt-3); font-weight:700;
+    text-transform:uppercase; letter-spacing:0.05em;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.h-totals-item .v{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:13px; font-weight:800;
+    font-variant-numeric:tabular-nums; color:#fff;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.h-totals-item.sal .v{color:#fbbf24;}
+.h-totals-item.exp .v{color:#fb7185;}
+.h-totals-item.sent .v{color:#34d399;}
+
+.h-section-title{
+    font-size:11px; font-weight:800;
+    text-transform:uppercase; letter-spacing:0.06em;
+    color:var(--txt-2);
+    margin-top:18px; margin-bottom:10px;
+    display:flex; align-items:center; gap:6px;
+}
+.h-entry{
+    display:flex; align-items:center; gap:10px;
+    padding:11px 12px;
+    background:rgba(255,255,255,0.025);
+    border:1px solid var(--line);
+    border-radius:var(--radius-sm);
+    margin-bottom:6px;
+    flex-wrap:wrap;
+    transition:all 0.2s;
+}
+.h-entry:hover{background:rgba(255,255,255,0.05); border-color:var(--line-hi);}
+.h-entry-date{
+    font-size:11px; font-weight:700;
+    color:#fbbf24;
+    background:rgba(245,158,11,0.15);
+    padding:2px 8px; border-radius:5px;
+    white-space:nowrap;
+    flex-shrink:0;
+}
+.h-entry-details{
+    display:flex; gap:10px;
+    font-size:12px; flex:1; flex-wrap:wrap;
+    color:var(--txt-2);
+    min-width:0;
+}
+.h-entry-details span{
+    white-space:nowrap;
+    font-variant-numeric:tabular-nums;
+    font-weight:600;
+}
+.h-entry-details .d-sal{color:#fbbf24;}
+.h-entry-details .d-exp{color:#fb7185;}
+.h-entry-details .d-sent{color:#34d399;}
+.h-entry-actions{display:flex; gap:2px; margin-left:auto;}
+.h-entry-actions button{
+    width:30px;height:30px;
+    background:transparent; border:none; cursor:pointer;
+    border-radius:8px; font-size:13px; color:var(--txt-3);
+    display:flex; align-items:center; justify-content:center;
+    touch-action:manipulation;
+    transition:all 0.15s;
+}
+.h-entry-actions button:active{background:rgba(255,255,255,0.12); color:#fff; transform:scale(0.92);}
 
 .anjana-card{
     background:linear-gradient(140deg, rgba(16,185,129,0.08) 0%, rgba(30,20,60,0.9) 50%, rgba(168,85,247,0.08) 100%);
@@ -372,8 +441,7 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
     -webkit-overflow-scrolling:touch;
     overscroll-behavior-x:contain;
     border-radius:var(--radius);
-    margin:0 -4px;
-    padding:0 4px;
+    margin:0 -4px; padding:0 4px;
 }
 .family-table{
     display:grid;
@@ -398,7 +466,6 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
 .ft-h.hus{ color:#fbbf24; }
 .ft-h.anj{ color:#34d399; }
 .ft-h.tot{ color:#c084fc; }
-
 .ft-label{
     padding:13px 6px;
     font-size:12px; font-weight:700;
@@ -424,7 +491,6 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
 .ft-cell.anj{ color:#34d399; }
 .ft-cell.neg{ color:#fb7185; }
 .ft-cell.transfer{ color:var(--txt-2); font-size:11px; font-weight:600; font-style:italic; }
-
 .ft-row-savings .ft-label{
     background:linear-gradient(135deg, rgba(168,85,247,0.15), rgba(236,72,153,0.1));
     color:#f3e8ff; border-bottom:none;
@@ -469,8 +535,7 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
     background:linear-gradient(135deg, var(--pink), var(--purple));
     box-shadow:0 1px 0 rgba(255,255,255,0.25) inset, 0 10px 30px -8px rgba(236,72,153,0.6);
     transition:all 0.2s; position:relative; overflow:hidden;
-    min-height:50px;
-    touch-action:manipulation;
+    min-height:50px; touch-action:manipulation;
 }
 .btn-primary::before{
     content:''; position:absolute; inset:0;
@@ -481,14 +546,18 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
 .btn-primary:active{transform:scale(0.985);}
 .btn-primary:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
 
+.btn-husband{
+    background:linear-gradient(135deg, #f59e0b, #ec4899);
+    box-shadow:0 1px 0 rgba(255,255,255,0.25) inset, 0 10px 30px -8px rgba(245,158,11,0.6);
+}
+
 .btn-ghost{
     width:100%; padding:12px; border-radius:var(--radius-sm);
     font-family:inherit; font-size:13px; font-weight:700;
     color:var(--txt-2); background:rgba(255,255,255,0.06);
     border:1px solid var(--line); cursor:pointer; margin-top:8px;
     display:none; transition:all 0.2s;
-    min-height:44px;
-    touch-action:manipulation;
+    min-height:44px; touch-action:manipulation;
 }
 .btn-ghost:hover{background:rgba(255,255,255,0.1);color:#fff;}
 
@@ -615,12 +684,9 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
     color:#fff; font-size:20px;
     border:2px solid rgba(255,255,255,0.9);
     box-shadow:0 8px 24px -4px rgba(236,72,153,0.6);
-    cursor:pointer;
-    z-index:9999;
+    cursor:pointer; z-index:9999;
     display:flex; align-items:center; justify-content:center;
-    transition:all 0.2s;
-    touch-action:manipulation;
-    padding:0;
+    transition:all 0.2s; touch-action:manipulation; padding:0;
 }
 #musicBtn:active{transform:scale(0.9);}
 #musicBtn.playing{animation:musicPulse 2s ease-in-out infinite;}
@@ -644,7 +710,7 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
     .wrap{gap:12px;}
     .glass{padding:18px 16px;border-radius:20px;}
     .top-header{padding:11px 13px;}
-    .couple-photo{width:44px;height:44px;}
+    .couple-photo{width:48px;height:48px;}
     .header-info h1{font-size:15.5px;}
     .header-info p{font-size:10.5px;}
     .btn-ic{width:38px;height:38px;font-size:15px;}
@@ -655,7 +721,7 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
     .clock-item .val{font-size:14px;}
     .clock-item .date{font-size:9.5px;}
 
-    .h-grid{grid-template-columns:1fr;}
+    .h-grid{grid-template-columns:1fr 1fr;}
     .h-grid .field label{font-size:11.5px;}
 
     .form-grid{grid-template-columns:1fr;}
@@ -683,6 +749,10 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
     .tx-amt{font-size:13px;}
     .tx-acts button{width:38px;height:38px;}
 
+    .h-entry{padding:10px 11px;gap:8px;}
+    .h-entry-details{font-size:11px; gap:8px;}
+    .h-entry-date{font-size:10px; padding:2px 6px;}
+
     #musicBtn{width:48px;height:48px;font-size:18px;}
 }
 
@@ -698,6 +768,9 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
     .acct-row .amount{font-size:13px;}
     .clock-item .val{font-size:13px;}
     .clock-item .date{font-size:9px;}
+    .h-totals-item .v{font-size:12px;}
+    .h-totals-item .l{font-size:9px;}
+    .couple-photo{width:44px;height:44px;}
 }
 
 @media print{
@@ -713,8 +786,8 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
     .acct-balance,.h-result{background:#f9fafb !important;border:1px solid #ccc !important;}
     .acct-balance::before,.h-result::before{display:none;}
     .acct-balance .label,.h-result .label{color:#333 !important;}
-    #entryForm,.export-btns,#musicBtn,.filters,.tx-acts,.live{display:none !important;}
-    .tx{border:1px solid #ddd !important;background:#fafafa !important;}
+    #entryForm,#hEntryForm,.export-btns,#musicBtn,.filters,.tx-acts,.h-entry-actions,.live,.btn-ghost{display:none !important;}
+    .tx,.h-entry{border:1px solid #ddd !important;background:#fafafa !important;}
     .cat-fill::after{display:none;}
     td,th,.v,h1,h2,.stat .lbl,.cat-row,.ft-cell,.ft-label,.ft-h{color:#000 !important;}
     .sec-head{color:#000;}
@@ -723,6 +796,9 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
     .ft-h{background:#f3f4f6 !important;}
     .ft-row-savings .ft-label,.ft-row-savings .ft-cell{background:#f3f4f6 !important;border-top:2px solid #333 !important;}
     .family-table-wrap{overflow:visible;margin:0;padding:0;}
+    .h-totals{background:#f3f4f6 !important;border:1px solid #ccc !important;}
+    .h-totals-item .v{color:#000 !important;}
+    .couple-photo::after{display:none;}
 }
 </style>
 </head>
@@ -736,7 +812,7 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
 
     <header class="top-header">
         <div class="header-left">
-            <img src="" alt="Photo" class="couple-photo" id="couplePhoto">
+            <img src="wife.jpg" alt="Photo" class="couple-photo" id="couplePhoto">
             <div class="header-info">
                 <h1>🌸 अन्जना हिसाब</h1>
                 <p>
@@ -793,29 +869,58 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
         </div>
     </div>
 
-    <div class="glass">
+    <div class="glass" id="husbandSection">
         <div class="sec-head">
             <span class="ico">👨‍💼</span>
             पतिको खाता
+            <span class="sub" id="hEntryCount"></span>
         </div>
-        <div class="h-grid">
-            <div class="field">
-                <label>तलब (रु.)</label>
-                <input type="number" id="hSalary" placeholder="0" oninput="calculateHusband()" inputmode="decimal">
+
+        <form id="hEntryForm">
+            <div class="h-grid">
+                <div class="field">
+                    <label>मिति</label>
+                    <input type="date" id="hDate" required>
+                </div>
+                <div class="field">
+                    <label>तलब (रु.)</label>
+                    <input type="number" id="hSalary" placeholder="0" min="0" step="any" inputmode="decimal">
+                </div>
+                <div class="field">
+                    <label>व्यक्तिगत खर्च (रु.)</label>
+                    <input type="number" id="hExpense" placeholder="0" min="0" step="any" inputmode="decimal">
+                </div>
+                <div class="field">
+                    <label>अन्जनालाई पठाएको (रु.)</label>
+                    <input type="number" id="hSent" placeholder="0" min="0" step="any" inputmode="decimal">
+                </div>
             </div>
-            <div class="field">
-                <label>व्यक्तिगत खर्च (रु.)</label>
-                <input type="number" id="hExpense" placeholder="0" oninput="calculateHusband()" inputmode="decimal">
-            </div>
-            <div class="field">
-                <label>अन्जनालाई पठाएको (रु.)</label>
-                <input type="number" id="hSent" placeholder="0" oninput="calculateHusband()" inputmode="decimal">
-            </div>
-        </div>
+            <button type="submit" class="btn-primary btn-husband" id="hSaveBtn">➕ नयाँ रेकर्ड थप्नुहोस्</button>
+            <button type="button" class="btn-ghost" id="hCancelBtn" onclick="cancelHEdit()">रद्द गर्नुहोस्</button>
+        </form>
+
         <div class="h-result" id="hSavBox">
-            <span class="label">💰 पतिको बचत</span>
+            <span class="label">💰 पतिको कुल बचत</span>
             <span class="amount" id="hSavings">रु. ०</span>
         </div>
+
+        <div class="h-totals">
+            <div class="h-totals-item sal">
+                <span class="l">कुल तलब</span>
+                <span class="v" id="hTotalSalary">रु. ०</span>
+            </div>
+            <div class="h-totals-item exp">
+                <span class="l">कुल खर्च</span>
+                <span class="v" id="hTotalExpense">रु. ०</span>
+            </div>
+            <div class="h-totals-item sent">
+                <span class="l">पठाएको</span>
+                <span class="v" id="hTotalSent">रु. ०</span>
+            </div>
+        </div>
+
+        <div class="h-section-title">📋 इतिहास</div>
+        <div id="hHistory"></div>
     </div>
 
     <div class="glass anjana-card">
@@ -824,7 +929,6 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
             अन्जना खाता
             <span class="sub">पतिबाट सुरु</span>
         </div>
-
         <div class="acct-flow">
             <div class="acct-row opening">
                 <span class="label"><span class="dot"></span><span>पतिबाट आएको</span></span>
@@ -844,7 +948,6 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
                 <span class="amount" id="anjanaExpense">रु. ०</span>
             </div>
         </div>
-
         <div class="acct-balance" id="anjanaBalanceBox">
             <span class="label">💎 बाँकी बचत</span>
             <span class="amount" id="anjanaBalance">रु. ०</span>
@@ -855,9 +958,8 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
         <div class="sec-head">
             <span class="ico">👨‍👩‍👧</span>
             परिवारको सारांश
-            <span class="sub">दुवैको तुलना</span>
+            <span class="sub">सबै समयको जम्मा</span>
         </div>
-
         <div class="family-table-wrap">
             <div class="family-table">
                 <div class="ft-h first"></div>
@@ -886,7 +988,6 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
                 <div class="ft-cell tot ft-row-savings" id="ftTSavings">रु. ०</div>
             </div>
         </div>
-
         <div class="ft-note">
             "पतिबाट प्राप्त" भनेको पतिको पैसा अन्जनाकहाँ सर्ने (transfer) हो — परिवारको कुल आम्दानीमा दोहोरो गनिँदैन।
         </div>
@@ -975,11 +1076,15 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
 
 <script>
 /* ================= CONFIG ================= */
-const DB_URL      = "https://anjana-khata-default-rtdb.firebaseio.com/khata";
-const EXP_URL     = DB_URL + "/expenses";
-const INC_URL     = DB_URL + "/incomes";
-const HUSBAND_URL = DB_URL + "/husband";
-const PHOTO_URL   = DB_URL + "/photo";
+const DB_URL              = "https://anjana-khata-default-rtdb.firebaseio.com/khata";
+const EXP_URL             = DB_URL + "/expenses";
+const INC_URL             = DB_URL + "/incomes";
+const HUSBAND_ENTRIES_URL = DB_URL + "/husband_entries";
+const HUSBAND_LEGACY_URL  = DB_URL + "/husband";
+const PHOTO_URL           = DB_URL + "/photo";
+
+const PHOTO_FILE_DEFAULT  = 'wife.jpg';
+const PHOTO_CACHE_KEY     = 'anjana_photo_v2';
 
 const EXP_CATS = [
     { id:'khana',      name:'खाना',           icon:'🍚', color:'#f59e0b' },
@@ -1008,14 +1113,15 @@ const PLACEHOLDER = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(
 
 let allData = [];
 let lastFiltered = [];
-let husbandData = { salary: 0, expense: 0, sent: 0 };
+let husbandEntries = [];
+let editingHId = null;
 let editingId = null;
 let editingType = null;
 
 let sseSources = [];
 let pollTimer = null;
 let reloadTimer = null;
-let hSaveTimer = null;
+let currentPhotoSrc = null;
 
 const $ = id => document.getElementById(id);
 const fmt = n => 'रु. ' + (Number(n)||0).toLocaleString('en-IN');
@@ -1072,17 +1178,15 @@ function startClock(){
     setInterval(tickDate, 60000);
 }
 
-/* ================= MUSIC (local song.mp3 + song2.mp3) ================= */
+/* ================= MUSIC ================= */
 const SONG_FILES = ['song.mp3', 'song2.mp3'];
 const FALLBACK_SONG = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3';
-
 let playlist = [];
 let songIdx = 0;
 let isPlaying = false;
 let userPaused = false;
 const audio = $('bgMusic');
 
-/* Pre-check which song files exist */
 async function checkSongs(){
     const working = [];
     for(const url of SONG_FILES){
@@ -1090,7 +1194,6 @@ async function checkSongs(){
             const res = await fetch(url, { method:'HEAD', cache:'no-store' });
             if(res.ok){
                 const ct = res.headers.get('content-type') || '';
-                /* GitHub sometimes serves 404 page with 200; check content-type */
                 if(res.status === 200 && (!ct || ct.includes('audio') || ct.includes('octet-stream') || ct.includes('mpeg') || ct.includes('mp4'))){
                     working.push(url);
                 }
@@ -1189,7 +1292,6 @@ async function toggleMusic(){
     }
 }
 
-/* When current song ends → play next in playlist (loop forever) */
 audio.addEventListener('ended', () => {
     if(playlist.length === 0) return;
     songIdx = (songIdx + 1) % playlist.length;
@@ -1197,7 +1299,6 @@ audio.addEventListener('ended', () => {
     audio.play().catch(()=>{});
 });
 
-/* If song fails to load → skip to next (or fallback) */
 audio.addEventListener('error', () => {
     if(playlist.length <= 1) return;
     songIdx = (songIdx + 1) % playlist.length;
@@ -1206,63 +1307,265 @@ audio.addEventListener('error', () => {
     if(isPlaying) audio.play().catch(()=>{});
 });
 
-/* ================= PHOTO ================= */
-function setPhoto(b64){ $('couplePhoto').src = b64 || PLACEHOLDER; }
-$('couplePhoto').addEventListener('error', () => $('couplePhoto').src = PLACEHOLDER);
+/* ================= PHOTO (3-tier fallback) ================= */
+
+function setPhoto(src){
+    if(!src) return;
+    currentPhotoSrc = src;
+    const img = $('couplePhoto');
+    img.onerror = null;
+    img.src = src;
+}
+
+function tryWifeJpg(){
+    const img = $('couplePhoto');
+    const test = new Image();
+    test.onload = () => {
+        if(!currentPhotoSrc){
+            setPhoto(PHOTO_FILE_DEFAULT);
+        }
+    };
+    test.onerror = () => {
+        if(!currentPhotoSrc){
+            img.src = PLACEHOLDER;
+            img.onerror = null;
+        }
+    };
+    test.src = PHOTO_FILE_DEFAULT;
+}
+
+function tryLocalPhoto(){
+    try{
+        const cached = localStorage.getItem(PHOTO_CACHE_KEY);
+        if(cached && cached.length > 100){
+            setPhoto(cached);
+            return true;
+        }
+    }catch(_){}
+    return false;
+}
+
+function initPhoto(){
+    // 1st: cached local photo
+    if(tryLocalPhoto()) return;
+    // 2nd: wife.jpg from repo (or placeholder if missing)
+    tryWifeJpg();
+    // 3rd: Firebase will update in loadData()
+}
+
 $('couplePhoto').addEventListener('click', () => $('photoInput').click());
 
 $('photoInput').addEventListener('change', async e => {
     const file = e.target.files[0];
     e.target.value = '';
     if(!file) return;
+
+    if(!file.type.startsWith('image/')){
+        showToast('कृपया image फाइल छान्नुहोस्','⚠️');
+        return;
+    }
+
     try{
-        const b64 = await resizeImage(file, 260);
+        showToast('फोटो अपलोड हुँदैछ…','⏳');
+        const b64 = await resizeImage(file, 300, 0.8);
+
+        // Show immediately
         setPhoto(b64);
-        try{ localStorage.setItem('anjana_photo', b64); }catch(_){}
-        await fetch(PHOTO_URL + '.json', { method:'PUT', body: JSON.stringify(b64) });
-        showToast('फोटो सेभ भयो', '📸');
-    }catch(err){ showToast('फोटो सेभ गर्न सकिएन','⚠️'); }
+
+        // Cache locally (bigger images may fail — that's OK)
+        try{ localStorage.setItem(PHOTO_CACHE_KEY, b64); }catch(_){ }
+
+        // Save to Firebase (source of truth)
+        const res = await fetch(PHOTO_URL + '.json', {
+            method:'PUT',
+            body: JSON.stringify(b64),
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if(!res.ok){
+            throw new Error('Firebase responded ' + res.status);
+        }
+        showToast('फोटो सेभ भयो ✓','📸');
+    }catch(err){
+        console.error('Photo save error:', err);
+        showToast('फोटो सेभ गर्न सकिएन','⚠️');
+    }
 });
 
-function resizeImage(file, max){
+function resizeImage(file, max, quality){
+    quality = quality || 0.85;
     return new Promise((resolve, reject) => {
         const img = new Image();
         const url = URL.createObjectURL(file);
         img.onload = () => {
-            const scale = Math.min(1, max / Math.max(img.width, img.height));
-            const w = Math.round(img.width * scale), h = Math.round(img.height * scale);
-            const c = document.createElement('canvas');
-            c.width = w; c.height = h;
-            c.getContext('2d').drawImage(img, 0, 0, w, h);
-            URL.revokeObjectURL(url);
-            resolve(c.toDataURL('image/jpeg', 0.85));
+            try{
+                const scale = Math.min(1, max / Math.max(img.width, img.height));
+                const w = Math.round(img.width * scale);
+                const h = Math.round(img.height * scale);
+                const c = document.createElement('canvas');
+                c.width = w; c.height = h;
+                const ctx = c.getContext('2d');
+                ctx.drawImage(img, 0, 0, w, h);
+                URL.revokeObjectURL(url);
+                resolve(c.toDataURL('image/jpeg', quality));
+            }catch(e){
+                URL.revokeObjectURL(url);
+                reject(e);
+            }
         };
-        img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('bad')); };
+        img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('bad image')); };
         img.src = url;
     });
 }
 
-/* ================= HUSBAND ================= */
-async function saveHusbandToDB(){
-    try{ await fetch(HUSBAND_URL + '.json', { method:'PUT', body: JSON.stringify(husbandData) }); }catch(e){}
+/* ================= HUSBAND ENTRIES ================= */
+async function loadHusbandEntries(){
+    try{
+        const res = await fetch(HUSBAND_ENTRIES_URL + '.json');
+        const data = (await res.json()) || {};
+        husbandEntries = [];
+        for(const k in data) husbandEntries.push({ id:k, ...data[k] });
+
+        if(husbandEntries.length === 0){
+            try{
+                const oldRes = await fetch(HUSBAND_LEGACY_URL + '.json');
+                const old = await oldRes.json();
+                if(old && (Number(old.salary)||Number(old.expense)||Number(old.sent))){
+                    const migrate = {
+                        date: toISO(new Date()),
+                        salary: Number(old.salary)||0,
+                        expense: Number(old.expense)||0,
+                        sent: Number(old.sent)||0,
+                        ts: Date.now()
+                    };
+                    await fetch(HUSBAND_ENTRIES_URL + '.json', { method:'POST', body: JSON.stringify(migrate) });
+                    await fetch(HUSBAND_LEGACY_URL + '.json', { method:'DELETE' });
+                    return loadHusbandEntries();
+                }
+            }catch(_){}
+        }
+
+        husbandEntries.sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.ts||0)-(a.ts||0));
+    }catch(e){
+        console.error('Husband load', e);
+        husbandEntries = [];
+    }
 }
-function calculateHusband(shouldSave = true){
+
+function getHusbandTotals(){
+    let salary = 0, expense = 0, sent = 0;
+    husbandEntries.forEach(e => {
+        salary  += Number(e.salary)  || 0;
+        expense += Number(e.expense) || 0;
+        sent    += Number(e.sent)    || 0;
+    });
+    return { salary, expense, sent, savings: salary - expense - sent };
+}
+
+async function saveHusbandEntry(){
+    const date    = $('hDate').value;
     const salary  = Number($('hSalary').value)  || 0;
     const expense = Number($('hExpense').value) || 0;
     const sent    = Number($('hSent').value)    || 0;
-    const savings = salary - expense - sent;
 
-    husbandData = { salary, expense, sent };
-    if(shouldSave){
-        clearTimeout(hSaveTimer);
-        hSaveTimer = setTimeout(saveHusbandToDB, 700);
+    if(!date){ showToast('मिति छान्नुहोस्','⚠️'); return; }
+    if(salary === 0 && expense === 0 && sent === 0){
+        showToast('केही रकम भर्नुहोस्','⚠️');
+        return;
     }
-    $('hSavings').textContent = fmt(savings);
-    $('hSavBox').classList.toggle('negative', savings < 0);
-    renderData();
+
+    const entry = { date, salary, expense, sent, ts: Date.now() };
+
+    $('hSaveBtn').textContent = 'सेभ गर्दै…';
+    $('hSaveBtn').disabled = true;
+
+    try{
+        if(editingHId){
+            await fetch(`${HUSBAND_ENTRIES_URL}/${editingHId}.json`, { method:'PUT', body: JSON.stringify(entry) });
+            editingHId = null;
+            $('hCancelBtn').style.display = 'none';
+            showToast('रेकर्ड अपडेट भयो','✏️');
+        }else{
+            await fetch(HUSBAND_ENTRIES_URL + '.json', { method:'POST', body: JSON.stringify(entry) });
+            showToast('रेकर्ड सेभ भयो','✓');
+        }
+
+        $('hSalary').value = '';
+        $('hExpense').value = '';
+        $('hSent').value = '';
+        $('hDate').value = toISO(new Date());
+
+        await loadData(true);
+    }catch(e){
+        showToast('सेभ गर्न सकिएन','⚠️');
+    }finally{
+        $('hSaveBtn').textContent = editingHId ? 'रेकर्ड अपडेट गर्नुहोस्' : '➕ नयाँ रेकर्ड थप्नुहोस्';
+        $('hSaveBtn').disabled = false;
+    }
 }
 
-/* ================= FORM ================= */
+function cancelHEdit(){
+    editingHId = null;
+    $('hSalary').value = '';
+    $('hExpense').value = '';
+    $('hSent').value = '';
+    $('hDate').value = toISO(new Date());
+    $('hSaveBtn').textContent = '➕ नयाँ रेकर्ड थप्नुहोस्';
+    $('hCancelBtn').style.display = 'none';
+}
+
+window.editHusbandEntry = (id) => {
+    const e = husbandEntries.find(x => x.id === id);
+    if(!e) return;
+    editingHId = id;
+    $('hDate').value = e.date || toISO(new Date());
+    $('hSalary').value = e.salary || '';
+    $('hExpense').value = e.expense || '';
+    $('hSent').value = e.sent || '';
+    $('hSaveBtn').textContent = 'रेकर्ड अपडेट गर्नुहोस्';
+    $('hCancelBtn').style.display = 'block';
+    $('husbandSection').scrollIntoView({ behavior:'smooth', block:'start' });
+};
+
+window.deleteHusbandEntry = async (id) => {
+    if(!confirm('यो पतिको रेकर्ड मेटाउने हो?')) return;
+    try{
+        await fetch(`${HUSBAND_ENTRIES_URL}/${id}.json`, { method:'DELETE' });
+        showToast('रेकर्ड मेटाइयो','🗑️');
+    }catch(e){
+        showToast('मेटाउन सकिएन','⚠️');
+    }
+};
+
+$('hEntryForm').addEventListener('submit', e => {
+    e.preventDefault();
+    saveHusbandEntry();
+});
+
+function renderHusbandHistory(){
+    $('hEntryCount').textContent = husbandEntries.length ? `${husbandEntries.length} रेकर्ड` : '';
+
+    if(husbandEntries.length === 0){
+        $('hHistory').innerHTML = '<div class="cat-empty" style="text-align:center;padding:16px;">कुनै रेकर्ड छैन — माथि भरेर थप्नुहोस्</div>';
+        return;
+    }
+
+    $('hHistory').innerHTML = husbandEntries.map(e => `
+        <div class="h-entry">
+            <span class="h-entry-date">${formatDate(e.date)}</span>
+            <div class="h-entry-details">
+                <span class="d-sal">तलब ${fmt(e.salary)}</span>
+                <span class="d-exp">खर्च ${fmt(e.expense)}</span>
+                <span class="d-sent">पठाएको ${fmt(e.sent)}</span>
+            </div>
+            <div class="h-entry-actions">
+                <button onclick="editHusbandEntry('${e.id}')" aria-label="सम्पादन">✏️</button>
+                <button onclick="deleteHusbandEntry('${e.id}')" aria-label="मेटाउनु">🗑️</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+/* ================= FORM (Anjana) ================= */
 function setType(type){
     $('type').value = type;
     $('segExp').className = type === 'expense' ? 'active-exp' : '';
@@ -1334,34 +1637,28 @@ async function loadData(silent = false){
         const fy = $('filterYear').value;
         const fm = $('filterMonth').value;
 
-        const [expRes, incRes, husRes, phoRes] = await Promise.all([
+        await loadHusbandEntries();
+
+        const [expRes, incRes, phoRes] = await Promise.all([
             fetch(EXP_URL + '.json'),
             fetch(INC_URL + '.json'),
-            fetch(HUSBAND_URL + '.json'),
             fetch(PHOTO_URL + '.json')
         ]);
         const exps = (await expRes.json()) || {};
         const incs = (await incRes.json()) || {};
-        const hus  = await husRes.json();
         const pho  = await phoRes.json();
 
         allData = [];
         for(const k in exps) allData.push({ id:k, type:'expense', ...exps[k] });
         for(const k in incs) allData.push({ id:k, type:'income',  ...incs[k] });
 
-        if(hus){
-            husbandData = {
-                salary:  Number(hus.salary)  || 0,
-                expense: Number(hus.expense) || 0,
-                sent:    Number(hus.sent)    || 0
-            };
-            if(document.activeElement !== $('hSalary'))  $('hSalary').value  = husbandData.salary  || '';
-            if(document.activeElement !== $('hExpense')) $('hExpense').value = husbandData.expense || '';
-            if(document.activeElement !== $('hSent'))    $('hSent').value    = husbandData.sent    || '';
+        /* Firebase photo (highest priority) */
+        if(typeof pho === 'string' && pho.length > 100){
+            if(pho !== currentPhotoSrc){
+                setPhoto(pho);
+            }
+            try{ localStorage.setItem(PHOTO_CACHE_KEY, pho); }catch(_){ }
         }
-        calculateHusband(false);
-
-        if(pho){ setPhoto(pho); try{ localStorage.setItem('anjana_photo', pho); }catch(_){} }
 
         buildYearFilter(fy);
         $('filterMonth').value = fm || 'all';
@@ -1376,6 +1673,7 @@ function buildYearFilter(keep){
     const now = new Date().getFullYear();
     const years = new Set([now, now + 1]);
     allData.forEach(d => { const y = (d.date||'').split('-')[0]; if(y) years.add(+y); });
+    husbandEntries.forEach(d => { const y = (d.date||'').split('-')[0]; if(y) years.add(+y); });
     const list = [...years].filter(y => !isNaN(y)).sort((a,b) => b - a);
     $('filterYear').innerHTML = `<option value="all">सबै वर्ष</option>` +
         list.map(y => `<option value="${y}">${y}</option>`).join('');
@@ -1389,7 +1687,7 @@ function startRealtime(){
     try{
         attachStream(EXP_URL + '.json', 'expense');
         attachStream(INC_URL + '.json', 'income');
-        attachStream(HUSBAND_URL + '.json', 'husband');
+        attachStream(HUSBAND_ENTRIES_URL + '.json', 'husband_entries');
         attachStream(PHOTO_URL + '.json', 'photo');
     }catch(e){ startPolling(); }
 }
@@ -1406,22 +1704,29 @@ function handleStreamEvent(kind, payload){
     const path = payload.path || '/';
     const data = payload.data;
 
-    if(kind === 'husband'){
-        husbandData = {
-            salary:  Number(data?.salary)  || 0,
-            expense: Number(data?.expense) || 0,
-            sent:    Number(data?.sent)    || 0
-        };
-        if(document.activeElement !== $('hSalary'))  $('hSalary').value  = husbandData.salary  || '';
-        if(document.activeElement !== $('hExpense')) $('hExpense').value = husbandData.expense || '';
-        if(document.activeElement !== $('hSent'))    $('hSent').value    = husbandData.sent    || '';
-        calculateHusband(false);
-        return;
-    }
     if(kind === 'photo'){
-        if(typeof data === 'string' && data){ setPhoto(data); try{ localStorage.setItem('anjana_photo', data); }catch(_){} }
+        if(typeof data === 'string' && data.length > 100){
+            setPhoto(data);
+            try{ localStorage.setItem(PHOTO_CACHE_KEY, data); }catch(_){ }
+        }
         return;
     }
+
+    if(kind === 'husband_entries'){
+        if(path === '/'){
+            husbandEntries = [];
+            if(data) for(const k in data) husbandEntries.push({ id:k, ...data[k] });
+        }else{
+            const segs = path.split('/').filter(Boolean);
+            const id = segs[0];
+            husbandEntries = husbandEntries.filter(x => x.id !== id);
+            if(data) husbandEntries.push({ id, ...data });
+        }
+        husbandEntries.sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.ts||0)-(a.ts||0));
+        renderData();
+        return;
+    }
+
     if(path === '/'){
         allData = allData.filter(d => d.type !== kind);
         if(data) for(const k in data) allData.push({ id:k, type:kind, ...data[k] });
@@ -1483,10 +1788,11 @@ function renderData(){
         }
     });
 
-    const hSalary  = Number($('hSalary').value)  || 0;
-    const hExpense = Number($('hExpense').value) || 0;
-    const hSent    = Number($('hSent').value)    || 0;
-    const hSavings = hSalary - hExpense - hSent;
+    const hTot = getHusbandTotals();
+    const hSalary  = hTot.salary;
+    const hExpense = hTot.expense;
+    const hSent    = hTot.sent;
+    const hSavings = hTot.savings;
 
     const anjanaOpening     = hSent;
     const anjanaExtra       = extraIncTotal;
@@ -1494,9 +1800,16 @@ function renderData(){
     const anjanaExpense     = expTotal;
     const anjanaSavings     = anjanaTotalIncome - anjanaExpense;
 
-    const familyIncome   = hSalary + anjanaExtra;
-    const familyExpense  = hExpense + anjanaExpense;
-    const familySavings  = hSavings + anjanaSavings;
+    const familyIncome  = hSalary + anjanaExtra;
+    const familyExpense = hExpense + anjanaExpense;
+    const familySavings = hSavings + anjanaSavings;
+
+    $('hSavings').textContent = fmt(hSavings);
+    $('hSavBox').classList.toggle('negative', hSavings < 0);
+    $('hTotalSalary').textContent  = fmt(hSalary);
+    $('hTotalExpense').textContent = fmt(hExpense);
+    $('hTotalSent').textContent    = fmt(hSent);
+    renderHusbandHistory();
 
     const hv = $('heroValue');
     hv.textContent = fmt(familySavings);
@@ -1596,24 +1909,28 @@ function renderData(){
 
 /* ================= EXPORT ================= */
 function exportCSV(){
-    const hSalary  = Number($('hSalary').value)  || 0;
-    const hExpense = Number($('hExpense').value) || 0;
-    const hSent    = Number($('hSent').value)    || 0;
-    const hSavings = hSalary - hExpense - hSent;
+    const hTot = getHusbandTotals();
 
     let extraInc = 0, expTot = 0;
     lastFiltered.forEach(d => { if(d.type==='income') extraInc += Number(d.amount)||0; else expTot += Number(d.amount)||0; });
-    const aIncome  = hSent + extraInc;
+    const aIncome  = hTot.sent + extraInc;
     const aSavings = aIncome - expTot;
-    const familySavings = hSavings + aSavings;
+    const familySavings = hTot.savings + aSavings;
 
     let csv = '\uFEFF';
     csv += '=== FAMILY SUMMARY ===\n';
     csv += `Parameter,Husband,Anjana,Total\n`;
-    csv += `Aamdani,${hSalary},${extraInc},${hSalary+extraInc}\n`;
-    csv += `Patibata payeko,${-hSent},${hSent},0\n`;
-    csv += `Kharcha,${hExpense},${expTot},${hExpense+expTot}\n`;
-    csv += `Bachat,${hSavings},${aSavings},${familySavings}\n\n`;
+    csv += `Aamdani,${hTot.salary},${extraInc},${hTot.salary+extraInc}\n`;
+    csv += `Patibata payeko,${-hTot.sent},${hTot.sent},0\n`;
+    csv += `Kharcha,${hTot.expense},${expTot},${hTot.expense+expTot}\n`;
+    csv += `Bachat,${hTot.savings},${aSavings},${familySavings}\n\n`;
+
+    csv += '=== HUSBAND HISTORY ===\n';
+    csv += 'Miti,Talab,Kharcha,Pathayeko\n';
+    husbandEntries.forEach(e => {
+        csv += `${e.date||''},${e.salary||0},${e.expense||0},${e.sent||0}\n`;
+    });
+    csv += '\n';
 
     csv += '=== ANJANA TRANSACTIONS ===\n';
     csv += 'Miti,Prakar,Category,Rakam,Vivaran\n';
@@ -1631,7 +1948,7 @@ function exportCSV(){
     showToast('CSV डाउनलोड भयो','📥');
 }
 
-/* ================= EDIT / DELETE ================= */
+/* ================= EDIT / DELETE (Anjana) ================= */
 window.editItem = (id, type) => {
     const item = allData.find(d => d.id === id && d.type === type);
     if(!item) return;
@@ -1660,12 +1977,12 @@ window.deleteItem = async (id, type) => {
 
 /* ================= INIT ================= */
 (function init(){
-    $('date').value = toISO(new Date());
-    $('couplePhoto').src = PLACEHOLDER;
-    try{
-        const cached = localStorage.getItem('anjana_photo');
-        if(cached) setPhoto(cached);
-    }catch(_){}
+    const today = toISO(new Date());
+    $('date').value = today;
+    $('hDate').value = today;
+
+    initPhoto();     // photo: cache → wife.jpg → placeholder (Firebase later)
+
     setType('expense');
     startClock();
     initMusic();
