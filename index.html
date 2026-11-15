@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anjana Hisab - Family Dashboard</title>
+<title>Anjana Hisab - Family App</title>
 <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter@3.3.4/dist/nepali-date-converter.umd.js"></script>
 
@@ -18,16 +18,15 @@
     --glass-border: rgba(255, 255, 255, 0.15);
     --text-main: #ffffff;
     --text-muted: #cbd5e1;
-    --radius: 20px;
+    --radius: 16px;
 }
 *{box-sizing:border-box;margin:0;padding:0; font-family: 'Mukta', sans-serif;} 
 
 body{
     color:var(--text-main);
-    padding:24px;
+    padding:16px;
     background: linear-gradient(135deg, #0f172a 0%, #2e1065 50%, #4c1d95 100%);
     background-attachment: fixed;
-    overflow-x: hidden;
     min-height: 100vh;
 }
 
@@ -37,603 +36,471 @@ body{
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.3);
 }
 
-/* Full Page Layout */
-.dashboard-wrap {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
+.wrap { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
 
 /* Top Header */
 .top-header { 
-    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;
-    padding: 20px 30px; border-radius: var(--radius); 
+    display: flex; align-items: center; gap: 15px; padding: 15px; border-radius: var(--radius); 
     background: linear-gradient(135deg, rgba(219, 39, 119, 0.9), rgba(147, 51, 234, 0.9));
-    backdrop-filter: blur(10px);
-    box-shadow: 0 10px 30px rgba(219, 39, 119, 0.3);
-    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 8px 20px rgba(219, 39, 119, 0.3);
 }
-.header-left { display: flex; align-items: center; gap: 20px; }
-.couple-photo-small { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 3px solid #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-.header-text h1 { font-size: 28px; font-weight: 800; }
-.header-text p { font-size: 14px; color: #fbcfe8; }
+.couple-photo { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 3px solid #fff; }
+.header-info h1 { font-size: 22px; font-weight: 800; }
+.header-info p { font-size: 13px; color: #fbcfe8; }
 
-.clock-container { display: flex; gap: 20px; background: rgba(0,0,0,0.2); padding: 10px 20px; border-radius: 15px; }
-.clock-box { text-align: center; }
-.clock-box .flag { font-size: 20px; }
-.clock-box .country { font-size: 12px; color: #cbd5e1; font-weight: bold; }
-.clock-box .time { font-size: 22px; font-weight: 800; color: #fff; }
+/* Time Box */
+.time-box { display: flex; justify-content: space-between; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 12px; margin-bottom: 16px; text-align: center; }
+.time-item .flag { font-size: 20px; }
+.time-item .label { font-size: 11px; color: var(--text-muted); font-weight: bold; }
+.time-item .val { font-size: 18px; font-weight: 800; color: #fff; margin-top: 2px; }
 
-/* Summary Cards (Top Row) */
-.summary-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-.summary-card { padding: 24px; border-radius: 16px; border-left: 6px solid var(--primary); background: rgba(255,255,255,0.05); }
-.summary-title { font-size: 13px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
-.summary-amount { font-size: 30px; font-weight: 900; margin-top: 5px; }
+/* Cards */
+.card { padding: 16px; }
+.card-title { font-size: 16px; font-weight: 700; margin-bottom: 15px; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
 
-/* Main Grid Layout */
-.main-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 24px; }
-@media(max-width: 992px) { .main-grid { grid-template-columns: 1fr; } }
+/* Summary Grid */
+.summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.summary-box { padding: 15px; border-radius: 12px; text-align: center; background: rgba(0,0,0,0.2); border-bottom: 4px solid; }
+.summary-box .title { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+.summary-box .amount { font-size: 20px; font-weight: 800; margin-top: 4px; }
 
-/* Form Styles */
-.card{ padding: 24px; }
-.card-title{font-size:18px;font-weight:700;margin-bottom:20px; display:flex; align-items:center; gap:10px; color: #fff;}
-.field{display:flex;flex-direction:column;gap:6px; margin-bottom: 15px;}
-.field label{font-size:13px;font-weight:600;color:var(--text-muted)}
-.field input,.field select{
-    font-size:15px; padding:12px; border:1px solid var(--glass-border); border-radius:12px;
-    background:rgba(0,0,0,0.2); color: #fff; outline:none; transition: 0.3s; width: 100%;
+/* Form Grid */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-grid .full { grid-column: span 2; }
+.input-group { display: flex; flex-direction: column; gap: 5px; }
+.input-group label { font-size: 13px; color: var(--text-muted); font-weight: 600; }
+.input-group input, .input-group select {
+    padding: 12px; border-radius: 10px; border: 1px solid var(--glass-border);
+    background: rgba(0,0,0,0.2); color: #fff; font-size: 15px; outline: none;
 }
-.field input:focus,.field select:focus { border-color: var(--primary); background: rgba(0,0,0,0.4); }
-.field select option { background: #1e1b4b; color: #fff; }
+.input-group select option { background: #1e1b4b; color: #fff; }
 
-.btn-primary{
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color:#fff;font-size:16px;font-weight:700;padding:15px;border-radius:12px;width:100%;
-    box-shadow: 0 6px 20px rgba(219, 39, 119, 0.4); cursor: pointer; border: none;
-}
-.btn-primary:hover { transform: translateY(-2px); }
-.btn-ghost{background:rgba(255,255,255,0.1); color:#fff; font-size:14px;font-weight:600;padding:10px 15px;border-radius:10px;border:1px solid var(--glass-border); cursor: pointer;}
+/* Buttons */
+.btn-submit { width: 100%; padding: 14px; border-radius: 10px; border: none; font-size: 16px; font-weight: 700; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; cursor: pointer; margin-top: 10px; }
+.btn-cancel { width: 100%; padding: 10px; border-radius: 10px; border: none; font-size: 14px; font-weight: 700; background: rgba(255,255,255,0.1); color: white; cursor: pointer; margin-top: 10px; display: none; }
 
-/* Category Breakdown */
-.category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-@media(max-width: 600px) { .category-grid { grid-template-columns: 1fr; } }
-
-.cat-section h3 { font-size: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
-.cat-item { margin-bottom: 12px; }
-.cat-header { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
-.cat-bar-bg { height: 10px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
-.cat-bar-fill { height: 100%; border-radius: 10px; transition: width 0.5s ease; }
-
-/* Filters */
-.filter-bar { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-.filter-bar select { padding: 12px 20px; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); color: #fff; font-weight: bold; outline: none; cursor: pointer; font-size: 15px;}
-.filter-bar input { flex: 1; padding: 12px 20px; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); color: #fff; outline: none; min-width: 200px;}
+/* Filter Bar */
+.filter-bar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
+.filter-bar select, .filter-bar input { padding: 10px; border-radius: 10px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); color: #fff; font-size: 14px; outline: none; }
+.filter-bar input { flex: 1; min-width: 150px; }
 
 /* Table */
-.table-scroll{overflow-x:auto; margin: 0 -24px; padding: 0 24px;}
-table{width:100%;border-collapse:collapse;min-width:800px;}
-thead th{text-align:left;font-size:13px;color:var(--text-muted);padding:12px 10px;border-bottom:1px solid var(--glass-border);}
-tbody td{padding:15px 10px;font-size:15px;border-bottom:1px solid rgba(255,255,255,0.05);}
-.badge{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;padding:5px 10px;border-radius:99px;}
-.action-btns { display: flex; gap: 8px; }
-.icon-btn{width:35px;height:35px;border-radius:8px;background:rgba(255,255,255,0.1);display:grid;place-items:center;font-size:14px;cursor:pointer; border:1px solid var(--glass-border);}
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 600px; }
+th { text-align: left; padding: 10px; font-size: 13px; color: var(--text-muted); border-bottom: 1px solid var(--glass-border); }
+td { padding: 12px 10px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.badge { padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: bold; }
 
-#toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #16a34a; color: #fff; padding: 12px 24px; border-radius: 99px; font-weight: 600; font-size: 14px; z-index: 10000; transition: transform 0.35s; box-shadow: 0 8px 24px rgba(22,163,74,0.4); opacity: 0; }
-#toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+/* Category Breakdown Items */
+.cat-item { margin-bottom: 12px; }
+.cat-header { display: flex; justify-content: space-between; font-size: 13px; font-weight: bold; margin-bottom: 5px; }
+.cat-bar-bg { height: 8px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; }
+.cat-bar-fill { height: 100%; border-radius: 5px; transition: width 0.3s; }
+
+/* Toast */
+#toast { position: fixed; bottom: 20px; left: 50%; transform: translate(-50%, 100px); background: #16a34a; color: white; padding: 10px 20px; border-radius: 20px; font-weight: 600; transition: 0.3s; z-index: 9999; opacity: 0; }
+#toast.show { transform: translate(-50%, 0); opacity: 1; }
 
 /* Music Button */
-#musicBtn { position: fixed; bottom: 30px; right: 30px; background: linear-gradient(45deg, #db2777, #9333ea); color: white; padding: 15px; border-radius: 50%; font-weight: 800; font-size: 20px; cursor: pointer; box-shadow: 0 6px 20px rgba(147, 51, 234, 0.6); z-index: 9999; display: flex; align-items: center; justify-content: center; border: 2px solid rgba(255,255,255,0.5); transition: all 0.3s ease; width: 60px; height: 60px; }
-#musicBtn.playing { background: linear-gradient(45deg, #10b981, #059669); animation: pulse 2s infinite; }
-@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+#musicBtn { position: fixed; bottom: 20px; right: 20px; width: 55px; height: 55px; border-radius: 50%; background: linear-gradient(45deg, #db2777, #9333ea); color: white; font-size: 22px; border: 2px solid white; box-shadow: 0 4px 15px rgba(147,51,234,0.5); cursor: pointer; z-index: 9999; display: flex; justify-content: center; align-items: center; }
 </style>
 </head>
 <body>
 
-<!-- गीत बजाउने अडियो -->
 <audio id="bgMusic" loop></audio>
-
 <div id="toast">✓ <span id="toastMsg"></span></div>
 
-<div class="dashboard-wrap">
-  
-  <!-- HEADER -->
-  <header class="top-header">
-    <div class="header-left">
-        <img src="wife.jpg" alt="Hamro Photo" class="couple-photo-small">
-        <div class="header-text">
+<div class="wrap">
+    <!-- HEADER -->
+    <header class="top-header">
+        <img src="wife.jpg" alt="Photo" class="couple-photo">
+        <div class="header-info">
             <h1>🌸 अन्जना हिसाब</h1>
-            <p id="todayDate">मिति लोड हुँदै...</p>
+            <p id="nepaliDate">मिति...</p>
         </div>
-    </div>
-    <div class="clock-container">
-        <div class="clock-box">
+    </header>
+
+    <!-- LIVE CLOCK -->
+    <div class="glass-card time-box">
+        <div class="time-item">
             <div class="flag">🇸🇦</div>
-            <div class="country">साउदी समय</div>
-            <div class="time" id="saudiTime">--:--:--</div>
+            <div class="label">साउदी समय</div>
+            <div class="val" id="saudiTime">--:--:--</div>
         </div>
-        <div class="clock-box">
+        <div class="time-item">
             <div class="flag">🇳🇵</div>
-            <div class="country">नेपाल समय</div>
-            <div class="time" id="nepalTime">--:--:--</div>
+            <div class="label">नेपाल समय</div>
+            <div class="val" id="nepalTime">--:--:--</div>
         </div>
     </div>
-  </header>
 
-  <!-- SUMMARY CARDS -->
-  <div class="summary-row">
-    <div class="glass-card summary-card" style="border-left-color: #10b981;">
-        <div class="summary-title">कुल आम्दानी</div>
-        <div class="summary-amount" id="statIncome" style="color: #10b981;">रु. ०</div>
+    <!-- SUMMARY TOTALS -->
+    <div class="summary-grid">
+        <div class="summary-box" style="border-color: var(--green);">
+            <div class="title">कुल आम्दानी</div>
+            <div class="amount" id="sumIncome" style="color: var(--green);">रु. ०</div>
+        </div>
+        <div class="summary-box" style="border-color: var(--red);">
+            <div class="title">कुल खर्च</div>
+            <div class="amount" id="sumExpense" style="color: var(--red);">रु. ०</div>
+        </div>
+        <div class="summary-box" style="border-color: var(--blue); grid-column: span 2;">
+            <div class="title">कुल बचत (Savings)</div>
+            <div class="amount" id="sumSavings" style="color: var(--blue);">रु. ०</div>
+        </div>
     </div>
-    <div class="glass-card summary-card" style="border-left-color: #ef4444;">
-        <div class="summary-title">कुल खर्च</div>
-        <div class="summary-amount" id="statExpense" style="color: #ef4444;">रु. ०</div>
-    </div>
-    <div class="glass-card summary-card" style="border-left-color: #3b82f6;">
-        <div class="summary-title">कुल बचत (Savings)</div>
-        <div class="summary-amount" id="statSavings" style="color: #3b82f6;">रु. ०</div>
-    </div>
-    <div class="glass-card summary-card" style="border-left-color: #f59e0b;">
-        <div class="summary-title">कुल रेकर्ड</div>
-        <div class="summary-amount" id="statCount">० वटा</div>
-    </div>
-  </div>
 
-  <!-- MAIN GRID: FORM & CATEGORY -->
-  <div class="main-grid">
-    
-    <!-- LEFT SIDE: FORM -->
+    <!-- FORM -->
     <div class="glass-card card">
         <h2 class="card-title">➕ नयाँ रेकर्ड थप्नुहोस्</h2>
-        
-        <form id="expenseForm">
-          <div class="field">
-            <label>प्रकार (Type)</label>
-            <select id="txType" onchange="toggleCategories()" style="font-weight:bold; background: rgba(0,0,0,0.4);">
-                <option value="expense">🔴 खर्च (Expense)</option>
-                <option value="income">🟢 आम्दानी (Income)</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label>मिति</label>
-            <input type="date" id="date" required min="1900-01-01" max="2200-12-31">
-          </div>
-
-          <div class="field">
-            <label>रकम (रु.)</label>
-            <input type="number" id="amount" min="1" placeholder="0" required>
-          </div>
-          
-          <div class="field">
-            <label>के को लागि? (कोटी)</label>
-            <select id="category" required></select>
-          </div>
-          
-          <div class="field">
-            <label>भुक्तानी माध्यम</label>
-            <select id="paymentMethod">
-                <option value="cash">💵 नगद (Cash)</option>
-                <option value="bank">🏦 बैंक (Bank)</option>
-                <option value="online">📱 अनलाइन (Online)</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label>विवरण (Note)</label>
-            <input type="text" id="note" placeholder="जस्तै: तलब आयो / तेल किनेको">
-          </div>
-          
-          <button type="submit" class="btn-primary" id="submitBtn" style="margin-top: 10px;">रेकर्ड सेभ गर्नुहोस्</button>
-          <button type="button" class="btn-ghost" id="cancelEditBtn" style="display:none; margin-top: 10px; width:100%;" onclick="cancelEdit()">रद्द गर्नुहोस्</button>
+        <form id="entryForm">
+            <div class="form-grid">
+                <div class="input-group full">
+                    <label>प्रकार (Type)</label>
+                    <select id="type" onchange="updateCategories()">
+                        <option value="expense">🔴 खर्च (Expense)</option>
+                        <option value="income">🟢 आम्दानी (Income)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>मिति</label>
+                    <input type="date" id="date" required>
+                </div>
+                <div class="input-group">
+                    <label>रकम (रु.)</label>
+                    <input type="number" id="amount" required placeholder="0">
+                </div>
+                <div class="input-group full">
+                    <label>के को लागि? (कोटी)</label>
+                    <select id="category" required></select>
+                </div>
+                <div class="input-group full">
+                    <label>भुक्तानी माध्यम</label>
+                    <select id="payment">
+                        <option value="cash">💵 नगद (Cash)</option>
+                        <option value="bank">🏦 बैंक (Bank)</option>
+                        <option value="online">📱 अनलाइन (Online)</option>
+                    </select>
+                </div>
+                <div class="input-group full">
+                    <label>विवरण (Note)</label>
+                    <input type="text" id="note" placeholder="जस्तै: तलब आयो / तेल किनेको">
+                </div>
+            </div>
+            <button type="submit" class="btn-submit" id="submitBtn">सेभ गर्नुहोस्</button>
+            <button type="button" class="btn-cancel" id="cancelBtn" onclick="cancelEdit()">रद्द गर्नुहोस्</button>
         </form>
     </div>
 
-    <!-- RIGHT SIDE: CATEGORY BREAKDOWN -->
+    <!-- FILTERS -->
     <div class="glass-card card">
-        <h2 class="card-title">📊 कुन कुरामा कति खर्च भयो? (कोटी अनुसार)</h2>
-        <div class="category-grid" id="categoryBreakdownContainer">
-            <!-- Dynamic content will load here -->
+        <div class="filter-bar">
+            <select id="filterYear" onchange="renderData()">
+                <option value="all">सबै वर्ष</option>
+            </select>
+            <select id="filterMonth" onchange="renderData()">
+                <option value="all">सबै महिना</option>
+                <option value="0">जनवरी</option><option value="1">फेब्रुअरी</option><option value="2">मार्च</option>
+                <option value="3">अप्रिल</option><option value="4">मे</option><option value="5">जुन</option>
+                <option value="6">जुलाई</option><option value="7">अगस्ट</option><option value="8">सेप्टेम्बर</option>
+                <option value="9">अक्टोबर</option><option value="10">नोभेम्बर</option><option value="11">डिसेम्बर</option>
+            </select>
+            <input type="text" id="searchBar" placeholder="🔍 खोज्नुहोस्..." oninput="renderData()">
         </div>
+
+        <!-- CATEGORY BREAKDOWN (कुन कुरामा कति) -->
+        <h2 class="card-title" style="margin-top:20px;">📊 कुन कुरामा कति खर्च/आम्दानी?</h2>
+        <div id="categoryBreakdown" style="margin-bottom: 20px;">
+            <!-- Loads dynamically -->
+        </div>
+
+        <!-- DATA TABLE -->
+        <h2 class="card-title">🧾 सबै कारोबारको सूची</h2>
+        <div class="table-scroll">
+            <table>
+                <thead>
+                    <tr>
+                        <th>मिति</th>
+                        <th>प्रकार</th>
+                        <th>विवरण</th>
+                        <th style="text-align:right;">रकम</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+        <div id="emptyState" style="text-align:center; padding: 20px; color:var(--text-muted); display:none;">कुनै रेकर्ड भेटिएन।</div>
     </div>
-
-  </div>
-
-  <!-- TABLE & FILTERS SECTION -->
-  <div class="glass-card card">
-    <h2 class="card-title">🧾 सबै कारोबारको सूची</h2>
-    
-    <div class="filter-bar">
-        <select id="yearFilter" onchange="renderDashboard()">
-            <option value="all">सबै वर्ष</option>
-        </select>
-        <select id="monthFilter" onchange="renderDashboard()">
-            <option value="all">सबै महिना</option>
-            <option value="0">जनवरी</option><option value="1">फेब्रुअरी</option><option value="2">मार्च</option>
-            <option value="3">अप्रिल</option><option value="4">मे</option><option value="5">जुन</option>
-            <option value="6">जुलाई</option><option value="7">अगस्ट</option><option value="8">सेप्टेम्बर</option>
-            <option value="9">अक्टोबर</option><option value="10">नोभेम्बर</option><option value="11">डिसेम्बर</option>
-        </select>
-        <input type="text" id="searchInput" placeholder="🔍 खर्च खोज्नुहोस् (जस्तै: तेल, स्कुल...)" oninput="renderDashboard()">
-        <button class="btn-ghost" onclick="downloadCSV()">⬇️ CSV ब्याकअप</button>
-    </div>
-
-    <div class="table-scroll">
-      <table>
-        <thead>
-            <tr>
-                <th>मिति</th>
-                <th>प्रकार</th>
-                <th>कोटी र विवरण</th>
-                <th>माध्यम</th>
-                <th style="text-align:right;">रकम</th>
-                <th style="text-align:right;">कार्य</th>
-            </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-      </table>
-    </div>
-    <div id="tableEmpty" style="text-align:center;padding:30px;color:var(--text-muted);display:none;">📭 यो अवधिमा कुनै रेकर्ड भेटिएन।</div>
-  </div>
-
 </div>
 
-<!-- Music Button -->
 <button id="musicBtn" onclick="toggleMusic()">🎵</button>
 
 <script>
 /* ================= CONFIG ================= */
-const BASE_URL = "https://anjana-khata-default-rtdb.firebaseio.com/khata/";
-const EXPENSE_URL = BASE_URL + "expenses";
-const INCOME_URL = BASE_URL + "incomes";
+const DB_URL = "https://anjana-khata-default-rtdb.firebaseio.com/khata";
+const EXP_URL = DB_URL + "/expenses";
+const INC_URL = DB_URL + "/incomes";
 
-/* CATEGORIES */
-const EXPENSE_CATS = [
-  { id:'khana', name:'खाना/किराना', icon:'🍚', color:'#f59e0b' }, 
-  { id:'school_fee', name:'स्कुल फी', icon:'🏫', color:'#f97316' },
-  { id:'bijuli', name:'बिजुली', icon:'💡', color:'#eab308' }, 
-  { id:'pani', name:'पानी', icon:'💧', color:'#3b82f6' },
-  { id:'gas', name:'ग्यास', icon:'🔥', color:'#ef4444' }, 
-  { id:'wifi', name:'वाइफाइ', icon:'📶', color:'#06b6d4' },
-  { id:'shopping', name:'सपिङ/लुगा', icon:'🛍️', color:'#a855f7' }, 
-  { id:'medical', name:'मेडिकल', icon:'💊', color:'#dc2626' },
-  { id:'other_exp', name:'अन्य खर्च', icon:'📦', color:'#64748b' }
+const EXP_CATS = [
+    { id:'khana', name:'खाना', icon:'🍚', color:'#f59e0b' },
+    { id:'school_fee', name:'स्कुल फी', icon:'🏫', color:'#f97316' },
+    { id:'bijuli', name:'बिजुली', icon:'💡', color:'#eab308' },
+    { id:'pani', name:'पानी', icon:'💧', color:'#3b82f6' },
+    { id:'gas', name:'ग्यास', icon:'🔥', color:'#ef4444' },
+    { id:'wifi', name:'वाइफाइ', icon:'📶', color:'#06b6d4' },
+    { id:'shopping', name:'सपिङ', icon:'🛍️', color:'#a855f7' },
+    { id:'medical', name:'मेडिकल', icon:'💊', color:'#dc2626' },
+    { id:'other_exp', name:'अन्य', icon:'📦', color:'#64748b' }
 ];
 
-const INCOME_CATS = [
-  { id:'salary', name:'तलब (Salary)', icon:'💼', color:'#10b981' },
-  { id:'business', name:'व्यापार (Business)', icon:'🏪', color:'#0ea5e9' },
-  { id:'gift', name:'उपहार (Gift)', icon:'🎁', color:'#8b5cf6' },
-  { id:'investment', name:'लगानी (Investment)', icon:'📈', color:'#f59e0b' },
-  { id:'other_inc', name:'अन्य आम्दानी', icon:'💰', color:'#14b8a6' }
+const INC_CATS = [
+    { id:'salary', name:'तलब', icon:'💼', color:'#10b981' },
+    { id:'business', name:'व्यापार', icon:'🏪', color:'#0ea5e9' },
+    { id:'gift', name:'उपहार', icon:'🎁', color:'#8b5cf6' },
+    { id:'other_inc', name:'अन्य', icon:'💰', color:'#14b8a6' }
 ];
 
-const MONTHS_NE = ['जनवरी','फेब्रुअरी','मार्च','अप्रिल','मे','जुन','जुलाई','अगस्ट','सेप्टेम्बर','अक्टोबर','नोभेम्बर','डिसेम्बर'];
+const MONTHS = ['जनवरी','फेब्रुअरी','मार्च','अप्रिल','मे','जुन','जुलाई','अगस्ट','सेप्टेम्बर','अक्टोबर','नोभेम्बर','डिसेम्बर'];
+const catMap = Object.fromEntries([...EXP_CATS, ...INC_CATS].map(c => [c.id, c]));
 
-let allTransactions = []; 
+let allData = [];
 let editingId = null;
-let editingType = null; 
+let editingType = null;
 const $ = id => document.getElementById(id);
-const allCatsMap = Object.fromEntries([...EXPENSE_CATS, ...INCOME_CATS].map(c => [c.id, c]));
 
-/* ================= MUSIC LOGIC (song.mp3 & song2.mp3) ================= */
+function fmt(n) { return 'रु. ' + (Number(n)||0).toLocaleString('en-IN'); }
+function toISO(d) { return d.toISOString().split('T')[0]; }
+function formatDate(iso) { const [y,m,d] = iso.split('-'); return `${+d} ${MONTHS[+m-1]} ${y}`; }
+
+/* ================= MUSIC LOGIC ================= */
 const songs = ['song.mp3', 'song2.mp3'];
-let currentSongIndex = 0;
-const music = document.getElementById('bgMusic');
-const musicBtn = document.getElementById('musicBtn');
+let songIdx = 0;
+const audio = $('bgMusic');
+audio.src = songs[songIdx];
+audio.addEventListener('ended', () => {
+    songIdx = (songIdx + 1) % songs.length;
+    audio.src = songs[songIdx];
+    audio.play().catch(e=>{});
+});
+
 let isPlaying = false;
-
-// पहिलो गीत सेट गर्ने
-music.src = songs[currentSongIndex];
-
-// गीत सकिएपछि अर्को गीत बजाउने
-music.addEventListener('ended', function() {
-    currentSongIndex = (currentSongIndex + 1) % songs.length;
-    music.src = songs[currentSongIndex];
-    music.play().catch(e => {});
-});
-
 function playMusic() {
-    if (!isPlaying) {
-        music.play().then(() => {
-            isPlaying = true;
-            musicBtn.classList.add('playing');
-            musicBtn.textContent = '⏸️';
-        }).catch(e => {}); // ब्राउजरले रोक्यो भने केही नगर्ने
+    if(!isPlaying) {
+        audio.play().then(()=>{ isPlaying=true; $('musicBtn').textContent='⏸️'; }).catch(e=>{});
     }
 }
-
 function toggleMusic() {
-    if (isPlaying) {
-        music.pause();
-        isPlaying = false;
-        musicBtn.classList.remove('playing');
-        musicBtn.textContent = '🎵';
-    } else {
-        playMusic();
-    }
+    if(isPlaying) { audio.pause(); isPlaying=false; $('musicBtn').textContent='🎵'; }
+    else { playMusic(); }
 }
+document.body.addEventListener('click', (e)=>{ if(!e.target.closest('#musicBtn')) playMusic(); });
 
-// स्क्रिनमा पहिलो पटक टच/क्लिक गर्दा गीत बज्ने (Autoplay policy)
-document.body.addEventListener('touchstart', function(e) {
-    if (!e.target.closest('#musicBtn')) playMusic();
-}, { passive: true });
-document.body.addEventListener('click', function(e) {
-    if (!e.target.closest('#musicBtn')) playMusic();
-});
-
-/* ================= HELPER FUNCTIONS ================= */
-function fmt(n){ return 'रु. ' + (Number(n)||0).toLocaleString('en-IN'); }
-function toISO(d){ return d.toISOString().split('T')[0]; }
-function formatDate(iso){ const [y,m,d] = iso.split('-'); return `${+d} ${MONTHS_NE[+m-1]} ${y}`; }
-
-let toastTimer;
-function showToast(msg, color='#16a34a'){
-  const t = $('toast'); $('toastMsg').textContent = msg; t.style.background = color;
-  t.classList.add('show'); clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
-}
-
-/* ================= LIVE CLOCK ================= */
-function initClock() {
-    try {
-        const now = new Date();
-        const nd = new NepaliDate(now);
-        $('todayDate').innerHTML = `<b>${nd.format('DD MMMM YYYY', 'np')}</b>`;
-    } catch (e) { $('todayDate').textContent = "मिति लोड हुन सकेन"; }
-
+/* ================= CLOCK ================= */
+function startClock() {
     setInterval(() => {
         const d = new Date();
-        $('saudiTime').textContent = d.toLocaleTimeString('en-US', { timeZone: 'Asia/Riyadh', hour12: false });
-        $('nepalTime').textContent = d.toLocaleTimeString('en-US', { timeZone: 'Asia/Kathmandu', hour12: false });
+        $('saudiTime').textContent = d.toLocaleTimeString('en-US', { timeZone:'Asia/Riyadh', hour12:false });
+        $('nepalTime').textContent = d.toLocaleTimeString('en-US', { timeZone:'Asia/Kathmandu', hour12:false });
     }, 1000);
+    try {
+        const nd = new NepaliDate(new Date());
+        $('nepaliDate').textContent = nd.format('DD MMMM YYYY', 'np');
+    } catch(e) {}
 }
 
-/* ================= FORM LOGIC ================= */
-function toggleCategories() {
-    const type = $('txType').value;
-    const catSelect = $('category');
-    const cats = type === 'income' ? INCOME_CATS : EXPENSE_CATS;
-    catSelect.innerHTML = cats.map(c => `<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
+/* ================= FORM & LOAD ================= */
+function updateCategories() {
+    const type = $('type').value;
+    const cats = type === 'income' ? INC_CATS : EXP_CATS;
+    $('category').innerHTML = cats.map(c => `<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
 }
 
-async function loadCloudData() {
-  try {
-    const expRes = await fetch(EXPENSE_URL + ".json");
-    const expJson = await expRes.json();
-    let expenses = [];
-    if (expJson) { for (let key in expJson) { expenses.push({ id: key, type: 'expense', ...expJson[key] }); } }
-    
-    const incRes = await fetch(INCOME_URL + ".json");
-    const incJson = await incRes.json();
-    let incomes = [];
-    if (incJson) { for (let key in incJson) { incomes.push({ id: key, type: 'income', ...incJson[key] }); } }
+async function loadData() {
+    try {
+        const [expRes, incRes] = await Promise.all([fetch(EXP_URL+'.json'), fetch(INC_URL+'.json')]);
+        const exps = await expRes.json() || {};
+        const incs = await incRes.json() || {};
+        
+        allData = [];
+        for(let k in exps) allData.push({ id:k, type:'expense', ...exps[k] });
+        for(let k in incs) allData.push({ id:k, type:'income', ...incs[k] });
 
-    allTransactions = [...expenses, ...incomes];
-    
-    // वर्ष फिल्टर अपडेट गर्ने
-    const currentYear = new Date().getFullYear();
-    const years = new Set();
-    for(let i = 2015; i <= currentYear + 5; i++) { years.add(i); }
-    allTransactions.forEach(d => { const y = +d.date.split('-')[0]; if(y) years.add(y); });
-    
-    const sortedYears = [...years].sort((a,b) => b-a);
-    const yearSel = $('yearFilter');
-    const currentVal = yearSel.value;
-    
-    yearSel.innerHTML = `<option value="all">सबै वर्ष</option>` + sortedYears.map(y => `<option value="${y}">${y}</option>`).join('');
-    
-    if (currentVal && (currentVal === 'all' || sortedYears.includes(+currentVal))) {
-        yearSel.value = currentVal;
-    } else {
-        yearSel.value = 'all'; // डिफल्टमा सबै वर्ष देखाउने
-    }
-    
-    renderDashboard();
-  } catch(e) { console.error("डाटा लोड भएन", e); }
+        // Populate Years
+        const currentY = new Date().getFullYear();
+        let years = new Set(allData.map(d => +d.date.split('-')[0]));
+        years.add(currentY);
+        let sortedYears = [...years].sort((a,b)=>b-a);
+        $('filterYear').innerHTML = `<option value="all">सबै वर्ष</option>` + sortedYears.map(y=>`<option value="${y}">${y}</option>`).join('');
+
+        renderData();
+    } catch(e) { console.error("Load error", e); }
 }
 
-$('expenseForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const type = $('txType').value;
-  const url = type === 'income' ? INCOME_URL : EXPENSE_URL;
-  const payment = $('paymentMethod').value;
-  
-  const newItem = {
-    date: $('date').value, category: $('category').value, payment: payment,
-    amount: Number($('amount').value), note: $('note').value.trim(), ts: Date.now()
-  };
-  
-  $('submitBtn').textContent = 'सेभ हुँदै...'; $('submitBtn').disabled = true;
-  
-  try {
-    if (editingId) {
-      if (editingType !== type) {
-          const oldUrl = editingType === 'income' ? INCOME_URL : EXPENSE_URL;
-          await fetch(`${oldUrl}/${editingId}.json`, { method: 'DELETE' });
-          await fetch(url + ".json", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newItem) });
-      } else {
-          await fetch(`${url}/${editingId}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newItem) });
-      }
-      editingId = null; editingType = null;
-      $('submitBtn').textContent = 'रेकर्ड सेभ गर्नुहोस्'; $('cancelEditBtn').style.display = 'none';
-      showToast('✓ अपडेट भयो!');
-    } else {
-      await fetch(url + ".json", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newItem) });
-      showToast(type === 'income' ? '✓ आम्दानी सुरक्षित भयो!' : '✓ खर्च सुरक्षित भयो!');
-    }
-    $('amount').value = ''; $('note').value = ''; $('date').value = toISO(new Date());
-    loadCloudData();
-  } catch(err) { alert("सेभ गर्न सकिएन।"); } finally { $('submitBtn').textContent = 'रेकर्ड सेभ गर्नुहोस्'; $('submitBtn').disabled = false; }
+$('entryForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const type = $('type').value;
+    const url = type === 'income' ? INC_URL : EXP_URL;
+    
+    const newData = {
+        date: $('date').value,
+        category: $('category').value,
+        amount: Number($('amount').value),
+        payment: $('payment').value,
+        note: $('note').value.trim(),
+        ts: Date.now()
+    };
+
+    $('submitBtn').textContent = 'सेभ हुँदै...';
+    $('submitBtn').disabled = true;
+
+    try {
+        if(editingId) {
+            if(editingType !== type) {
+                let oldUrl = editingType === 'income' ? INC_URL : EXP_URL;
+                await fetch(`${oldUrl}/${editingId}.json`, { method: 'DELETE' });
+                await fetch(`${url}.json`, { method:'POST', body:JSON.stringify(newData) });
+            } else {
+                await fetch(`${url}/${editingId}.json`, { method:'PUT', body:JSON.stringify(newData) });
+            }
+            editingId = null; editingType = null;
+            $('submitBtn').textContent = 'सेभ गर्नुहोस्';
+            $('cancelBtn').style.display = 'none';
+        } else {
+            await fetch(`${url}.json`, { method:'POST', body:JSON.stringify(newData) });
+        }
+        
+        $('amount').value = '';
+        $('note').value = '';
+        $('date').value = toISO(new Date());
+        await loadData();
+    } catch(e) { alert('सेभ गर्न सकिएन'); }
+    finally { $('submitBtn').textContent = 'सेभ गर्नुहोस्'; $('submitBtn').disabled = false; }
 });
 
-/* ================= DASHBOARD RENDER ================= */
-function renderDashboard() {
-  toggleCategories(); 
-
-  const y = $('yearFilter').value; 
-  const m = $('monthFilter').value;
-  const searchTerm = $('searchInput').value.toLowerCase();
-  
-  // १. फिल्टरिङ
-  let filtered = allTransactions;
-  if (y !== 'all') {
-      filtered = filtered.filter(d => +d.date.split('-')[0] === +y);
-  }
-  if (m !== 'all') {
-      filtered = filtered.filter(d => (+d.date.split('-')[1] - 1) === +m);
-  }
-  if (searchTerm) {
-      filtered = filtered.filter(d => 
-          (d.note && d.note.toLowerCase().includes(searchTerm)) || 
-          (allCatsMap[d.category] && allCatsMap[d.category].name.toLowerCase().includes(searchTerm))
-      );
-  }
-
-  // २. स्ट्याट्स
-  const totalIncome = filtered.filter(d => d.type === 'income').reduce((s,d) => s + d.amount, 0);
-  const totalExpense = filtered.filter(d => d.type === 'expense').reduce((s,d) => s + d.amount, 0);
-  const totalSavings = totalIncome - totalExpense;
-  
-  $('statIncome').textContent = fmt(totalIncome);
-  $('statExpense').textContent = fmt(totalExpense);
-  $('statSavings').textContent = fmt(totalSavings);
-  $('statSavings').style.color = totalSavings < 0 ? '#ef4444' : '#3b82f6';
-  $('statCount').textContent = fmtNum(filtered.length) + ' वटा';
-
-  // ३. कोटी अनुसार विश्लेषण (Category Breakdown)
-  const expByCat = {};
-  const incByCat = {};
-  filtered.forEach(d => {
-      if (d.type === 'income') incByCat[d.category] = (incByCat[d.category] || 0) + d.amount;
-      else expByCat[d.category] = (expByCat[d.category] || 0) + d.amount;
-  });
-  
-  let catHTML = '';
-  
-  // आम्दानीको स्रोत
-  catHTML += '<div class="cat-section">';
-  catHTML += '<h3 style="color:#10b981;">🟢 आम्दानीको स्रोत</h3>';
-  if (totalIncome > 0) {
-    const sortedInc = Object.keys(incByCat).sort((a,b) => incByCat[b] - incByCat[a]);
-    sortedInc.forEach(catId => {
-        const cat = allCatsMap[catId] || allCatsMap['other_inc'];
-        const amt = incByCat[catId];
-        const percent = (amt / totalIncome) * 100;
-        catHTML += `
-        <div class="cat-item">
-            <div class="cat-header"><span>${cat.icon} ${cat.name}</span> <span>${fmt(amt)}</span></div>
-            <div class="cat-bar-bg"><div class="cat-bar-fill" style="width: ${percent}%; background: ${cat.color};"></div></div>
-        </div>`;
-    });
-  } else {
-    catHTML += `<div style="font-size:13px; color:#cbd5e1;">कुनै आम्दानी छैन।</div>`;
-  }
-  catHTML += '</div>';
-
-  // खर्चको स्रोत
-  catHTML += '<div class="cat-section">';
-  catHTML += '<h3 style="color:#f472b6;">🔴 खर्चको स्रोत</h3>';
-  if (totalExpense > 0) {
-    const sortedExp = Object.keys(expByCat).sort((a,b) => expByCat[b] - expByCat[a]);
-    sortedExp.forEach(catId => {
-        const cat = allCatsMap[catId] || allCatsMap['other_exp'];
-        const amt = expByCat[catId];
-        const percent = (amt / totalExpense) * 100;
-        catHTML += `
-        <div class="cat-item">
-            <div class="cat-header"><span>${cat.icon} ${cat.name}</span> <span>${fmt(amt)}</span></div>
-            <div class="cat-bar-bg"><div class="cat-bar-fill" style="width: ${percent}%; background: ${cat.color};"></div></div>
-        </div>`;
-    });
-  } else {
-    catHTML += `<div style="font-size:13px; color:#cbd5e1;">कुनै खर्च छैन।</div>`;
-  }
-  catHTML += '</div>';
-
-  $('categoryBreakdownContainer').innerHTML = catHTML;
-
-  // ४. टेबल
-  filtered.sort((a,b) => b.date.localeCompare(a.date) || b.ts - a.ts);
-  $('tableBody').innerHTML = filtered.map(d => {
-    const c = allCatsMap[d.category] || { icon:'📦', name: d.category, color:'#64748b' };
-    const isInc = d.type === 'income';
-    const payIcon = d.payment === 'cash' ? '💵' : d.payment === 'bank' ? '🏦' : '📱';
-    
-    return `<tr>
-      <td>${formatDate(d.date)}</td>
-      <td><span class="badge" style="background:${isInc?'#10b98120':'#ef444420'}; color:${isInc?'#10b981':'#ef4444'}; border:1px solid ${isInc?'#10b981':'#ef4444'};">${isInc?'आम्दानी':'खर्च'}</span></td>
-      <td><span style="font-weight:bold; color:${c.color}">${c.icon} ${c.name}</span> <br><small style="color:#cbd5e1">${d.note || ''}</small></td>
-      <td style="font-size: 20px;" title="${d.payment || 'cash'}">${payIcon}</td>
-      <td style="text-align:right;font-weight:700; color:${isInc?'#10b981':'#fff'};">${isInc?'+':'-'} ${fmt(d.amount)}</td>
-      <td style="text-align:right;">
-        <div class="action-btns" style="justify-content: flex-end;">
-            <button class="icon-btn" onclick="editItem('${d.id}', '${d.type}')">✏️</button>
-            <button class="icon-btn del" style="color:#ef4444;" onclick="deleteItem('${d.id}', '${d.type}')">🗑️</button>
-        </div>
-      </td>
-    </tr>`;
-  }).join('');
-  
-  $('tableEmpty').style.display = filtered.length === 0 ? 'block' : 'none';
+function cancelEdit() {
+    editingId = null; editingType = null;
+    $('amount').value = ''; $('note').value = '';
+    $('submitBtn').textContent = 'सेभ गर्नुहोस्';
+    $('cancelBtn').style.display = 'none';
 }
 
-/* ================= EDIT & DELETE ================= */
+/* ================= RENDER & CALCULATE ================= */
+function renderData() {
+    updateCategories();
+    
+    const y = $('filterYear').value;
+    const m = $('filterMonth').value;
+    const search = $('searchBar').value.toLowerCase();
+
+    let filtered = allData;
+    if(y !== 'all') filtered = filtered.filter(d => +d.date.split('-')[0] === +y);
+    if(m !== 'all') filtered = filtered.filter(d => (+d.date.split('-')[1]-1) === +m);
+    if(search) filtered = filtered.filter(d => (d.note||'').toLowerCase().includes(search) || (catMap[d.category]||{}).name.toLowerCase().includes(search));
+
+    // Calculations
+    let incTotal = 0, expTotal = 0;
+    let incCat = {}, expCat = {};
+
+    filtered.forEach(d => {
+        if(d.type === 'income') {
+            incTotal += d.amount;
+            incCat[d.category] = (incCat[d.category]||0) + d.amount;
+        } else {
+            expTotal += d.amount;
+            expCat[d.category] = (expCat[d.category]||0) + d.amount;
+        }
+    });
+
+    $('sumIncome').textContent = fmt(incTotal);
+    $('sumExpense').textContent = fmt(expTotal);
+    $('sumSavings').textContent = fmt(incTotal - expTotal);
+
+    // Category Breakdown
+    let breakdownHTML = '<div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">';
+    
+    // Income list
+    breakdownHTML += '<div><h4 style="color:var(--green); margin-bottom:10px; font-size:14px;">🟢 आम्दानी</h4>';
+    if(Object.keys(incCat).length === 0) breakdownHTML += '<p style="font-size:12px; color:var(--muted);">छैन</p>';
+    for(let c in incCat) {
+        let cat = catMap[c] || catMap.other_inc;
+        let pct = incTotal ? (incCat[c]/incTotal*100) : 0;
+        breakdownHTML += `
+        <div class="cat-item">
+            <div class="cat-header"><span>${cat.icon} ${cat.name}</span> <span>${fmt(incCat[c])}</span></div>
+            <div class="cat-bar-bg"><div class="cat-bar-fill" style="width:${pct}%; background:${cat.color};"></div></div>
+        </div>`;
+    }
+    breakdownHTML += '</div>';
+
+    // Expense list
+    breakdownHTML += '<div><h4 style="color:var(--red); margin-bottom:10px; font-size:14px;">🔴 खर्च</h4>';
+    if(Object.keys(expCat).length === 0) breakdownHTML += '<p style="font-size:12px; color:var(--muted);">छैन</p>';
+    for(let c in expCat) {
+        let cat = catMap[c] || catMap.other_exp;
+        let pct = expTotal ? (expCat[c]/expTotal*100) : 0;
+        breakdownHTML += `
+        <div class="cat-item">
+            <div class="cat-header"><span>${cat.icon} ${cat.name}</span> <span>${fmt(expCat[c])}</span></div>
+            <div class="cat-bar-bg"><div class="cat-bar-fill" style="width:${pct}%; background:${cat.color};"></div></div>
+        </div>`;
+    }
+    breakdownHTML += '</div></div>';
+    $('categoryBreakdown').innerHTML = breakdownHTML;
+
+    // Table
+    filtered.sort((a,b) => b.date.localeCompare(a.date) || b.ts - a.ts);
+    $('tableBody').innerHTML = filtered.map(d => {
+        let c = catMap[d.category] || { icon:'📦', name:'अन्य', color:'#64748b' };
+        let isInc = d.type === 'income';
+        let payIcon = d.payment === 'cash' ? '💵' : (d.payment === 'bank' ? '🏦' : '📱');
+        
+        return `<tr>
+            <td>${formatDate(d.date)}</td>
+            <td><span class="badge" style="background:${isInc?'#10b98120':'#ef444420'}; color:${isInc?'#10b981':'#ef4444'}; border:1px solid ${isInc?'#10b981':'#ef4444'};">${isInc?'आम्दानी':'खर्च'}</span></td>
+            <td>${payIcon} ${c.icon} ${c.name} <br><small style="color:#94a3b8">${d.note||''}</small></td>
+            <td style="text-align:right; font-weight:700; color:${isInc?'#10b981':'#fff'};">${isInc?'+':'-'} ${fmt(d.amount)}</td>
+            <td style="text-align:right;">
+                <button style="background:none; border:none; cursor:pointer;" onclick="editItem('${d.id}', '${d.type}')">✏️</button>
+                <button style="background:none; border:none; cursor:pointer;" onclick="deleteItem('${d.id}', '${d.type}')">🗑️</button>
+            </td>
+        </tr>`;
+    }).join('');
+    $('emptyState').style.display = filtered.length === 0 ? 'block' : 'none';
+}
+
 window.editItem = (id, type) => {
-  const item = allTransactions.find(d => d.id === id); if(!item) return;
-  $('txType').value = type;
-  editingType = type; 
-  toggleCategories();
-  $('date').value = item.date; $('category').value = item.category; $('amount').value = item.amount; $('note').value = item.note || '';
-  if (item.payment) $('paymentMethod').value = item.payment;
-  editingId = id; 
-  $('submitBtn').textContent = 'अपडेट गर्नुहोस्';
-  $('cancelEditBtn').style.display = 'block';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+    let item = allData.find(d => d.id === id); if(!item) return;
+    $('type').value = type;
+    editingType = type;
+    updateCategories();
+    $('date').value = item.date;
+    $('category').value = item.category;
+    $('amount').value = item.amount;
+    $('note').value = item.note || '';
+    $('payment').value = item.payment || 'cash';
+    editingId = id;
+    $('submitBtn').textContent = 'अपडेट गर्नुहोस्';
+    $('cancelBtn').style.display = 'block';
+    window.scrollTo({top:0, behavior:'smooth'});
 };
 
 window.deleteItem = async (id, type) => {
-  if(!confirm('के तपाईं यो रेकर्ड मेटाउन चाहनुहुन्छ?')) return;
-  const url = type === 'income' ? INCOME_URL : EXPENSE_URL;
-  try {
+    if(!confirm('मेटाउने हो?')) return;
+    let url = type === 'income' ? INC_URL : EXP_URL;
     await fetch(`${url}/${id}.json`, { method: 'DELETE' });
-    showToast('✓ रेकर्ड मेटियो!', '#f59e0b');
-    loadCloudData();
-  } catch(e) { alert("मेटाउन सकिएन।"); }
+    loadData();
 };
 
-function cancelEdit() {
-    editingId = null;
-    editingType = null;
-    $('amount').value = ''; $('note').value = ''; $('date').value = toISO(new Date());
-    $('submitBtn').textContent = 'रेकर्ड सेभ गर्नुहोस्';
-    $('cancelEditBtn').style.display = 'none';
-}
-
-function downloadCSV() {
-    if(allTransactions.length === 0) return alert("डाउनलोड गर्न डाटा छैन।");
-    let csvContent = "Date,Type,Category,Amount,Payment,Note\n";
-    allTransactions.forEach(d => {
-        csvContent += `${d.date},${d.type},${allCatsMap[d.category]?.name || d.category},${d.amount},${d.payment||'cash'},"${d.note || ''}"\n`;
-    });
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = `Hisab_Backup_${toISO(new Date())}.csv`;
-    link.click();
-}
-
-/* ================= INIT ================= */
+/* INIT */
 (function init() {
-  $('date').value = toISO(new Date());
-  toggleCategories(); 
-  initClock();
-  loadCloudData();
+    $('date').value = toISO(new Date());
+    updateCategories();
+    startClock();
+    loadData();
 })();
 </script>
 </body>
