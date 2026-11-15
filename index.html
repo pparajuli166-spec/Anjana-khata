@@ -101,6 +101,16 @@ button{font-family:inherit;cursor:pointer;border:none;transition:.2s;}
 .insight-icon { font-size: 30px; }
 .insight-text { font-size: 14px; line-height: 1.5; color: #e2e8f0; }
 
+/* Quick Add Chips */
+.quick-add-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; }
+.quick-add-container::-webkit-scrollbar { display: none; }
+.chip { background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border); padding: 8px 15px; border-radius: 20px; font-size: 13px; font-weight: 600; color: #fff; white-space: nowrap; cursor: pointer; transition: 0.2s; }
+.chip:hover { background: var(--primary); border-color: var(--primary); }
+
+/* Search Bar */
+.search-bar { display: flex; gap: 10px; margin-bottom: 15px; }
+.search-bar input { flex: 1; padding: 10px 15px; border-radius: 10px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); color: #fff; outline: none; }
+
 /* Table */
 .table-scroll{overflow-x:auto; margin: 0 -20px; padding: 0 20px;}
 table{width:100%;border-collapse:collapse;min-width:100%;}
@@ -158,11 +168,18 @@ tbody td{padding:12px 10px;font-size:14px;border-bottom:1px solid rgba(255,255,2
 #callModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 99999; flex-direction: column; }
 #callIframe { flex: 1; width: 100%; height: 100%; border: none; }
 .close-call { position: absolute; top: 30px; right: 20px; background: #ef4444; color: white; border: none; padding: 12px 20px; border-radius: 30px; font-weight: bold; z-index: 100000; cursor: pointer; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.5); }
+
+/* 🛠️ FIXED: Toast CSS was missing */
+#toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(100px); background: #16a34a; color: #fff; padding: 12px 24px; border-radius: 99px; font-weight: 600; font-size: 14px; z-index: 10000; transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 8px 24px rgba(22,163,74,0.4); display: flex; align-items: center; gap: 8px; opacity: 0; pointer-events: none; }
+#toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 </style>
 </head>
 <body>
 
 <audio id="bgMusic" loop></audio>
+
+<!-- 🛠️ FIXED: Toast HTML was missing -->
+<div id="toast">✓ <span id="toastMsg"></span></div>
 
 <div id="callModal">
     <button class="close-call" onclick="endCall()">❌ कल अन्त्य गर्नुहोस्</button>
@@ -225,7 +242,7 @@ tbody td{padding:12px 10px;font-size:14px;border-bottom:1px solid rgba(255,255,2
         </div>
     </div>
 
-    <!-- 💡 Smart Insight (स्मार्ट सुझाव) -->
+    <!-- 💡 Smart Insight -->
     <div class="insight-card">
         <div class="insight-icon">💡</div>
         <div class="insight-text" id="smartInsightText">लोड हुँदै...</div>
@@ -242,7 +259,7 @@ tbody td{padding:12px 10px;font-size:14px;border-bottom:1px solid rgba(255,255,2
         </select>
     </div>
 
-    <!-- Stats Grid: Income, Expense, Savings, Today -->
+    <!-- Stats Grid -->
     <div class="stats-grid">
         <div class="glass-card stat-card" style="border-left-color: #10b981;">
             <div class="stat-title">कुल आम्दानी</div>
@@ -270,9 +287,18 @@ tbody td{padding:12px 10px;font-size:14px;border-bottom:1px solid rgba(255,255,2
 
     <div class="glass-card card" id="catBreakdown" style="padding:20px;"></div>
 
-    <!-- Transaction Form (Income/Expense) -->
+    <!-- Transaction Form -->
     <div class="glass-card card" style="border: 1px solid rgba(219, 39, 119, 0.5);">
         <h2 class="card-title" style="color:var(--primary);">➕ नयाँ रेकर्ड थप्नुहोस्</h2>
+        
+        <!-- Quick Add -->
+        <div class="quick-add-container">
+            <div class="chip" onclick="quickAdd('bijuli', 'बिजुली बिल')">💡 बिजुली</div>
+            <div class="chip" onclick="quickAdd('gas', 'ग्यास सिलिन्डर')">🔥 ग्यास</div>
+            <div class="chip" onclick="quickAdd('wifi', 'वाइफाइ बिल')">📶 वाइफाइ</div>
+            <div class="chip" onclick="quickAdd('khana', 'खाना/किराना')">🍚 खाना</div>
+        </div>
+
         <div class="form-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
           
           <div class="field" style="grid-column: span 2;">
@@ -287,6 +313,16 @@ tbody td{padding:12px 10px;font-size:14px;border-bottom:1px solid rgba(255,255,2
           <div class="field"><label>रकम (रु.)</label><input type="number" id="amount" min="1" placeholder="0" required></div>
           
           <div class="field" style="grid-column: span 2;"><label>के को लागि? (कोटी)</label><select id="category" required></select></div>
+          
+          <div class="field" style="grid-column: span 2;">
+            <label>भुक्तानी माध्यम (Payment Method)</label>
+            <select id="paymentMethod">
+                <option value="cash">💵 नगद (Cash)</option>
+                <option value="bank">🏦 बैंक (Bank)</option>
+                <option value="online">📱 अनलाइन (eSewa/Khalti)</option>
+            </select>
+          </div>
+
           <div class="field" style="grid-column: span 2;"><label>विवरण (Note)</label><input type="text" id="note" placeholder="जस्तै: तलब आयो / तेल किनेको"></div>
           
           <div class="field" style="grid-column: span 2;">
@@ -301,6 +337,12 @@ tbody td{padding:12px 10px;font-size:14px;border-bottom:1px solid rgba(255,255,2
             <h2 class="card-title" style="margin:0;">🧾 कारोबारको सूची</h2>
             <button class="btn-ghost" onclick="downloadCSV()" style="padding: 6px 12px; font-size:12px;">⬇️ CSV</button>
         </div>
+        
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="🔍 खर्च खोज्नुहोस् (जस्तै: तेल, स्कुल...)" oninput="renderHisab()">
+        </div>
+
         <div class="table-scroll">
           <table>
             <thead><tr><th>मिति</th><th>प्रकार</th><th>विवरण</th><th style="text-align:right;">रकम</th><th></th></tr></thead>
@@ -436,7 +478,7 @@ tbody td{padding:12px 10px;font-size:14px;border-bottom:1px solid rgba(255,255,2
     </div>
   </div>
 
-  <!-- 💌 Tab 4: Chat (Special Design) -->
+  <!-- 💌 Tab 4: Chat -->
   <div id="tab-chat" class="tab-content">
     <div class="chat-container">
       <div class="chat-header">
@@ -457,7 +499,7 @@ tbody td{padding:12px 10px;font-size:14px;border-bottom:1px solid rgba(255,255,2
     </div>
   </div>
 
-  <!-- 🎬 Tab 5: INSTAGRAM STYLE REELS -->
+  <!-- 🎬 Tab 5: REELS -->
   <div id="tab-reels" class="tab-content">
     <div class="reels-feed" id="reelsContainer"></div>
   </div>
@@ -492,10 +534,9 @@ const BASE_URL = "https://anjana-khata-default-rtdb.firebaseio.com/khata/";
 const EXPENSE_URL = BASE_URL + "expenses";
 const INCOME_URL = BASE_URL + "incomes";
 const MSG_URL = BASE_URL + "messages";
-const REELS_URL = BASE_URL + "reels";
 const MOOD_URL = BASE_URL + "mood";
 const BUDGET_URL = BASE_URL + "budget";
-const GOAL_URL = BASE_URL + "familyGoal"; // नयाँ: पारिवारिक लक्ष्य
+const GOAL_URL = BASE_URL + "familyGoal";
 const NOTES_URL = BASE_URL + "loveNotes";
 const BUCKET_URL = BASE_URL + "bucketList";
 const LOVE_DATE_URL = BASE_URL + "loveStartDate";
@@ -514,7 +555,7 @@ function endCall() {
     document.getElementById('callIframe').src = "";
 }
 
-/* ================= 🎵 RANDOM SONGS ================= */
+/* 🎵 RANDOM SONGS */
 const songs = ["song1.mp3", "song2.mp3", "song3.mp3", "song4.mp3"]; 
 let currentSongIndex = Math.floor(Math.random() * songs.length);
 const music = document.getElementById('bgMusic');
@@ -541,7 +582,7 @@ function toggleMusic(e) {
 document.body.addEventListener('touchstart', function(e) { if (!e.target.closest('#musicBtn')) playMusic(); }, { passive: true });
 document.body.addEventListener('click', function(e) { if (!e.target.closest('#musicBtn')) playMusic(); });
 
-/* ================= CATEGORIES ================= */
+/* CATEGORIES */
 const EXPENSE_CATS = [
   { id:'khana', name:'खाना/किराना', icon:'🍚', color:'#f59e0b' }, 
   { id:'school_fee', name:'स्कुल फी', icon:'🏫', color:'#f97316' },
@@ -564,15 +605,12 @@ const INCOME_CATS = [
 
 const MONTHS_NE = ['जनवरी','फेब्रुअरी','मार्च','अप्रिल','मे','जुन','जुलाई','अगस्ट','सेप्टेम्बर','अक्टोबर','नोभेम्बर','डिसेम्बर'];
 const MONTHS_SHORT = ['जन','फेब','मार्च','अप्रि','मे','जुन','जुल','अग','सेप','अक्टो','नोभ','डिस'];
-const DAILY_QUESTIONS = ["हामीले पहिलो पटक भेट्दा तपाईंलाई मेरो कुन कुरा मन पर्यो?", "मेरो कुन बानीले तपाईंलाई सबैभन्दा धेरै खुसी बनाउँछ?", "हामीले सँगै गरेको सबैभन्दा रमाइलो यात्रा कुन हो?", "भविष्यमा हामीले सँगै गर्नुपर्ने एउटा सपना के हो?", "मेरो कुन कुराले तपाईंलाई रिस उठ्छ?", "आज मैले तपाईंलाई कसरी खुसी बनाउन सक्छु?"];
-const TRUTHS = ["तपाईंले मलाई पहिलो पटक देख्दा के सोच्नुभएको थियो?", "मेरो सबैभन्दा राम्रो कुरा के हो?", "तपाईंको सबैभन्दा ठूलो डर के हो?", "के तपाईंले कहिल्यै मलाई झुक्याउनुभएको छ?", "हाम्रो सम्बन्धमा तपाईंलाई सबैभन्दा मन पर्ने कुरा के हो?"];
-const DARES = ["मलाई एउटा मीठो गीत गाएर सुनाउनुहोस्।", "अर्को १ मिनेटसम्म मेरो आँखामा हेरेर बस्नुहोस्।", "मलाई एउटा मीठो कम्प्लिमेन्ट गर्नुहोस्।", "तपाईंको फोनको ग्यालरीबाट हाम्रो पहिलो फोटो देखाउनुहोस्।", "मलाई ५ सेकेन्डको भर्चुअल हग गर्नुहोस्।"];
 
 let allTransactions = []; 
 let budgetData = 0;
 let familyGoal = { name: '', target: 0, current: 0 };
 let editingId = null;
-let editingType = null;
+let editingType = null; // 🛠️ FIXED: Track type for safe editing
 const $ = id => document.getElementById(id);
 const allCatsMap = Object.fromEntries([...EXPENSE_CATS, ...INCOME_CATS].map(c => [c.id, c]));
 
@@ -588,28 +626,26 @@ function showToast(msg, color='#16a34a'){
   toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-/* ================= TAB SWITCHING ================= */
 function switchTab(tabId, navEl) {
     document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
     $(tabId).classList.add('active');
     navEl.classList.add('active');
     if(tabId === 'tab-chat') { loadMessages(); }
-    if(tabId === 'tab-reels') { initReels(); }
+    if(tabId === 'tab-reels') { initReels(); } // 🛠️ FIXED: Reels init
     if(tabId === 'tab-hisab') { renderHisab(); }
     if(tabId === 'tab-us') { loadLoveNotes(); loadBucketList(); loadLoveDate(); loadCounters(); loadMemories(); loadDailyQ(); }
 }
 
-/* ================= 🎬 REELS ================= */
-const reelVideos = [
-    { url: "video1.mp4", title: "हाम्रो पहिलो भिडियो ❤️", desc: "यो भिडियो हेर्दा मलाई सधैं तिम्रो याद आउँछ।" },
-    { url: "video2.mp4", title: "तिमीसंग बिताएका पलहरु 🌸", desc: "जिन्दगीको सबैभन्दा राम्रो समय।" },
-    { url: "video3.mp4", title: "मेरो मनको राजा 👑", desc: "सधैं खुसी रहनु है।" }
-];
-let reelsLoaded = false;
+/* 🎬 REELS INIT */
 function initReels() {
     const container = document.getElementById('reelsContainer');
-    if (reelsLoaded && container.innerHTML !== "") return;
+    if (container.innerHTML !== "") return; // एक पटक मात्र लोड गर्ने
+    const reelVideos = [
+        { url: "video1.mp4", title: "हाम्रो पहिलो भिडियो ❤️", desc: "यो भिडियो हेर्दा मलाई सधैं तिम्रो याद आउँछ।" },
+        { url: "video2.mp4", title: "तिमीसंग बिताएका पलहरु 🌸", desc: "जिन्दगीको सबैभन्दा राम्रो समय।" },
+        { url: "video3.mp4", title: "मेरो मनको राजा 👑", desc: "सधैं खुसी रहनु है।" }
+    ];
     container.innerHTML = reelVideos.map((vid) => `
         <div class="reel-item">
             <video src="${vid.url}" loop playsinline muted></video>
@@ -617,7 +653,6 @@ function initReels() {
             <div class="reel-heart" onclick="this.style.color='red'; this.style.transform='scale(1.5)';">🤍</div>
         </div>
     `).join('');
-    reelsLoaded = true;
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             const video = entry.target.querySelector('video');
@@ -628,12 +663,20 @@ function initReels() {
     document.querySelectorAll('.reel-item').forEach(item => observer.observe(item));
 }
 
-/* ================= 💰 HISAB LOGIC ================= */
+/* HISAB LOGIC */
 function toggleCategories() {
     const type = $('txType').value;
     const catSelect = $('category');
     const cats = type === 'income' ? INCOME_CATS : EXPENSE_CATS;
     catSelect.innerHTML = cats.map(c => `<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
+}
+
+function quickAdd(catId, label) {
+    $('txType').value = 'expense';
+    toggleCategories();
+    $('category').value = catId;
+    $('amount').focus();
+    showToast(`"${label}" को लागि रकम हाल्नुहोस्`, '#3b82f6');
 }
 
 async function loadCloudData() {
@@ -655,7 +698,6 @@ async function loadCloudData() {
     budgetData = await bRes.json() || 0;
     $('budgetInput').value = budgetData > 0 ? budgetData : '';
     
-    // लक्ष्य तान्ने
     const gRes = await fetch(GOAL_URL + ".json");
     const gJson = await gRes.json();
     if(gJson) {
@@ -663,8 +705,6 @@ async function loadCloudData() {
         $('goalName').value = familyGoal.name || '';
         $('goalTarget').value = familyGoal.target || '';
         $('goalCurrent').value = familyGoal.current || '';
-    } else {
-        familyGoal = { name: '', target: 0, current: 0 };
     }
 
     $('syncStatus').textContent = `✓ सिंक भयो`;
@@ -709,9 +749,10 @@ $('expenseForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const type = $('txType').value;
   const url = type === 'income' ? INCOME_URL : EXPENSE_URL;
+  const payment = $('paymentMethod').value;
   
   const newItem = {
-    date: $('date').value, category: $('category').value,
+    date: $('date').value, category: $('category').value, payment: payment,
     amount: Number($('amount').value), note: $('note').value.trim(), ts: Date.now()
   };
   
@@ -719,8 +760,16 @@ $('expenseForm').addEventListener('submit', async (e) => {
   
   try {
     if (editingId) {
-      await fetch(`${url}/${editingId}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newItem) });
-      editingId = null; $('submitBtn').textContent = 'रेकर्ड सेभ गर्नुहोस्'; $('cancelEditBtn').style.display = 'none';
+      // 🛠️ FIXED: If user changes type while editing, delete from old and create new
+      if (editingType !== type) {
+          const oldUrl = editingType === 'income' ? INCOME_URL : EXPENSE_URL;
+          await fetch(`${oldUrl}/${editingId}.json`, { method: 'DELETE' });
+          await fetch(url + ".json", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newItem) });
+      } else {
+          await fetch(`${url}/${editingId}.json`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newItem) });
+      }
+      editingId = null; editingType = null;
+      $('submitBtn').textContent = 'रेकर्ड सेभ गर्नुहोस्'; $('cancelEditBtn').style.display = 'none';
       showToast('✓ अपडेट भयो!');
     } else {
       await fetch(url + ".json", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newItem) });
@@ -736,13 +785,21 @@ function renderHisab() {
 
   const y = +$('yearFilter').value || new Date().getFullYear(); 
   const m = $('monthFilter').value;
+  const searchTerm = $('searchInput').value.toLowerCase();
   
   let filtered = allTransactions.filter(d => +d.date.split('-')[0] === y);
   if (m !== 'all') {
       filtered = filtered.filter(d => (+d.date.split('-')[1] - 1) === +m);
   }
+  
+  if (searchTerm) {
+      filtered = filtered.filter(d => 
+          (d.note && d.note.toLowerCase().includes(searchTerm)) || 
+          (allCatsMap[d.category] && allCatsMap[d.category].name.toLowerCase().includes(searchTerm))
+      );
+  }
 
-  // === १. लक्ष्य अपडेट ===
+  // १. लक्ष्य
   if (familyGoal.target > 0) {
       $('goalNameDisplay').textContent = familyGoal.name;
       $('goalAmountDisplay').textContent = `${fmt(familyGoal.current)} / ${fmt(familyGoal.target)}`;
@@ -754,7 +811,7 @@ function renderHisab() {
       $('goalFill').style.width = '0%';
   }
 
-  // === २. स्ट्याट्स ===
+  // २. स्ट्याट्स
   const totalIncome = filtered.filter(d => d.type === 'income').reduce((s,d) => s + d.amount, 0);
   const totalExpense = filtered.filter(d => d.type === 'expense').reduce((s,d) => s + d.amount, 0);
   const totalSavings = totalIncome - totalExpense;
@@ -768,9 +825,12 @@ function renderHisab() {
   const todayExpense = allTransactions.filter(d => d.date === todayStr && d.type === 'expense').reduce((s,d) => s + d.amount, 0);
   $('statToday').textContent = fmt(todayExpense);
 
-  // === ३. बजेट र स्मार्ट सुझाव ===
+  // ३. बजेट र स्मार्ट सुझाव
   const now = new Date();
   const currentMonthExpense = allTransactions.filter(d => +d.date.split('-')[0] === y && (+d.date.split('-')[1] - 1) === now.getMonth() && d.type === 'expense').reduce((s,d)=>s+d.amount, 0);
+  
+  let savingsRate = 0;
+  if (totalIncome > 0) savingsRate = ((totalSavings / totalIncome) * 100).toFixed(1);
   
   if (budgetData > 0) {
       $('budgetProgressArea').style.display = 'block';
@@ -780,7 +840,6 @@ function renderHisab() {
       let percent = (currentMonthExpense / budgetData) * 100;
       let barColor = '#f59e0b';
       
-      // स्मार्ट सुझाव
       const daysInMonth = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
       const daysLeft = daysInMonth - now.getDate();
       const remainingBudget = budgetData - currentMonthExpense;
@@ -789,23 +848,23 @@ function renderHisab() {
           barColor = '#ef4444';
           $('budgetMsg').innerHTML = `⚠️ बजेट भन्दा ${fmt(Math.abs(remainingBudget))} बढी खर्च भयो!`;
           $('budgetMsg').style.color = '#ef4444';
-          $('smartInsightText').innerHTML = `तपाईंको यो महिनाको बजेट सकिएको छ। अब खर्च कम गर्नुपर्छ। अझै <b>${daysLeft}</b> दिन बाँकी छन्।`;
+          $('smartInsightText').innerHTML = `तपाईंको बजेट सकिएको छ। अझै <b>${daysLeft}</b> दिन बाँकी छन्। खर्च कम गर्नुपर्छ।<br>यो अवधिको बचत दर: <b>${savingsRate}%</b>`;
       } else {
           barColor = '#f59e0b';
           $('budgetMsg').innerHTML = `✓ रु. ${(remainingBudget).toLocaleString('en-IN')} बचत गर्न सक्नुहुन्छ।`;
           $('budgetMsg').style.color = '#10b981';
           const dailyAllowance = daysLeft > 0 ? (remainingBudget / daysLeft).toFixed(0) : remainingBudget;
-          $('smartInsightText').innerHTML = `तपाईंसँग यो महिना अझै <b>रु. ${remainingBudget.toLocaleString('en-IN')}</b> बाँकी छ। अझै <b>${daysLeft}</b> दिन बाँकी छन्, दिनको करिब <b>रु. ${Number(dailyAllowance).toLocaleString('en-IN')}</b> खर्च गर्न सक्नुहुन्छ।`;
+          $('smartInsightText').innerHTML = `यो महिना अझै <b>${daysLeft}</b> दिन बाँकी छन्। दिनको करिब <b>रु. ${Number(dailyAllowance).toLocaleString('en-IN')}</b> खर्च गर्न सक्नुहुन्छ।<br>यो अवधिको बचत दर: <b>${savingsRate}%</b>`;
       }
       
       $('budgetBar').style.width = Math.min(percent, 100) + '%';
       $('budgetBar').style.background = barColor;
   } else {
       $('budgetProgressArea').style.display = 'none';
-      $('smartInsightText').innerHTML = `बजेट सेट गर्नुभएको छैन। मासिक बजेट सेट गर्नुहोस्, जसले गर्दा दैनिक कति खर्च गर्ने भनेर थाहा हुनेछ।`;
+      $('smartInsightText').innerHTML = `बजेट सेट गर्नुभएको छैन। मासिक बजेट सेट गर्नुहोस्।<br>यो अवधिको बचत दर: <b>${savingsRate}%</b>`;
   }
 
-  // === ४. चार्ट ===
+  // ४. चार्ट
   const monthlyIncome = Array(12).fill(0);
   const monthlyExpense = Array(12).fill(0);
   
@@ -845,7 +904,7 @@ function renderHisab() {
   }
   $('analysisText').innerHTML = analysisStr;
 
-  // === ५. कोटी अनुसार ===
+  // ५. कोटी अनुसार
   const expByCat = {};
   const incByCat = {};
   filtered.forEach(d => {
@@ -891,16 +950,17 @@ function renderHisab() {
   }
   $('catBreakdown').innerHTML = catHTML;
 
-  // === ६. टेबल ===
+  // ६. टेबल
   filtered.sort((a,b) => b.date.localeCompare(a.date) || b.ts - a.ts);
   $('tableBody').innerHTML = filtered.map(d => {
     const c = allCatsMap[d.category] || { icon:'📦', name: d.category, color:'#64748b' };
     const isInc = d.type === 'income';
+    const payIcon = d.payment === 'cash' ? '💵' : d.payment === 'bank' ? '🏦' : '📱';
     
     return `<tr>
       <td>${formatDate(d.date)}</td>
       <td><span class="badge" style="background:${isInc?'#10b98120':'#ef444420'}; color:${isInc?'#10b981':'#ef4444'}; border:1px solid ${isInc?'#10b981':'#ef4444'};">${isInc?'आम्दानी':'खर्च'}</span></td>
-      <td style="color:#cbd5e1;font-size:12px; max-width:100px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${d.note || ''}">${c.icon} ${c.name} ${d.note ? '- '+d.note : ''}</td>
+      <td style="color:#cbd5e1;font-size:12px; max-width:100px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${d.note || ''}">${payIcon} ${c.icon} ${c.name} ${d.note ? '- '+d.note : ''}</td>
       <td style="text-align:right;font-weight:700; color:${isInc?'#10b981':'#fff'};">${isInc?'+':'-'} ${fmt(d.amount)}</td>
       <td>
         <div class="action-btns">
@@ -916,8 +976,10 @@ function renderHisab() {
 window.editItem = (id, type) => {
   const item = allTransactions.find(d => d.id === id); if(!item) return;
   $('txType').value = type;
+  editingType = type; // 🛠️ FIXED: Save editing type
   toggleCategories();
   $('date').value = item.date; $('category').value = item.category; $('amount').value = item.amount; $('note').value = item.note || '';
+  if (item.payment) $('paymentMethod').value = item.payment;
   editingId = id; 
   $('submitBtn').textContent = 'अपडेट गर्नुहोस्';
   $('cancelEditBtn').style.display = 'block';
@@ -937,6 +999,7 @@ window.deleteItem = async (id, type) => {
 
 function cancelEdit() {
     editingId = null;
+    editingType = null;
     $('amount').value = ''; $('note').value = ''; $('date').value = toISO(new Date());
     $('submitBtn').textContent = 'रेकर्ड सेभ गर्नुहोस्';
     $('cancelEditBtn').style.display = 'none';
@@ -944,9 +1007,9 @@ function cancelEdit() {
 
 function downloadCSV() {
     if(allTransactions.length === 0) return alert("डाउनलोड गर्न डाटा छैन।");
-    let csvContent = "Date,Type,Category,Amount,Note\n";
+    let csvContent = "Date,Type,Category,Amount,Payment,Note\n";
     allTransactions.forEach(d => {
-        csvContent += `${d.date},${d.type},${allCatsMap[d.category]?.name || d.category},${d.amount},"${d.note || ''}"\n`;
+        csvContent += `${d.date},${d.type},${allCatsMap[d.category]?.name || d.category},${d.amount},${d.payment||'cash'},"${d.note || ''}"\n`;
     });
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement("a");
@@ -955,261 +1018,7 @@ function downloadCSV() {
     link.click();
 }
 
-/* ================= "HAMI" TAB ================= */
-async function saveLoveDate(dateVal) {
-    if(!dateVal) return;
-    await fetch(LOVE_DATE_URL + ".json", { method: 'PUT', body: JSON.stringify(dateVal) });
-    loadLoveDate();
-}
-async function loadLoveDate() {
-    const res = await fetch(LOVE_DATE_URL + ".json");
-    const dateStr = await res.json();
-    if(dateStr) {
-        $('loveStartDate').value = dateStr;
-        const start = new Date(dateStr);
-        const now = new Date();
-        const diff = now - start;
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        $('loveDays').textContent = days > 0 ? days : 0;
-    } else {
-        $('loveDays').textContent = "--";
-    }
-}
-
-async function sendLoveAction(type) {
-    const myRole = $('myRole').value;
-    let msgText = type === 'hug' ? "🤗 (Virtual Hug) मैले तिमीलाई अँगालो हालेको छु!" : "😘 (Virtual Kiss) मेरो तर्फबाट मीठो चुम्बन!";
-    
-    try {
-        const res = await fetch(COUNTERS_URL + `/${type}.json`);
-        let count = await res.json() || 0;
-        await fetch(COUNTERS_URL + `/${type}.json`, { method: 'PUT', body: JSON.stringify(count + 1) });
-    } catch(e) {}
-
-    const msg = { sender: myRole, text: msgText, ts: Date.now() };
-    try {
-        await fetch(MSG_URL + ".json", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(msg) });
-        showToast(`तपाईंको ${type} पठाइयो! ❤️`, type === 'hug' ? '#f59e0b' : '#ec4899');
-        if(navigator.vibrate) navigator.vibrate([200, 100, 200]); 
-        loadCounters();
-    } catch(e) { alert("इन्टरनेट चेक गर्नुहोस्।"); }
-}
-async function loadCounters() {
-    try {
-        const res = await fetch(COUNTERS_URL + ".json");
-        const data = await res.json();
-        if(data) {
-            $('hugCount').textContent = data.hug || 0;
-            $('kissCount').textContent = data.kiss || 0;
-        }
-    } catch(e) {}
-}
-
-function playTOD(type) {
-    const arr = type === 'truth' ? TRUTHS : DARES;
-    const random = arr[Math.floor(Math.random() * arr.length)];
-    $('todText').textContent = random;
-}
-
-function getDayOfYear() {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 0);
-    return Math.floor((now - start) / (1000 * 60 * 60 * 24));
-}
-async function loadDailyQ() {
-    const dayIndex = getDayOfYear() % DAILY_QUESTIONS.length;
-    $('dailyQuestionText').textContent = DAILY_QUESTIONS[dayIndex];
-
-    try {
-        const res = await fetch(QA_URL + `/${dayIndex}.json`);
-        const json = await res.json();
-        const myRole = $('myRole').value;
-        if(json) {
-            if(json[myRole]) $('questionAnswerInput').value = json[myRole];
-            const partnerRole = myRole === 'husband' ? 'wife' : 'husband';
-            if(json[partnerRole]) $('partnerAnswerDisplay').textContent = `पार्टनरको उत्तर: "${json[partnerRole]}"`;
-            else $('partnerAnswerDisplay').textContent = "";
-        }
-    } catch(e) {}
-}
-async function submitAnswer() {
-    const answer = $('questionAnswerInput').value.trim(); if(!answer) return;
-    const dayIndex = getDayOfYear() % DAILY_QUESTIONS.length;
-    await fetch(QA_URL + `/${dayIndex}/${$('myRole').value}.json`, { method: 'PUT', body: JSON.stringify(answer) });
-    showToast("उत्तर सेभ भयो! ❤️");
-    loadDailyQ();
-}
-
-let notesData = [];
-async function loadLoveNotes() {
-    try {
-        const res = await fetch(NOTES_URL + ".json");
-        const json = await res.json();
-        notesData = [];
-        if(json) { for(let key in json) { notesData.push({id: key, ...json[key]}); } }
-        notesData.sort((a,b) => b.ts - a.ts);
-        
-        const board = $('notesBoard');
-        if(notesData.length === 0) {
-            board.innerHTML = `<p style="text-align:center; color:#cbd5e1; font-size:14px; grid-column: span 2;">कुनै चिठी छैन।</p>`;
-        } else {
-            const colors = ['#fef08a', '#bbf7d0', '#bfdbfe', '#fbcfe8'];
-            board.innerHTML = notesData.map((n, i) => `
-                <div style="background: ${colors[i % 4]}; color: #1e293b; padding: 15px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); position: relative; font-size: 14px; font-weight: 600; min-height: 100px; display: flex; flex-direction: column; justify-content: space-between; transform: rotate(${i%2===0?'-2':'2'}deg);">
-                    <button style="position: absolute; top: 5px; right: 5px; background: transparent; border: none; font-size: 14px; cursor: pointer; opacity: 0.5;" onclick="deleteLoveNote('${n.id}')">✖</button>
-                    <div>${n.text}</div>
-                    <div style="font-size: 10px; text-align: right; margin-top: 10px; color: #475569;">${n.author === 'wife' ? 'अन्जना' : 'प्रकाश'}</div>
-                </div>
-            `).join('');
-        }
-    } catch(e) {}
-}
-async function addLoveNote() {
-    const input = $('noteInput'); const text = input.value.trim(); if(!text) return;
-    input.value = '';
-    await fetch(NOTES_URL + ".json", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: text, author: $('myRole').value, ts: Date.now() }) });
-    loadLoveNotes();
-    showToast("चिठी टाँसियो! 💌");
-}
-async function deleteLoveNote(id) {
-    if(!confirm('यो चिठी हटाउने हो?')) return;
-    await fetch(`${NOTES_URL}/${id}.json`, { method: 'DELETE' });
-    loadLoveNotes();
-}
-
-let bucketData = [];
-async function loadBucketList() {
-    try {
-        const res = await fetch(BUCKET_URL + ".json");
-        const json = await res.json();
-        bucketData = [];
-        if(json) { for(let key in json) { bucketData.push({id: key, ...json[key]}); } }
-        bucketData.sort((a,b) => a.ts - b.ts);
-        
-        const listEl = $('bucketList');
-        if(bucketData.length === 0) {
-            listEl.innerHTML = `<p style="text-align:center; color:#cbd5e1; font-size:14px;">लिस्ट खाली छ।</p>`;
-        } else {
-            listEl.innerHTML = bucketData.map(item => `
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); ${item.done ? 'opacity: 0.5;' : ''}">
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <input type="checkbox" ${item.done ? 'checked' : ''} onchange="toggleBucketItem('${item.id}', ${item.done})" style="width: 20px; height: 20px; accent-color: #db2777;">
-                        <span style="font-size: 15px; font-weight: 600; ${item.done ? 'text-decoration: line-through;' : ''}">${item.text}</span>
-                    </div>
-                    <button onclick="deleteBucketItem('${item.id}')" style="background: transparent; color: #ef4444; font-size: 18px;">🗑️</button>
-                </div>
-            `).join('');
-        }
-    } catch(e) {}
-}
-async function addBucketItem() {
-    const input = $('bucketInput'); const text = input.value.trim(); if(!text) return;
-    input.value = '';
-    await fetch(BUCKET_URL + ".json", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: text, done: false, ts: Date.now() }) });
-    loadBucketList();
-}
-async function toggleBucketItem(id, currentDone) {
-    await fetch(`${BUCKET_URL}/${id}.json`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ done: !currentDone }) });
-    loadBucketList();
-}
-async function deleteBucketItem(id) {
-    if(!confirm('मेटाउने हो?')) return;
-    await fetch(`${BUCKET_URL}/${id}.json`, { method: 'DELETE' });
-    loadBucketList();
-}
-
-let memoryData = [];
-async function loadMemories() {
-    try {
-        const res = await fetch(MEMORY_URL + ".json");
-        const json = await res.json();
-        memoryData = [];
-        if(json) { for(let key in json) { memoryData.push({id: key, ...json[key]}); } }
-        memoryData.sort((a,b) => b.ts - a.ts);
-        
-        const listEl = $('memoryList');
-        if(memoryData.length === 0) {
-            listEl.innerHTML = `<p style="text-align:center; color:#cbd5e1; font-size:14px;">कुनै सम्झना छैन।</p>`;
-        } else {
-            listEl.innerHTML = memoryData.map(item => `
-                <div style="display: flex; flex-direction: column; padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative; background: rgba(255,255,255,0.05); border-radius: 10px; margin-bottom: 10px;">
-                    <b style="color:#f472b6; font-size:16px; margin-bottom:6px;">${item.title}</b>
-                    <span style="font-size: 14px; color: #cbd5e1;">${item.desc}</span>
-                    <button onclick="deleteMemory('${item.id}')" style="position:absolute; right:10px; top:10px; background:transparent; border:none; color:#ef4444; font-size:16px;">🗑️</button>
-                </div>
-            `).join('');
-        }
-    } catch(e) {}
-}
-async function addMemory() {
-    const title = $('memoryTitle').value.trim();
-    const desc = $('memoryDesc').value.trim();
-    if(!title || !desc) return alert('शीर्षक र विवरण दुवै भर्नुहोस्।');
-    $('memoryTitle').value = ''; $('memoryDesc').value = '';
-    await fetch(MEMORY_URL + ".json", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title: title, desc: desc, ts: Date.now() }) });
-    loadMemories();
-    showToast("सम्झना सेभ भयो! 📸");
-}
-async function deleteMemory(id) {
-    if(!confirm('मेटाउने हो?')) return;
-    await fetch(`${MEMORY_URL}/${id}.json`, { method: 'DELETE' });
-    loadMemories();
-}
-
-/* ================= HOME TAB ================= */
-function initHome() {
-    try {
-        const now = new Date();
-        const nd = new NepaliDate(now);
-        $('todayDate').innerHTML = `आजको मिति: <b>${nd.format('DD MMMM YYYY', 'np')}</b>`;
-    } catch (e) { $('todayDate').textContent = "नेपाली मिति लोड हुन सकेन"; }
-
-    try {
-        const now = new Date();
-        const ndNow = new NepaliDate(now);
-        let annivDate = new NepaliDate(ndNow.getYear(), 0, 6);
-        if (now > annivDate.toJsDate()) { annivDate = new NepaliDate(ndNow.getYear() + 1, 0, 6); }
-        const diffDays = Math.ceil((annivDate.toJsDate() - now) / (1000 * 60 * 60 * 24));
-        $('anniversaryDays').textContent = diffDays;
-    } catch(e) { $('anniversaryDays').textContent = "--"; }
-
-    setInterval(() => {
-        const d = new Date();
-        $('saudiTime').textContent = d.toLocaleTimeString('en-US', { timeZone: 'Asia/Riyadh', hour12: false });
-        $('nepalTime').textContent = d.toLocaleTimeString('en-US', { timeZone: 'Asia/Kathmandu', hour12: false });
-    }, 1000);
-
-    loadMoods();
-}
-
-async function setMood(role, emoji) {
-    try {
-        await fetch(MOOD_URL + `/${role}.json`, { method: 'PUT', body: JSON.stringify(emoji) });
-        loadMoods();
-    } catch(e) {}
-}
-async function loadMoods() {
-    try {
-        const res = await fetch(MOOD_URL + ".json");
-        const json = await res.json();
-        if(json) {
-            if(json.husband) $('husbandMoodDisplay').textContent = `प्रकाश: ${json.husband}`;
-            if(json.wife) $('wifeMoodDisplay').textContent = `अन्जना: ${json.wife}`;
-        }
-    } catch(e) {}
-}
-
-async function sendMissYou() {
-    const myRole = $('myRole').value;
-    const msg = { sender: myRole, text: "❤️ I Miss You so much! (मिस गर्छु) ❤️", ts: Date.now() };
-    try {
-        await fetch(MSG_URL + ".json", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(msg) });
-        showToast("तपाईंको माया पठाइयो! ❤️", "#db2777");
-        if(navigator.vibrate) navigator.vibrate(200);
-    } catch(e) { alert("इन्टरनेट चेक गर्नुहोस्।"); }
-}
-
-/* ================= CHAT TAB ================= */
+/* CHAT */
 const chatInput = $('chatInput'); const chatMessages = $('chatMessages');
 $('myRole').value = localStorage.getItem('myRole') || 'husband';
 $('myRole').addEventListener('change', (e) => localStorage.setItem('myRole', e.target.value));
@@ -1259,17 +1068,17 @@ async function loadMessages() {
     } catch(e) {}
 }
 
-/* ================= INIT ================= */
+/* INIT */
 (function init() {
   $('date').value = toISO(new Date());
   toggleCategories(); 
-  
   initHome();
   loadCloudData();
   loadMessages();
   loadLoveDate();
   loadCounters();
   loadMemories();
+  initReels(); // 🛠️ FIXED: Reels load on startup
 
   setInterval(() => {
       if($('tab-chat').classList.contains('active')) loadMessages();
