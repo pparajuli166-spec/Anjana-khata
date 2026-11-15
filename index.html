@@ -79,7 +79,6 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
 }
 .glass > *{position:relative;z-index:1;}
 
-/* HEADER */
 .top-header{
     position:sticky;
     top:max(8px, calc(var(--safe-t) + 4px));
@@ -133,7 +132,6 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
 .btn-ic:hover{background:rgba(255,255,255,0.28);}
 .btn-ic:active{transform:scale(0.92);}
 
-/* CLOCK */
 .clock-card{
     display:grid;
     grid-template-columns:1fr 1px 1fr;
@@ -178,7 +176,6 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
     justify-self:center;
 }
 
-/* HERO */
 .hero{
     background:linear-gradient(140deg,#1e1240 0%, #2d1155 50%, #4a1250 100%);
     border:1px solid rgba(192,132,252,0.25);
@@ -221,7 +218,6 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
 .hero-sub-item .val.income{color:#34d399;}
 .hero-sub-item .val.expense{color:#fb7185;}
 
-/* SECTION */
 .sec-head{
     display:flex;align-items:center;gap:10px;
     font-size:14px;font-weight:700;color:#fff;margin-bottom:14px;letter-spacing:-0.01em;
@@ -234,7 +230,6 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
 }
 .sec-head .sub{font-size:11px;font-weight:600;color:var(--txt-2);margin-left:auto;font-family:'Plus Jakarta Sans',sans-serif;}
 
-/* FIELDS */
 .field{display:flex;flex-direction:column;gap:6px;}
 .field label{font-size:12px;font-weight:600;color:var(--txt-2);letter-spacing:0.02em;}
 .field input, .field select{
@@ -301,7 +296,6 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
 }
 .h-result.negative .amount{color:#fb7185; text-shadow:0 0 20px rgba(244,63,94,0.4);}
 
-/* ANJANA */
 .anjana-card{
     background:linear-gradient(140deg, rgba(16,185,129,0.08) 0%, rgba(30,20,60,0.9) 50%, rgba(168,85,247,0.08) 100%);
     border:1px solid rgba(52,211,153,0.2);
@@ -365,7 +359,6 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
 }
 .acct-balance.negative .amount{ color:#fb7185; text-shadow:0 0 20px rgba(244,63,94,0.4); }
 
-/* FAMILY TABLE */
 .family-card{
     background:linear-gradient(140deg, rgba(168,85,247,0.10) 0%, rgba(20,14,38,0.9) 50%, rgba(236,72,153,0.10) 100%);
     border:1px solid rgba(168,85,247,0.28);
@@ -451,7 +444,6 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
     padding:0 6px;
 }
 
-/* FORM */
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .form-grid .full{grid-column:span 2;}
 .seg{
@@ -500,7 +492,6 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
 }
 .btn-ghost:hover{background:rgba(255,255,255,0.1);color:#fff;}
 
-/* FILTERS */
 .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
 .filters select, .filters input{
     padding:11px 12px; border-radius:10px; border:1px solid var(--line);
@@ -520,7 +511,6 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
 .filters input{flex:1;min-width:140px;font-size:14px;}
 .filters input:focus, .filters select:focus{border-color:var(--pink);background:rgba(236,72,153,0.06);}
 
-/* CATEGORY */
 .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:8px;}
 .cat-col h4{
     font-size:11px; font-weight:800; text-transform:uppercase;
@@ -550,7 +540,6 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
 @keyframes shimmer{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}
 .cat-empty{font-size:11px;color:var(--txt-3);font-style:italic;padding:6px 0;}
 
-/* TRANSACTIONS */
 .tx-list{display:flex;flex-direction:column;gap:8px;}
 .tx{
     display:grid; grid-template-columns:auto 1fr auto; gap:10px;
@@ -617,52 +606,23 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
 }
 #toast.show{transform:translate(-50%,0);opacity:1;}
 
-/* FLOATING */
-.float-controls{
+#musicBtn{
     position:fixed;
     bottom:calc(20px + var(--safe-b));
     right:calc(20px + var(--safe-r));
-    display:flex;
-    align-items:center;
-    gap:8px;
-    z-index:9999;
-}
-#musicBtn{
     width:52px; height:52px; border-radius:50%;
     background:linear-gradient(135deg, var(--pink), var(--purple));
     color:#fff; font-size:20px;
     border:2px solid rgba(255,255,255,0.9);
     box-shadow:0 8px 24px -4px rgba(236,72,153,0.6);
     cursor:pointer;
+    z-index:9999;
     display:flex; align-items:center; justify-content:center;
     transition:all 0.2s;
     touch-action:manipulation;
     padding:0;
 }
-#songBtn{
-    width:42px; height:42px; border-radius:50%;
-    background:rgba(20,14,38,0.92);
-    color:#fff; font-size:17px;
-    border:1.5px solid rgba(255,255,255,0.4);
-    box-shadow:0 4px 12px rgba(0,0,0,0.4);
-    cursor:pointer;
-    display:flex; align-items:center; justify-content:center;
-    transition:all 0.2s;
-    touch-action:manipulation;
-    backdrop-filter:blur(10px);
-    -webkit-backdrop-filter:blur(10px);
-    padding:0;
-    position:relative;
-}
-#songBtn.has-song::after{
-    content:'';
-    position:absolute; top:1px; right:1px;
-    width:9px; height:9px; border-radius:50%;
-    background:#22c55e;
-    box-shadow:0 0 6px #22c55e;
-    border:1.5px solid #0f0a1e;
-}
-#musicBtn:active, #songBtn:active{transform:scale(0.9);}
+#musicBtn:active{transform:scale(0.9);}
 #musicBtn.playing{animation:musicPulse 2s ease-in-out infinite;}
 @keyframes musicPulse{50%{box-shadow:0 8px 24px -4px rgba(236,72,153,0.6), 0 0 0 8px rgba(236,72,153,0.15);}}
 #musicBtn.attn{animation:attnPulse 1.4s ease-in-out infinite;}
@@ -673,7 +633,6 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
     }
 }
 
-/* MOBILE */
 @media (max-width:640px){
     body{
         padding:
@@ -725,7 +684,6 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
     .tx-acts button{width:38px;height:38px;}
 
     #musicBtn{width:48px;height:48px;font-size:18px;}
-    #songBtn{width:38px;height:38px;font-size:15px;}
 }
 
 @media (max-width:380px){
@@ -755,7 +713,7 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
     .acct-balance,.h-result{background:#f9fafb !important;border:1px solid #ccc !important;}
     .acct-balance::before,.h-result::before{display:none;}
     .acct-balance .label,.h-result .label{color:#333 !important;}
-    #entryForm,.export-btns,.float-controls,.filters,.tx-acts,.live{display:none !important;}
+    #entryForm,.export-btns,#musicBtn,.filters,.tx-acts,.live{display:none !important;}
     .tx{border:1px solid #ddd !important;background:#fafafa !important;}
     .cat-fill::after{display:none;}
     td,th,.v,h1,h2,.stat .lbl,.cat-row,.ft-cell,.ft-label,.ft-h{color:#000 !important;}
@@ -773,7 +731,6 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
 <audio id="bgMusic" loop preload="auto"></audio>
 <div id="toast"><span id="toastIcon">✓</span><span id="toastMsg"></span></div>
 <input type="file" id="photoInput" accept="image/*" hidden>
-<input type="file" id="songInput" accept="audio/*" hidden>
 
 <div class="wrap">
 
@@ -1014,10 +971,7 @@ body::after { width:350px; height:350px; background:var(--purple); bottom:-100px
     </div>
 </div>
 
-<div class="float-controls">
-    <button id="songBtn" onclick="pickSong()" aria-label="गीत थप्नुहोस्">🎤</button>
-    <button id="musicBtn" onclick="toggleMusic()" aria-label="संगीत">🎵</button>
-</div>
+<button id="musicBtn" onclick="toggleMusic()" aria-label="संगीत">🎵</button>
 
 <script>
 /* ================= CONFIG ================= */
@@ -1118,65 +1072,43 @@ function startClock(){
     setInterval(tickDate, 60000);
 }
 
-/* ================= MUSIC (autoplay on open) ================= */
+/* ================= MUSIC (local song.mp3 + song2.mp3) ================= */
+const SONG_FILES = ['song.mp3', 'song2.mp3'];
 const FALLBACK_SONG = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3';
-const MUSIC_DB = 'anjana_music_v1';
-const MUSIC_STORE = 'song';
 
-let currentSongURL = null;
-let musicSource = 'fallback';
+let playlist = [];
+let songIdx = 0;
 let isPlaying = false;
 let userPaused = false;
 const audio = $('bgMusic');
 
-function openMusicDB(){
-    return new Promise((res, rej) => {
-        const req = indexedDB.open(MUSIC_DB, 1);
-        req.onupgradeneeded = e => {
-            const db = e.target.result;
-            if(!db.objectStoreNames.contains(MUSIC_STORE)) db.createObjectStore(MUSIC_STORE);
-        };
-        req.onsuccess = e => res(e.target.result);
-        req.onerror = () => rej(req.error);
-    });
-}
-async function saveSongDB(blob){
-    const db = await openMusicDB();
-    return new Promise((res, rej) => {
-        const tx = db.transaction(MUSIC_STORE, 'readwrite');
-        tx.objectStore(MUSIC_STORE).put(blob, 'current');
-        tx.oncomplete = () => res();
-        tx.onerror = () => rej(tx.error);
-    });
-}
-async function loadSongDB(){
-    const db = await openMusicDB();
-    return new Promise((res, rej) => {
-        const tx = db.transaction(MUSIC_STORE, 'readonly');
-        const req = tx.objectStore(MUSIC_STORE).get('current');
-        req.onsuccess = () => res(req.result);
-        req.onerror = () => rej(req.error);
-    });
+/* Pre-check which song files exist */
+async function checkSongs(){
+    const working = [];
+    for(const url of SONG_FILES){
+        try{
+            const res = await fetch(url, { method:'HEAD', cache:'no-store' });
+            if(res.ok){
+                const ct = res.headers.get('content-type') || '';
+                /* GitHub sometimes serves 404 page with 200; check content-type */
+                if(res.status === 200 && (!ct || ct.includes('audio') || ct.includes('octet-stream') || ct.includes('mpeg') || ct.includes('mp4'))){
+                    working.push(url);
+                }
+            }
+        }catch(_){}
+    }
+    return working;
 }
 
 async function initMusic(){
-    try{
-        const blob = await loadSongDB();
-        if(blob){
-            if(currentSongURL) URL.revokeObjectURL(currentSongURL);
-            currentSongURL = URL.createObjectURL(blob);
-            audio.src = currentSongURL;
-            musicSource = 'custom';
-            $('songBtn').classList.add('has-song');
-        }else{
-            audio.src = FALLBACK_SONG;
-            musicSource = 'fallback';
-            $('songBtn').classList.remove('has-song');
-        }
-    }catch(e){
-        audio.src = FALLBACK_SONG;
-        musicSource = 'fallback';
+    playlist = await checkSongs();
+    if(playlist.length === 0){
+        playlist = [FALLBACK_SONG];
+        showToast('song.mp3 फेला परेन — डिफल्ट गीत','⚠️');
     }
+    songIdx = 0;
+    audio.src = playlist[0];
+    audio.load();
     updateMusicBtn();
     await attemptAutoplay();
 }
@@ -1207,7 +1139,7 @@ function armGestureStart(){
     };
     const start = async (ev) => {
         if(fired || userPaused || isPlaying) return;
-        if(ev && ev.target && ev.target.closest && ev.target.closest('#musicBtn, #songBtn')) return;
+        if(ev && ev.target && ev.target.closest && ev.target.closest('#musicBtn')) return;
         fired = true;
         try{
             await audio.play();
@@ -1251,59 +1183,27 @@ async function toggleMusic(){
         userPaused = false;
         $('musicBtn').classList.remove('attn');
         updateMusicBtn();
-        showToast(musicSource === 'custom' ? 'गीत बज्दैछ 🎵' : 'डिफल्ट गीत · 🎤 थप्नुहोस्');
+        showToast('🎵 संगीत सुरु भयो');
     }catch(e){
         showToast('गीत बजाउन सकिएन','⚠️');
     }
 }
 
-function pickSong(){ $('songInput').click(); }
-
+/* When current song ends → play next in playlist (loop forever) */
 audio.addEventListener('ended', () => {
-    audio.currentTime = 0;
+    if(playlist.length === 0) return;
+    songIdx = (songIdx + 1) % playlist.length;
+    audio.src = playlist[songIdx];
     audio.play().catch(()=>{});
 });
 
-$('songInput').addEventListener('change', async e => {
-    const file = e.target.files[0];
-    e.target.value = '';
-    if(!file) return;
-
-    if(!file.type.startsWith('audio/') && !/\.(mp3|m4a|aac|wav|ogg|opus)$/i.test(file.name)){
-        showToast('कृपया audio फाइल छान्नुहोस्','⚠️');
-        return;
-    }
-    if(file.size > 25 * 1024 * 1024){
-        showToast('फाइल धेरै ठूलो (25MB भन्दा कम)','⚠️');
-        return;
-    }
-
-    try{
-        if(isPlaying){ audio.pause(); isPlaying = false; }
-        if(currentSongURL) URL.revokeObjectURL(currentSongURL);
-
-        await saveSongDB(file);
-        currentSongURL = URL.createObjectURL(file);
-        audio.src = currentSongURL;
-        audio.currentTime = 0;
-        musicSource = 'custom';
-        $('songBtn').classList.add('has-song');
-        userPaused = false;
-
-        try{
-            await audio.play();
-            isPlaying = true;
-            $('musicBtn').classList.remove('attn');
-            updateMusicBtn();
-            showToast('🎵 नयाँ गीत बज्दैछ');
-        }catch(e){
-            updateMusicBtn();
-            showToast('गीत सेभ भयो 🎵 थिच्नुहोस्');
-        }
-    }catch(err){
-        console.error(err);
-        showToast('गीत सेभ गर्न सकिएन','⚠️');
-    }
+/* If song fails to load → skip to next (or fallback) */
+audio.addEventListener('error', () => {
+    if(playlist.length <= 1) return;
+    songIdx = (songIdx + 1) % playlist.length;
+    audio.src = playlist[songIdx];
+    audio.load();
+    if(isPlaying) audio.play().catch(()=>{});
 });
 
 /* ================= PHOTO ================= */
