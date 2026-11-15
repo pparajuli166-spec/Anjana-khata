@@ -21,14 +21,13 @@
     --text-main: #ffffff;
     --text-muted: #cbd5e1;
     --radius: 20px;
-    --nav-height: 70px;
 }
 *{box-sizing:border-box;margin:0;padding:0; font-family: 'Mukta', sans-serif;} 
 
 body{
     color:var(--text-main);
     padding:16px;
-    padding-bottom:calc(var(--nav-height) + 30px);
+    padding-bottom: 30px; /* Bottom nav removed */
     background: linear-gradient(135deg, #0f172a 0%, #2e1065 50%, #4c1d95 100%);
     background-attachment: fixed;
     overflow-x: hidden;
@@ -46,24 +45,31 @@ body{
 
 .wrap{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:20px; position: relative; z-index: 1;}
 
+/* Top Header with Time */
 .top-header { 
-    display: flex; align-items: center; gap: 15px; 
+    display: flex; flex-direction: column; gap: 15px;
     padding: 20px; border-radius: var(--radius); 
     background: linear-gradient(135deg, rgba(219, 39, 119, 0.8), rgba(147, 51, 234, 0.8));
     backdrop-filter: blur(10px);
     box-shadow: 0 10px 30px rgba(219, 39, 119, 0.3);
     border: 1px solid rgba(255,255,255,0.2);
 }
-.couple-photo-small { width: 65px; height: 65px; border-radius: 50%; object-fit: cover; border: 3px solid #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-.header-text h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
+.header-top { display: flex; align-items: center; gap: 15px; }
+.couple-photo-small { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 3px solid #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+.header-text h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
 .header-text p { font-size: 13px; color: #fbcfe8; font-weight: 500;}
 
-.tab-content { display: none; animation: slideUp 0.4s ease; }
-.tab-content.active { display: block; }
-@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.clock-container { display: flex; justify-content: space-around; text-align: center; background: rgba(0,0,0,0.2); border-radius: 15px; padding: 12px; }
+.clock-box { flex: 1; }
+.clock-box .flag { font-size: 20px; margin-bottom: 2px; }
+.clock-box .country { font-size: 11px; color: #cbd5e1; font-weight: bold; }
+.clock-box .time { font-size: 18px; font-weight: 800; color: #fff; margin-top: 2px; letter-spacing: 1px;}
+.clock-box .time.nepal { color: #fbcfe8; }
+
+.page-title { text-align: center; font-size: 24px; font-weight: 800; color: #fbcfe8; margin-bottom: 15px; text-shadow: 0 2px 10px rgba(219, 39, 119, 0.5); }
 
 .card{ padding:20px; margin-bottom: 20px;}
-.card-title{font-size:18px;font-weight:700;margin-bottom:15px;display:flex;align-items:center;gap:10px; color: #fff;}
+.card-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px; color: #fff;}
 
 .field{display:flex;flex-direction:column;gap:6px;}
 .field label{font-size:13px;font-weight:600;color:var(--text-muted)}
@@ -84,8 +90,6 @@ button{font-family:inherit;cursor:pointer;border:none;transition:.2s;}
 .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(219, 39, 119, 0.6); }
 .btn-ghost{background:rgba(255,255,255,0.1); color:#fff; font-size:14px;font-weight:600;padding:10px 15px;border-radius:10px;border:1px solid var(--glass-border);}
 .btn-ghost:hover { background: rgba(255,255,255,0.2); }
-
-.page-title { text-align: center; font-size: 26px; font-weight: 800; color: #fbcfe8; margin-bottom: 20px; text-shadow: 0 2px 10px rgba(219, 39, 119, 0.5); }
 
 .filter-bar { display: flex; gap: 12px; margin-bottom: 20px; }
 .filter-bar select { flex: 1; padding: 12px; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); color: #fff; font-weight: bold; outline: none; }
@@ -120,83 +124,40 @@ tbody td{padding:12px 10px;font-size:14px;border-bottom:1px solid rgba(255,255,2
 .action-btns { display: flex; gap: 8px; }
 .icon-btn{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,0.1);display:grid;place-items:center;font-size:14px;cursor:pointer; border:1px solid var(--glass-border);}
 
-/* Chat */
-.chat-container { display: flex; flex-direction: column; height: 520px; border-radius: 24px; overflow: hidden; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 15px 40px rgba(0,0,0,0.4); position: relative;}
-.chat-header { background: linear-gradient(135deg, rgba(219, 39, 119, 0.9), rgba(147, 51, 234, 0.9)); padding: 15px 20px; display: flex; align-items: center; gap: 15px; border-bottom: 1px solid rgba(255,255,255,0.2);}
-.chat-header-title { font-size: 20px; font-weight: 800; flex: 1; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);}
-.chat-messages { flex: 1; padding: 20px 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px;}
-.message { max-width: 80%; padding: 12px 18px; border-radius: 20px; font-size: 15px; line-height: 1.5; position: relative; word-wrap: break-word; box-shadow: 0 4px 15px rgba(0,0,0,0.1);}
-.message.partner { background: rgba(255, 255, 255, 0.9); align-self: flex-start; border-bottom-left-radius: 4px; color: #0f172a;}
-.message.me { background: linear-gradient(135deg, #db2777, #9333ea); align-self: flex-end; border-bottom-right-radius: 4px; color: white;}
-.message .time { font-size: 10px; opacity: 0.8; text-align: right; margin-top: 6px;}
-.chat-input-area { display: flex; padding: 12px 15px; background: rgba(0, 0, 0, 0.3); gap: 12px; align-items: center; border-top: 1px solid rgba(255,255,255,0.1);}
-.chat-input-area input { flex: 1; padding: 14px 20px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.2); outline: none; font-size: 15px; background: rgba(255, 255, 255, 0.1); color: white;}
-.chat-input-area input::placeholder { color: rgba(255,255,255,0.5); }
-.chat-input-area button { background: linear-gradient(135deg, #db2777, #9333ea); color: white; border-radius: 50%; width: 50px; height: 50px; font-size: 20px; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(219, 39, 119, 0.4);}
-
-.call-btn { background: linear-gradient(135deg, #10b981, #059669); color: white; border-radius: 50%; width: 55px; height: 55px; font-size: 24px; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); animation: pulse-green 2s infinite; border: 2px solid #fff; position: absolute; right: 50%; transform: translateX(50%); top: 10px; z-index: 10;}
-@keyframes pulse-green { 0% { transform: translateX(50%) scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); } 70% { transform: translateX(50%) scale(1); box-shadow: 0 0 0 20px rgba(16, 185, 129, 0); } 100% { transform: translateX(50%) scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }}
-
-/* Reels Feed */
-.reels-feed { height: calc(100vh - 180px); overflow-y: scroll; scroll-snap-type: y mandatory; border-radius: 20px; background: #000; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); position: relative;}
-.reels-feed::-webkit-scrollbar { display: none; }
-.reels-feed { -ms-overflow-style: none; scrollbar-width: none; }
-.reel-item { height: 100%; scroll-snap-align: start; position: relative; display: flex; justify-content: center; align-items: center; background: #000; overflow: hidden;}
-.reel-item video, .reel-item iframe { width: 100%; height: 100%; object-fit: cover;}
-.reel-overlay { position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: white; pointer-events: none;}
-.reel-overlay h3 { font-size: 20px; font-weight: 800; margin-bottom: 5px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
-.reel-overlay p { font-size: 14px; opacity: 0.9; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
-.reel-heart { position: absolute; right: 15px; bottom: 30px; font-size: 35px; cursor: pointer; pointer-events: auto; animation: heartbeat 1s infinite;}
-@keyframes heartbeat { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
-
-/* Bottom Nav */
-.bottom-nav { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 550px; height: var(--nav-height); background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.15); border-radius: 25px; display: flex; justify-content: space-around; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 1000; }
-.nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #94a3b8; font-size: 11px; font-weight: 600; cursor: pointer; width: 20%; height: 100%; gap: 4px; transition: 0.3s;}
-.nav-item.active { color: #fbcfe8; transform: translateY(-5px); }
-.nav-item.active .icon { text-shadow: 0 0 10px rgba(219, 39, 119, 0.8); transform: scale(1.2);}
-.nav-item span.icon { font-size: 22px; transition: 0.3s;}
-
-#musicBtn { position: fixed; bottom: 100px; right: 20px; background: linear-gradient(45deg, #db2777, #9333ea); color: white; padding: 15px; border-radius: 50%; font-weight: 800; font-size: 18px; cursor: pointer; box-shadow: 0 6px 20px rgba(147, 51, 234, 0.6); z-index: 9999; display: flex; align-items: center; justify-content: center; border: 2px solid rgba(255,255,255,0.5); transition: all 0.3s ease; width: 55px; height: 55px;}
-#musicBtn.playing { background: linear-gradient(45deg, #10b981, #059669); animation: pulse 2s infinite; }
-
-.anniversary-card { background: linear-gradient(135deg, rgba(219, 39, 119, 0.2), rgba(147, 51, 234, 0.2)); border: 1px solid rgba(219, 39, 119, 0.5); border-radius: 16px; padding: 20px; text-align: center; margin-top: 20px; }
-.anniversary-card h3 { color: #fbcfe8; font-size: 18px; margin-bottom: 8px;}
-.anniversary-card .days { font-size: 36px; font-weight: 900; color: #fff; text-shadow: 0 0 15px rgba(219, 39, 119, 0.8);}
-.miss-btn { background: linear-gradient(45deg, #db2777, #9333ea); color: white; padding: 18px; border-radius: 16px; font-size: 20px; font-weight: 800; width: 100%; margin-top: 20px; box-shadow: 0 8px 25px rgba(219, 39, 119, 0.5); }
-.big-couple-photo { width: 100%; max-width: 100%; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.2); margin: 15px auto; display: block; object-fit: cover; height: 250px;}
-
-#callModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 99999; flex-direction: column; }
-#callIframe { flex: 1; width: 100%; height: 100%; border: none; }
-.close-call { position: absolute; top: 30px; right: 20px; background: #ef4444; color: white; border: none; padding: 12px 20px; border-radius: 30px; font-weight: bold; z-index: 100000; cursor: pointer; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.5); }
-
-/* 🛠️ FIXED: Toast CSS was missing */
-#toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(100px); background: #16a34a; color: #fff; padding: 12px 24px; border-radius: 99px; font-weight: 600; font-size: 14px; z-index: 10000; transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 8px 24px rgba(22,163,74,0.4); display: flex; align-items: center; gap: 8px; opacity: 0; pointer-events: none; }
+/* Toast */
+#toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #16a34a; color: #fff; padding: 12px 24px; border-radius: 99px; font-weight: 600; font-size: 14px; z-index: 10000; transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 8px 24px rgba(22,163,74,0.4); display: flex; align-items: center; gap: 8px; opacity: 0; pointer-events: none; }
 #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 </style>
 </head>
 <body>
 
-<audio id="bgMusic" loop></audio>
-
-<!-- 🛠️ FIXED: Toast HTML was missing -->
 <div id="toast">✓ <span id="toastMsg"></span></div>
 
-<div id="callModal">
-    <button class="close-call" onclick="endCall()">❌ कल अन्त्य गर्नुहोस्</button>
-    <iframe id="callIframe" allow="camera; microphone; fullscreen; display-capture; autoplay"></iframe>
-</div>
-
 <div class="wrap">
+  <!-- Header with Live Time -->
   <header class="top-header">
-    <img src="wife.jpg" alt="Hamro Photo" class="couple-photo-small">
-    <div class="header-text">
-        <h1>हाम्रो संसार</h1>
-        <p id="syncStatus">इन्टरनेट जोडिँदै...</p>
+    <div class="header-top">
+        <img src="wife.jpg" alt="Hamro Photo" class="couple-photo-small">
+        <div class="header-text">
+            <h1>हाम्रो संसार</h1>
+            <p id="todayDate">मिति लोड हुँदै...</p>
+        </div>
+    </div>
+    <div class="clock-container">
+        <div class="clock-box">
+            <div class="flag">🇸🇦</div>
+            <div class="country">साउदी समय</div>
+            <div class="time" id="saudiTime">--:--:--</div>
+        </div>
+        <div class="clock-box">
+            <div class="flag">🇳🇵</div>
+            <div class="country">नेपाल समय</div>
+            <div class="time nepal" id="nepalTime">--:--:--</div>
+        </div>
     </div>
   </header>
 
-  <!-- 💰 Tab 1: ANJANA HISAB (Smart Family Finance) -->
-  <div id="tab-hisab" class="tab-content active">
+  <div class="tab-content active">
     <h2 class="page-title">🌸 अन्जना हिसाब 🌸</h2>
     
     <!-- 🎯 Family Goal (पारिवारिक लक्ष्य) -->
@@ -353,234 +314,15 @@ tbody td{padding:12px 10px;font-size:14px;border-bottom:1px solid rgba(255,255,2
     </div>
   </div>
 
-  <!-- 💑 Tab 2: HAMI -->
-  <div id="tab-us" class="tab-content">
-    <h2 class="page-title">💑 अन्जना र प्रकाश 💑</h2>
-    
-    <div class="glass-card card">
-        <h2 class="card-title" style="justify-content:center;">⏳ हामी सँगै बसेको दिन</h2>
-        <div style="text-align: center;">
-            <h3 style="font-size: 14px; color: #fbcfe8; margin-bottom: 10px;">हामी सँगै छौं...</h3>
-            <div style="font-size: 48px; font-weight: 900; color: #fff; text-shadow: 0 0 20px rgba(219, 39, 119, 0.8);" id="loveDays">--</div>
-            <p style="font-size: 14px; color: #fbcfe8; margin-bottom: 15px;">दिन भइसक्यो</p>
-            <input type="date" id="loveStartDate" onchange="saveLoveDate(this.value)" style="padding: 10px; border-radius: 10px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); color: #fff; outline: none;">
-        </div>
-    </div>
-
-    <div class="glass-card card" style="text-align:center; border: 1px solid rgba(219, 39, 119, 0.5);">
-        <h2 class="card-title" style="justify-content:center; color:#fbcfe8;">🤗 भर्चुअल माया</h2>
-        <div style="display:flex; justify-content:space-around; margin-bottom:15px; font-size:16px;">
-            <div><span style="font-size:32px;">🤗</span><br><b id="hugCount" style="color:#fbbf24; font-size:20px;">0</b> Hugs</div>
-            <div><span style="font-size:32px;">😘</span><br><b id="kissCount" style="color:#f472b6; font-size:20px;">0</b> Kisses</div>
-        </div>
-        <div style="display: flex; gap: 12px;">
-            <button onclick="sendLoveAction('hug')" style="flex:1; padding:15px; border-radius:15px; background:linear-gradient(45deg, #f59e0b, #fbbf24); color:white; font-size:18px; font-weight:bold; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);">🤗 हग</button>
-            <button onclick="sendLoveAction('kiss')" style="flex:1; padding:15px; border-radius:15px; background:linear-gradient(45deg, #ec4899, #f43f5e); color:white; font-size:18px; font-weight:bold; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);">😘 किस</button>
-        </div>
-    </div>
-
-    <div class="glass-card card">
-        <h2 class="card-title">🎲 ट्रुथ वा डेयर</h2>
-        <div style="text-align: center; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 15px;">
-            <p id="todText" style="font-size: 16px; font-weight: bold; margin-bottom: 20px; min-height: 40px; color: #fbcfe8;">खेल खेल्न तलको बटन थिच्नुहोस्!</p>
-            <div style="display: flex; gap: 12px;">
-                <button onclick="playTOD('truth')" style="background: #3b82f6; color: white; flex: 1; padding: 12px; border-radius: 10px; font-weight: bold; font-size:15px;">ट्रुथ</button>
-                <button onclick="playTOD('dare')" style="background: #ef4444; color: white; flex: 1; padding: 12px; border-radius: 10px; font-weight: bold; font-size:15px;">डेयर</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="glass-card card">
-        <h2 class="card-title">🤔 आजको प्रश्न</h2>
-        <div style="background: rgba(147, 51, 234, 0.2); border-radius: 15px; padding: 20px; text-align: center; border: 1px solid rgba(147, 51, 234, 0.5);">
-            <p id="dailyQuestionText" style="font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #fff;">लोड हुँदै...</p>
-            <div style="display: flex; gap: 10px;">
-                <input type="text" id="questionAnswerInput" placeholder="तपाईंको उत्तर..." style="flex:1; padding:12px; border-radius:10px; border:none; outline:none; font-size:14px;">
-                <button onclick="submitAnswer()" style="background: #9333ea; color: white; padding: 0 20px; border-radius: 10px; font-weight: bold;">पठाउनुहोस्</button>
-            </div>
-            <p style="font-size:13px; margin-top:12px; color:#cbd5e1;" id="partnerAnswerDisplay"></p>
-        </div>
-    </div>
-
-    <div class="glass-card card">
-        <h2 class="card-title">💌 मायाको चिठी</h2>
-        <div style="display:flex; gap:10px; margin-bottom:20px;">
-            <input type="text" id="noteInput" placeholder="छोटो मीठो सन्देश..." style="flex:1; padding:12px; border-radius:10px; border:1px solid var(--glass-border); background:rgba(0,0,0,0.2); color:#fff; outline:none;">
-            <button onclick="addLoveNote()" style="background:#db2777; color:white; padding:0 20px; border-radius:10px; font-weight:bold; font-size:20px;">+</button>
-        </div>
-        <div id="notesBoard" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;"></div>
-    </div>
-
-    <div class="glass-card card">
-        <h2 class="card-title">🎯 साझा सपना (Bucket List)</h2>
-        <div style="display:flex; gap:10px; margin-bottom:20px;">
-            <input type="text" id="bucketInput" placeholder="सँगै गर्न चाहेको कुरा..." style="flex:1; padding:12px; border-radius:10px; border:1px solid var(--glass-border); background:rgba(0,0,0,0.2); color:#fff; outline:none;">
-            <button onclick="addBucketItem()" style="background:#4f46e5; color:white; padding:0 20px; border-radius:10px; font-weight:bold; font-size:20px;">+</button>
-        </div>
-        <div id="bucketList"></div>
-    </div>
-
-    <div class="glass-card card">
-        <h2 class="card-title">📸 सम्झनाको बाकस</h2>
-        <div style="display:flex; gap:10px; margin-bottom:20px; flex-direction:column;">
-            <input type="text" id="memoryTitle" placeholder="शीर्षक (जस्तै: पहिलो भेट)" style="padding:12px; border-radius:10px; border:1px solid var(--glass-border); background:rgba(0,0,0,0.2); color:#fff; outline:none;">
-            <div style="display:flex; gap:10px;">
-                <input type="text" id="memoryDesc" placeholder="के भएको थियो?" style="flex:1; padding:12px; border-radius:10px; border:1px solid var(--glass-border); background:rgba(0,0,0,0.2); color:#fff; outline:none;">
-                <button onclick="addMemory()" style="background:#f59e0b; color:white; padding:0 20px; border-radius:10px; font-weight:bold; font-size:20px;">+</button>
-            </div>
-        </div>
-        <div id="memoryList"></div>
-    </div>
-
-  </div>
-
-  <!-- 🏠 Tab 3: Home -->
-  <div id="tab-home" class="tab-content">
-    <div class="glass-card card" style="text-align: center;">
-        <h2 style="color: #fbcfe8; margin-bottom: 10px; font-size: 20px;">नमस्ते! 🙏</h2>
-        <p style="color: #cbd5e1; font-size: 16px; font-weight:bold; margin-bottom: 20px;" id="todayDate">मिति लोड हुँदै...</p>
-        
-        <img src="wife.jpg" alt="Hamro Photo" class="big-couple-photo">
-
-        <div class="anniversary-card">
-            <h3>💍 हाम्रो विवाह वार्षिकी (बैशाख ६) 💍</h3>
-            <div class="days" id="anniversaryDays">--</div>
-            <p style="font-size: 14px; color: #fbcfe8; margin-top: 5px;">दिन बाँकी छ</p>
-        </div>
-
-        <div style="display: flex; justify-content: space-around; text-align: center; background: rgba(0,0,0,0.2); border-radius: 15px; padding: 15px; margin: 20px 0;">
-            <div style="flex: 1; border-right: 1px solid rgba(255,255,255,0.1);">
-                <div style="font-size: 24px; margin-bottom: 5px;">🇸🇦</div>
-                <div style="font-size: 12px; color: #cbd5e1; font-weight: bold;">साउदी समय</div>
-                <div style="font-size: 20px; font-weight: 800; color: #fbcfe8; margin-top: 5px;" id="saudiTime">--:--</div>
-            </div>
-            <div style="flex: 1;">
-                <div style="font-size: 24px; margin-bottom: 5px;">🇳🇵</div>
-                <div style="font-size: 12px; color: #cbd5e1; font-weight: bold;">नेपाल समय</div>
-                <div style="font-size: 20px; font-weight: 800; color: #fbcfe8; margin-top: 5px;" id="nepalTime">--:--</div>
-            </div>
-        </div>
-
-        <div style="margin-top: 20px; text-align: left;">
-            <h3 style="font-size: 15px; color: #fbcfe8; margin-bottom: 10px;">आज तपाईंको मूड कस्तो छ?</h3>
-            <div style="display: flex; justify-content: space-around; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px;">
-                <div onclick="setMood('husband', '😊')" style="text-align: center; cursor: pointer; padding: 10px; border-radius: 10px; background: rgba(0,0,0,0.2);"><div style="font-size: 28px;">😊</div><div style="font-size: 12px; font-weight: bold; margin-top: 5px;">प्रकाश</div></div>
-                <div onclick="setMood('wife', '😊')" style="text-align: center; cursor: pointer; padding: 10px; border-radius: 10px; background: rgba(0,0,0,0.2);"><div style="font-size: 28px;">😊</div><div style="font-size: 12px; font-weight: bold; margin-top: 5px;">अन्जना</div></div>
-            </div>
-            <div style="display:flex; justify-content:space-between; margin-top:15px; font-size:14px; font-weight:bold; padding: 0 10px;">
-                <div id="husbandMoodDisplay" style="color:#60a5fa;">प्रकाश: 😊</div>
-                <div id="wifeMoodDisplay" style="color:#f472b6;">अन्जना: 😊</div>
-            </div>
-        </div>
-
-        <div style="font-style: italic; color: #cbd5e1; font-weight: 600; padding: 20px 0; font-size: 16px;">"तिमी टाढा छौ, तर मेरो मन सधैं तिमीसंगै छ। ❤️"</div>
-        <button class="miss-btn" onclick="sendMissYou()">❤️ I Miss You (मिस गर्छु)</button>
-    </div>
-  </div>
-
-  <!-- 💌 Tab 4: Chat -->
-  <div id="tab-chat" class="tab-content">
-    <div class="chat-container">
-      <div class="chat-header">
-        <div class="chat-header-title" style="text-align: left; margin-left: 10px;">अन्जना ❤️ प्रकाश</div>
-        
-        <button class="call-btn" onclick="startCall()" title="HD भिडियो कल गर्नुहोस्">📞</button>
-        
-        <select id="myRole" style="background:rgba(255,255,255,0.2); color:white; border:none; padding:8px; border-radius:10px; font-size:13px; outline:none; margin-left: 40px; font-weight: bold;">
-            <option value="husband">प्रकाश</option>
-            <option value="wife">अन्जना</option>
-        </select>
-      </div>
-      <div class="chat-messages" id="chatMessages"></div>
-      <div class="chat-input-area">
-        <input type="text" id="chatInput" placeholder="मायालु सन्देश लेख्नुहोस्...">
-        <button id="sendChatBtn">➤</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 🎬 Tab 5: REELS -->
-  <div id="tab-reels" class="tab-content">
-    <div class="reels-feed" id="reelsContainer"></div>
-  </div>
-
 </div>
-
-<nav class="bottom-nav">
-    <div class="nav-item active" onclick="switchTab('tab-hisab', this)">
-        <span class="icon">💰</span> हिसाब
-    </div>
-    <div class="nav-item" onclick="switchTab('tab-us', this)">
-        <span class="icon">💑</span> हामी
-    </div>
-    <div class="nav-item" onclick="switchTab('tab-home', this)">
-        <span class="icon">🏠</span> होम
-    </div>
-    <div class="nav-item" onclick="switchTab('tab-chat', this)">
-        <span class="icon">💌</span> च्याट
-    </div>
-    <div class="nav-item" onclick="switchTab('tab-reels', this)">
-        <span class="icon">🎬</span> रिल्स
-    </div>
-</nav>
-
-<button id="musicBtn" onclick="toggleMusic(event)">
-    <span id="musicIcon">🎵</span>
-</button>
 
 <script>
 /* ================= CONFIG ================= */
 const BASE_URL = "https://anjana-khata-default-rtdb.firebaseio.com/khata/";
 const EXPENSE_URL = BASE_URL + "expenses";
 const INCOME_URL = BASE_URL + "incomes";
-const MSG_URL = BASE_URL + "messages";
-const MOOD_URL = BASE_URL + "mood";
 const BUDGET_URL = BASE_URL + "budget";
 const GOAL_URL = BASE_URL + "familyGoal";
-const NOTES_URL = BASE_URL + "loveNotes";
-const BUCKET_URL = BASE_URL + "bucketList";
-const LOVE_DATE_URL = BASE_URL + "loveStartDate";
-const COUNTERS_URL = BASE_URL + "counters";
-const MEMORY_URL = BASE_URL + "memories";
-const QA_URL = BASE_URL + "dailyQ";
-
-function startCall() {
-    document.getElementById('callModal').style.display = 'flex';
-    const jitsiRoom = "HamroSansarAnjanaPrakash";
-    const hdParams = "#config.startWithVideoMuted=false&config.startWithAudioMuted=false&config.prejoinPageEnabled=false&config.resolution=1080&config.constraints.video.height.ideal=1080";
-    document.getElementById('callIframe').src = `https://meet.jit.si/${jitsiRoom}${hdParams}`;
-}
-function endCall() {
-    document.getElementById('callModal').style.display = 'none';
-    document.getElementById('callIframe').src = "";
-}
-
-/* 🎵 RANDOM SONGS */
-const songs = ["song1.mp3", "song2.mp3", "song3.mp3", "song4.mp3"]; 
-let currentSongIndex = Math.floor(Math.random() * songs.length);
-const music = document.getElementById('bgMusic');
-music.src = songs[currentSongIndex];
-music.addEventListener('ended', function() {
-    let nextIndex;
-    do { nextIndex = Math.floor(Math.random() * songs.length); } 
-    while (nextIndex === currentSongIndex && songs.length > 1);
-    currentSongIndex = nextIndex;
-    music.src = songs[currentSongIndex];
-    music.play().catch(e => {});
-});
-let isPlaying = false;
-function playMusic() {
-  if (!isPlaying) {
-    music.play().then(() => { isPlaying = true; $('musicBtn').classList.add('playing'); $('musicIcon').textContent = '⏸️'; }).catch(e => {});
-  }
-}
-function toggleMusic(e) {
-  if(e) e.stopPropagation();
-  if (isPlaying) { music.pause(); isPlaying = false; $('musicBtn').classList.remove('playing'); $('musicIcon').textContent = '🎵'; } 
-  else { playMusic(); }
-}
-document.body.addEventListener('touchstart', function(e) { if (!e.target.closest('#musicBtn')) playMusic(); }, { passive: true });
-document.body.addEventListener('click', function(e) { if (!e.target.closest('#musicBtn')) playMusic(); });
 
 /* CATEGORIES */
 const EXPENSE_CATS = [
@@ -610,14 +352,13 @@ let allTransactions = [];
 let budgetData = 0;
 let familyGoal = { name: '', target: 0, current: 0 };
 let editingId = null;
-let editingType = null; // 🛠️ FIXED: Track type for safe editing
+let editingType = null; 
 const $ = id => document.getElementById(id);
 const allCatsMap = Object.fromEntries([...EXPENSE_CATS, ...INCOME_CATS].map(c => [c.id, c]));
 
 function fmt(n){ return 'रु. ' + (Number(n)||0).toLocaleString('en-IN'); }
 function toISO(d){ return d.toISOString().split('T')[0]; }
 function formatDate(iso){ const [y,m,d] = iso.split('-'); return `${+d} ${MONTHS_NE[+m-1]} ${y}`; }
-function formatTime(ts){ const d = new Date(ts); return d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0'); }
 
 let toastTimer;
 function showToast(msg, color='#16a34a'){
@@ -626,41 +367,19 @@ function showToast(msg, color='#16a34a'){
   toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-function switchTab(tabId, navEl) {
-    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-    $(tabId).classList.add('active');
-    navEl.classList.add('active');
-    if(tabId === 'tab-chat') { loadMessages(); }
-    if(tabId === 'tab-reels') { initReels(); } // 🛠️ FIXED: Reels init
-    if(tabId === 'tab-hisab') { renderHisab(); }
-    if(tabId === 'tab-us') { loadLoveNotes(); loadBucketList(); loadLoveDate(); loadCounters(); loadMemories(); loadDailyQ(); }
-}
+/* LIVE TIME & DATE */
+function initTime() {
+    try {
+        const now = new Date();
+        const nd = new NepaliDate(now);
+        $('todayDate').innerHTML = `<b>${nd.format('DD MMMM YYYY', 'np')}</b>`;
+    } catch (e) { $('todayDate').textContent = "मिति लोड हुन सकेन"; }
 
-/* 🎬 REELS INIT */
-function initReels() {
-    const container = document.getElementById('reelsContainer');
-    if (container.innerHTML !== "") return; // एक पटक मात्र लोड गर्ने
-    const reelVideos = [
-        { url: "video1.mp4", title: "हाम्रो पहिलो भिडियो ❤️", desc: "यो भिडियो हेर्दा मलाई सधैं तिम्रो याद आउँछ।" },
-        { url: "video2.mp4", title: "तिमीसंग बिताएका पलहरु 🌸", desc: "जिन्दगीको सबैभन्दा राम्रो समय।" },
-        { url: "video3.mp4", title: "मेरो मनको राजा 👑", desc: "सधैं खुसी रहनु है।" }
-    ];
-    container.innerHTML = reelVideos.map((vid) => `
-        <div class="reel-item">
-            <video src="${vid.url}" loop playsinline muted></video>
-            <div class="reel-overlay"><h3>${vid.title}</h3><p>${vid.desc}</p></div>
-            <div class="reel-heart" onclick="this.style.color='red'; this.style.transform='scale(1.5)';">🤍</div>
-        </div>
-    `).join('');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            const video = entry.target.querySelector('video');
-            if (entry.isIntersecting) { video.currentTime = 0; video.muted = false; video.play().catch(e => { video.muted = true; video.play(); }); } 
-            else { video.pause(); }
-        });
-    }, { threshold: 0.6 });
-    document.querySelectorAll('.reel-item').forEach(item => observer.observe(item));
+    setInterval(() => {
+        const d = new Date();
+        $('saudiTime').textContent = d.toLocaleTimeString('en-US', { timeZone: 'Asia/Riyadh', hour12: false });
+        $('nepalTime').textContent = d.toLocaleTimeString('en-US', { timeZone: 'Asia/Kathmandu', hour12: false });
+    }, 1000);
 }
 
 /* HISAB LOGIC */
@@ -680,7 +399,6 @@ function quickAdd(catId, label) {
 }
 
 async function loadCloudData() {
-  $('syncStatus').textContent = "☁️ सिंक हुँदै...";
   try {
     const expRes = await fetch(EXPENSE_URL + ".json");
     const expJson = await expRes.json();
@@ -707,8 +425,6 @@ async function loadCloudData() {
         $('goalCurrent').value = familyGoal.current || '';
     }
 
-    $('syncStatus').textContent = `✓ सिंक भयो`;
-    
     const currentYear = new Date().getFullYear();
     const years = new Set();
     for(let i = 1900; i <= 2200; i++) { years.add(i); }
@@ -719,7 +435,7 @@ async function loadCloudData() {
     $('yearFilter').value = currentYear;
     
     renderHisab();
-  } catch(e) { $('syncStatus').textContent = "❌ अफलाइन"; }
+  } catch(e) { console.error("डाटा लोड भएन"); }
 }
 
 async function saveGoal() {
@@ -760,7 +476,6 @@ $('expenseForm').addEventListener('submit', async (e) => {
   
   try {
     if (editingId) {
-      // 🛠️ FIXED: If user changes type while editing, delete from old and create new
       if (editingType !== type) {
           const oldUrl = editingType === 'income' ? INCOME_URL : EXPENSE_URL;
           await fetch(`${oldUrl}/${editingId}.json`, { method: 'DELETE' });
@@ -976,14 +691,13 @@ function renderHisab() {
 window.editItem = (id, type) => {
   const item = allTransactions.find(d => d.id === id); if(!item) return;
   $('txType').value = type;
-  editingType = type; // 🛠️ FIXED: Save editing type
+  editingType = type; 
   toggleCategories();
   $('date').value = item.date; $('category').value = item.category; $('amount').value = item.amount; $('note').value = item.note || '';
   if (item.payment) $('paymentMethod').value = item.payment;
   editingId = id; 
   $('submitBtn').textContent = 'अपडेट गर्नुहोस्';
   $('cancelEditBtn').style.display = 'block';
-  switchTab('tab-hisab', document.querySelectorAll('.nav-item')[0]);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
@@ -1018,74 +732,12 @@ function downloadCSV() {
     link.click();
 }
 
-/* CHAT */
-const chatInput = $('chatInput'); const chatMessages = $('chatMessages');
-$('myRole').value = localStorage.getItem('myRole') || 'husband';
-$('myRole').addEventListener('change', (e) => localStorage.setItem('myRole', e.target.value));
-
-async function sendMessage() {
-    const text = chatInput.value.trim(); if(!text) return;
-    const msg = { sender: $('myRole').value, text: text, ts: Date.now() };
-    chatInput.value = ''; 
-    try {
-        await fetch(MSG_URL + ".json", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(msg) });
-        loadMessages(); 
-    } catch(e) { alert("म्यासेज पठाउन सकिएन।"); }
-}
-$('sendChatBtn').addEventListener('click', sendMessage);
-chatInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') sendMessage(); });
-
-let lastMsgCount = 0;
-async function loadMessages() {
-    try {
-        const res = await fetch(MSG_URL + ".json");
-        const json = await res.json();
-        let msgs = [];
-        if (json) { for (let key in json) { msgs.push(json[key]); } }
-        msgs.sort((a,b) => a.ts - b.ts);
-        
-        const isNew = msgs.length > lastMsgCount;
-        lastMsgCount = msgs.length;
-        const myRole = $('myRole').value;
-        
-        chatMessages.innerHTML = msgs.map(m => {
-            const isMe = m.sender === myRole;
-            return `<div class="message ${isMe ? 'me' : 'partner'}">
-                ${!isMe ? `<div style="font-size:11px; color:#db2777; font-weight:bold; margin-bottom:4px;">${m.sender === 'wife' ? 'अन्जना' : 'प्रकाश'}</div>` : ''}
-                ${m.text}
-                <div class="time">${formatTime(m.ts)}</div>
-            </div>`;
-        }).join('');
-        
-        if (isNew && msgs.length > 0) {
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            const lastMsg = msgs[msgs.length - 1];
-            if (lastMsg.sender !== myRole) {
-                showToast("💌 नयाँ प्रेम सन्देश आयो!", "#db2777");
-                if (navigator.vibrate) navigator.vibrate([200, 100, 200]); 
-            }
-        }
-    } catch(e) {}
-}
-
 /* INIT */
 (function init() {
   $('date').value = toISO(new Date());
   toggleCategories(); 
-  initHome();
+  initTime();
   loadCloudData();
-  loadMessages();
-  loadLoveDate();
-  loadCounters();
-  loadMemories();
-  initReels(); // 🛠️ FIXED: Reels load on startup
-
-  setInterval(() => {
-      if($('tab-chat').classList.contains('active')) loadMessages();
-      if($('tab-home').classList.contains('active')) loadMoods();
-      if($('tab-us').classList.contains('active')) { loadLoveNotes(); loadBucketList(); loadCounters(); loadMemories(); }
-  }, 5000);
-
 })();
 </script>
 </body>
