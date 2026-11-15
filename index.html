@@ -2,10 +2,8 @@
 <html lang="ne">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Hamro Sansar - Family Finance</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anjana Hisab - Family Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter@3.3.4/dist/nepali-date-converter.umd.js"></script>
 
@@ -26,8 +24,7 @@
 
 body{
     color:var(--text-main);
-    padding:16px;
-    padding-bottom: 30px; /* Bottom nav removed */
+    padding:24px;
     background: linear-gradient(135deg, #0f172a 0%, #2e1065 50%, #4c1d95 100%);
     background-attachment: fixed;
     overflow-x: hidden;
@@ -43,103 +40,113 @@ body{
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
 
-.wrap{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:20px; position: relative; z-index: 1;}
+/* Full Page Layout */
+.dashboard-wrap {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
 
-/* Top Header with Time */
+/* Top Header */
 .top-header { 
-    display: flex; flex-direction: column; gap: 15px;
-    padding: 20px; border-radius: var(--radius); 
-    background: linear-gradient(135deg, rgba(219, 39, 119, 0.8), rgba(147, 51, 234, 0.8));
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;
+    padding: 20px 30px; border-radius: var(--radius); 
+    background: linear-gradient(135deg, rgba(219, 39, 119, 0.9), rgba(147, 51, 234, 0.9));
     backdrop-filter: blur(10px);
     box-shadow: 0 10px 30px rgba(219, 39, 119, 0.3);
     border: 1px solid rgba(255,255,255,0.2);
 }
-.header-top { display: flex; align-items: center; gap: 15px; }
-.couple-photo-small { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 3px solid #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-.header-text h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
-.header-text p { font-size: 13px; color: #fbcfe8; font-weight: 500;}
+.header-left { display: flex; align-items: center; gap: 20px; }
+.couple-photo-small { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 3px solid #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+.header-text h1 { font-size: 28px; font-weight: 800; }
+.header-text p { font-size: 14px; color: #fbcfe8; }
 
-.clock-container { display: flex; justify-content: space-around; text-align: center; background: rgba(0,0,0,0.2); border-radius: 15px; padding: 12px; }
-.clock-box { flex: 1; }
-.clock-box .flag { font-size: 20px; margin-bottom: 2px; }
-.clock-box .country { font-size: 11px; color: #cbd5e1; font-weight: bold; }
-.clock-box .time { font-size: 18px; font-weight: 800; color: #fff; margin-top: 2px; letter-spacing: 1px;}
-.clock-box .time.nepal { color: #fbcfe8; }
+.clock-container { display: flex; gap: 20px; background: rgba(0,0,0,0.2); padding: 10px 20px; border-radius: 15px; }
+.clock-box { text-align: center; }
+.clock-box .flag { font-size: 20px; }
+.clock-box .country { font-size: 12px; color: #cbd5e1; font-weight: bold; }
+.clock-box .time { font-size: 22px; font-weight: 800; color: #fff; }
 
-.page-title { text-align: center; font-size: 24px; font-weight: 800; color: #fbcfe8; margin-bottom: 15px; text-shadow: 0 2px 10px rgba(219, 39, 119, 0.5); }
+/* Summary Cards (Top Row) */
+.summary-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+.summary-card { padding: 24px; border-radius: 16px; border-left: 6px solid var(--primary); background: rgba(255,255,255,0.05); }
+.summary-title { font-size: 13px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
+.summary-amount { font-size: 30px; font-weight: 900; margin-top: 5px; }
 
-.card{ padding:20px; margin-bottom: 20px;}
-.card-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px; color: #fff;}
+/* Main Grid Layout */
+.main-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 24px; }
+@media(max-width: 992px) { .main-grid { grid-template-columns: 1fr; } }
 
-.field{display:flex;flex-direction:column;gap:6px;}
+/* Form Styles */
+.card{ padding: 24px; }
+.card-title{font-size:18px;font-weight:700;margin-bottom:20px; display:flex; align-items:center; gap:10px; color: #fff;}
+.field{display:flex;flex-direction:column;gap:6px; margin-bottom: 15px;}
 .field label{font-size:13px;font-weight:600;color:var(--text-muted)}
-.field input,.field select,.field textarea{
+.field input,.field select{
     font-size:15px; padding:12px; border:1px solid var(--glass-border); border-radius:12px;
-    background:rgba(0,0,0,0.2); color: #fff; outline:none; transition: 0.3s;
-    -webkit-appearance: none; 
+    background:rgba(0,0,0,0.2); color: #fff; outline:none; transition: 0.3s; width: 100%;
 }
-.field input:focus,.field select:focus { border-color: var(--primary); background: rgba(0,0,0,0.4); box-shadow: 0 0 10px rgba(219, 39, 119, 0.3); }
+.field input:focus,.field select:focus { border-color: var(--primary); background: rgba(0,0,0,0.4); }
 .field select option { background: #1e1b4b; color: #fff; }
 
-button{font-family:inherit;cursor:pointer;border:none;transition:.2s;}
 .btn-primary{
     background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color:#fff;font-size:15px;font-weight:700;padding:14px;border-radius:12px;width:100%;
-    box-shadow: 0 6px 20px rgba(219, 39, 119, 0.4);
+    color:#fff;font-size:16px;font-weight:700;padding:15px;border-radius:12px;width:100%;
+    box-shadow: 0 6px 20px rgba(219, 39, 119, 0.4); cursor: pointer; border: none;
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(219, 39, 119, 0.6); }
-.btn-ghost{background:rgba(255,255,255,0.1); color:#fff; font-size:14px;font-weight:600;padding:10px 15px;border-radius:10px;border:1px solid var(--glass-border);}
-.btn-ghost:hover { background: rgba(255,255,255,0.2); }
+.btn-primary:hover { transform: translateY(-2px); }
+.btn-ghost{background:rgba(255,255,255,0.1); color:#fff; font-size:14px;font-weight:600;padding:10px 15px;border-radius:10px;border:1px solid var(--glass-border); cursor: pointer;}
 
-.filter-bar { display: flex; gap: 12px; margin-bottom: 20px; }
-.filter-bar select { flex: 1; padding: 12px; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); color: #fff; font-weight: bold; outline: none; }
+/* Category Breakdown */
+.category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media(max-width: 600px) { .category-grid { grid-template-columns: 1fr; } }
 
-/* Stats Grid */
-.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
-.stat-card { padding: 15px; border-radius: 16px; border-left: 5px solid var(--primary); background: rgba(255,255,255,0.05);}
-.stat-title { font-size: 11px; color: var(--text-muted); font-weight: 700; text-transform: uppercase;}
-.stat-amount { font-size: 20px; font-weight: 900; margin-top: 4px; }
+.cat-section h3 { font-size: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+.cat-item { margin-bottom: 12px; }
+.cat-header { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+.cat-bar-bg { height: 10px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
+.cat-bar-fill { height: 100%; border-radius: 10px; transition: width 0.5s ease; }
 
-/* Smart Insight Card */
-.insight-card { background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2)); border: 1px solid rgba(59, 130, 246, 0.4); padding: 15px; border-radius: 15px; margin-bottom: 20px; display: flex; align-items: center; gap: 15px;}
-.insight-icon { font-size: 30px; }
-.insight-text { font-size: 14px; line-height: 1.5; color: #e2e8f0; }
-
-/* Quick Add Chips */
-.quick-add-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; }
-.quick-add-container::-webkit-scrollbar { display: none; }
-.chip { background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border); padding: 8px 15px; border-radius: 20px; font-size: 13px; font-weight: 600; color: #fff; white-space: nowrap; cursor: pointer; transition: 0.2s; }
-.chip:hover { background: var(--primary); border-color: var(--primary); }
-
-/* Search Bar */
-.search-bar { display: flex; gap: 10px; margin-bottom: 15px; }
-.search-bar input { flex: 1; padding: 10px 15px; border-radius: 10px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); color: #fff; outline: none; }
+/* Filters */
+.filter-bar { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+.filter-bar select { padding: 12px 20px; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); color: #fff; font-weight: bold; outline: none; cursor: pointer; font-size: 15px;}
+.filter-bar input { flex: 1; padding: 12px 20px; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); color: #fff; outline: none; min-width: 200px;}
 
 /* Table */
-.table-scroll{overflow-x:auto; margin: 0 -20px; padding: 0 20px;}
-table{width:100%;border-collapse:collapse;min-width:100%;}
-thead th{text-align:left;font-size:12px;color:var(--text-muted);padding:10px;border-bottom:1px solid var(--glass-border);}
-tbody td{padding:12px 10px;font-size:14px;border-bottom:1px solid rgba(255,255,255,0.05);}
-.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:4px 8px;border-radius:99px;}
+.table-scroll{overflow-x:auto; margin: 0 -24px; padding: 0 24px;}
+table{width:100%;border-collapse:collapse;min-width:800px;}
+thead th{text-align:left;font-size:13px;color:var(--text-muted);padding:12px 10px;border-bottom:1px solid var(--glass-border);}
+tbody td{padding:15px 10px;font-size:15px;border-bottom:1px solid rgba(255,255,255,0.05);}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;padding:5px 10px;border-radius:99px;}
 .action-btns { display: flex; gap: 8px; }
-.icon-btn{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,0.1);display:grid;place-items:center;font-size:14px;cursor:pointer; border:1px solid var(--glass-border);}
+.icon-btn{width:35px;height:35px;border-radius:8px;background:rgba(255,255,255,0.1);display:grid;place-items:center;font-size:14px;cursor:pointer; border:1px solid var(--glass-border);}
 
-/* Toast */
-#toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #16a34a; color: #fff; padding: 12px 24px; border-radius: 99px; font-weight: 600; font-size: 14px; z-index: 10000; transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 8px 24px rgba(22,163,74,0.4); display: flex; align-items: center; gap: 8px; opacity: 0; pointer-events: none; }
+#toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #16a34a; color: #fff; padding: 12px 24px; border-radius: 99px; font-weight: 600; font-size: 14px; z-index: 10000; transition: transform 0.35s; box-shadow: 0 8px 24px rgba(22,163,74,0.4); opacity: 0; }
 #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* Music Button */
+#musicBtn { position: fixed; bottom: 30px; right: 30px; background: linear-gradient(45deg, #db2777, #9333ea); color: white; padding: 15px; border-radius: 50%; font-weight: 800; font-size: 20px; cursor: pointer; box-shadow: 0 6px 20px rgba(147, 51, 234, 0.6); z-index: 9999; display: flex; align-items: center; justify-content: center; border: 2px solid rgba(255,255,255,0.5); transition: all 0.3s ease; width: 60px; height: 60px; }
+#musicBtn.playing { background: linear-gradient(45deg, #10b981, #059669); animation: pulse 2s infinite; }
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 </style>
 </head>
 <body>
 
+<!-- गीत बजाउने अडियो -->
+<audio id="bgMusic" loop></audio>
+
 <div id="toast">✓ <span id="toastMsg"></span></div>
 
-<div class="wrap">
-  <!-- Header with Live Time -->
+<div class="dashboard-wrap">
+  
+  <!-- HEADER -->
   <header class="top-header">
-    <div class="header-top">
+    <div class="header-left">
         <img src="wife.jpg" alt="Hamro Photo" class="couple-photo-small">
         <div class="header-text">
-            <h1>हाम्रो संसार</h1>
+            <h1>🌸 अन्जना हिसाब</h1>
             <p id="todayDate">मिति लोड हुँदै...</p>
         </div>
     </div>
@@ -152,117 +159,40 @@ tbody td{padding:12px 10px;font-size:14px;border-bottom:1px solid rgba(255,255,2
         <div class="clock-box">
             <div class="flag">🇳🇵</div>
             <div class="country">नेपाल समय</div>
-            <div class="time nepal" id="nepalTime">--:--:--</div>
+            <div class="time" id="nepalTime">--:--:--</div>
         </div>
     </div>
   </header>
 
-  <div class="tab-content active">
-    <h2 class="page-title">🌸 अन्जना हिसाब 🌸</h2>
+  <!-- SUMMARY CARDS -->
+  <div class="summary-row">
+    <div class="glass-card summary-card" style="border-left-color: #10b981;">
+        <div class="summary-title">कुल आम्दानी</div>
+        <div class="summary-amount" id="statIncome" style="color: #10b981;">रु. ०</div>
+    </div>
+    <div class="glass-card summary-card" style="border-left-color: #ef4444;">
+        <div class="summary-title">कुल खर्च</div>
+        <div class="summary-amount" id="statExpense" style="color: #ef4444;">रु. ०</div>
+    </div>
+    <div class="glass-card summary-card" style="border-left-color: #3b82f6;">
+        <div class="summary-title">कुल बचत (Savings)</div>
+        <div class="summary-amount" id="statSavings" style="color: #3b82f6;">रु. ०</div>
+    </div>
+    <div class="glass-card summary-card" style="border-left-color: #f59e0b;">
+        <div class="summary-title">कुल रेकर्ड</div>
+        <div class="summary-amount" id="statCount">० वटा</div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID: FORM & CATEGORY -->
+  <div class="main-grid">
     
-    <!-- 🎯 Family Goal (पारिवारिक लक्ष्य) -->
-    <div class="glass-card card" style="border-left: 4px solid #3b82f6;">
-        <h2 class="card-title" style="color:#3b82f6; justify-content:space-between;">
-            <span>🎯 पारिवारिक लक्ष्य (Family Goal)</span>
-        </h2>
-        <div style="display:flex; gap:10px; margin-bottom:15px;">
-            <input type="text" id="goalName" placeholder="लक्ष्य (जस्तै: घर बनाउने)" style="flex:2; padding:12px; border-radius:10px; border:none; outline:none; font-size:14px; background:rgba(255,255,255,0.9); color:#000;">
-            <input type="number" id="goalTarget" placeholder="लक्ष्य रकम" style="flex:1; padding:12px; border-radius:10px; border:none; outline:none; font-size:14px; background:rgba(255,255,255,0.9); color:#000;">
-        </div>
-        <div style="display:flex; gap:10px; align-items:center;">
-            <input type="number" id="goalCurrent" placeholder="अहिले जम्मा भएको" style="flex:1; padding:12px; border-radius:10px; border:none; outline:none; font-size:14px; background:rgba(255,255,255,0.9); color:#000;">
-            <button onclick="saveGoal()" style="background:#3b82f6; color:#fff; padding:12px 20px; border-radius:10px; font-weight:bold; font-size:15px;">सेभ</button>
-        </div>
-        <div style="margin-top: 15px;">
-            <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:bold; margin-bottom:5px;">
-                <span id="goalNameDisplay" style="color:#fbcfe8;">लक्ष्य छैन</span>
-                <span id="goalAmountDisplay" style="color:#fff;">रु. ० / रु. ०</span>
-            </div>
-            <div style="width:100%; height:12px; background:rgba(255,255,255,0.2); border-radius:10px; overflow:hidden;">
-                <div id="goalFill" style="height:100%; width:0%; background:linear-gradient(90deg, #3b82f6, #10b981); transition:width 0.5s ease; border-radius:10px;"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 🎯 Budget Target -->
-    <div class="glass-card card" style="border-left: 4px solid #f59e0b;">
-        <h2 class="card-title" style="color:#f59e0b;">🎯 मासिक खर्चको लक्ष्य (Budget)</h2>
-        <div style="display:flex; gap:10px; margin-bottom:15px;">
-            <input type="number" id="budgetInput" placeholder="जस्तै: ५०,०००" style="flex:1; padding:12px; border-radius:10px; border:none; outline:none; font-size:16px; font-weight:bold; background:rgba(255,255,255,0.9); color:#000;">
-            <button onclick="saveBudget()" style="background:#f59e0b; color:#fff; padding:0 20px; border-radius:10px; font-weight:bold; font-size:15px;">सेभ</button>
-        </div>
-        <div id="budgetProgressArea" style="display:none;">
-            <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:bold; margin-bottom:8px;">
-                <span>खर्च: <span id="budgetSpent" style="color:#f87171;">रु. ०</span></span>
-                <span>लक्ष्य: <span id="budgetTarget" style="color:#fbbf24;">रु. ०</span></span>
-            </div>
-            <div style="width:100%; height:12px; background:rgba(255,255,255,0.2); border-radius:10px; overflow:hidden;">
-                <div id="budgetBar" style="height:100%; width:0%; background:#f59e0b; transition:width 0.5s ease; border-radius:10px;"></div>
-            </div>
-            <p id="budgetMsg" style="font-size:13px; font-weight:bold; margin-top:10px; text-align:center;"></p>
-        </div>
-    </div>
-
-    <!-- 💡 Smart Insight -->
-    <div class="insight-card">
-        <div class="insight-icon">💡</div>
-        <div class="insight-text" id="smartInsightText">लोड हुँदै...</div>
-    </div>
-
-    <div class="filter-bar">
-        <select id="yearFilter" onchange="renderHisab()"></select>
-        <select id="monthFilter" onchange="renderHisab()">
-            <option value="all">सबै महिना</option>
-            <option value="0">जनवरी</option><option value="1">फेब्रुअरी</option><option value="2">मार्च</option>
-            <option value="3">अप्रिल</option><option value="4">मे</option><option value="5">जुन</option>
-            <option value="6">जुलाई</option><option value="7">अगस्ट</option><option value="8">सेप्टेम्बर</option>
-            <option value="9">अक्टोबर</option><option value="10">नोभेम्बर</option><option value="11">डिसेम्बर</option>
-        </select>
-    </div>
-
-    <!-- Stats Grid -->
-    <div class="stats-grid">
-        <div class="glass-card stat-card" style="border-left-color: #10b981;">
-            <div class="stat-title">कुल आम्दानी</div>
-            <div class="stat-amount" id="statIncome">रु. ०</div>
-        </div>
-        <div class="glass-card stat-card" style="border-left-color: #ef4444;">
-            <div class="stat-title">कुल खर्च</div>
-            <div class="stat-amount" id="statExpense">रु. ०</div>
-        </div>
-        <div class="glass-card stat-card" style="border-left-color: #3b82f6;">
-            <div class="stat-title">बचत (Savings)</div>
-            <div class="stat-amount" id="statSavings">रु. ०</div>
-        </div>
-        <div class="glass-card stat-card" style="border-left-color: #f59e0b;">
-            <div class="stat-title">आजको खर्च</div>
-            <div class="stat-amount" id="statToday">रु. ०</div>
-        </div>
-    </div>
-
+    <!-- LEFT SIDE: FORM -->
     <div class="glass-card card">
-        <h2 class="card-title">📊 वार्षिक विश्लेषण (आम्दानी vs खर्च)</h2>
-        <div id="yearlyChart" style="display: flex; align-items: flex-end; height: 150px; gap: 8px; margin-top: 15px; padding-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.2);"></div>
-        <div id="analysisText" style="font-size: 13px; margin-top: 15px; line-height: 1.6; padding: 12px; background: rgba(0,0,0,0.2); border-radius: 10px;"></div>
-    </div>
-
-    <div class="glass-card card" id="catBreakdown" style="padding:20px;"></div>
-
-    <!-- Transaction Form -->
-    <div class="glass-card card" style="border: 1px solid rgba(219, 39, 119, 0.5);">
-        <h2 class="card-title" style="color:var(--primary);">➕ नयाँ रेकर्ड थप्नुहोस्</h2>
+        <h2 class="card-title">➕ नयाँ रेकर्ड थप्नुहोस्</h2>
         
-        <!-- Quick Add -->
-        <div class="quick-add-container">
-            <div class="chip" onclick="quickAdd('bijuli', 'बिजुली बिल')">💡 बिजुली</div>
-            <div class="chip" onclick="quickAdd('gas', 'ग्यास सिलिन्डर')">🔥 ग्यास</div>
-            <div class="chip" onclick="quickAdd('wifi', 'वाइफाइ बिल')">📶 वाइफाइ</div>
-            <div class="chip" onclick="quickAdd('khana', 'खाना/किराना')">🍚 खाना</div>
-        </div>
-
-        <div class="form-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-          
-          <div class="field" style="grid-column: span 2;">
+        <form id="expenseForm">
+          <div class="field">
             <label>प्रकार (Type)</label>
             <select id="txType" onchange="toggleCategories()" style="font-weight:bold; background: rgba(0,0,0,0.4);">
                 <option value="expense">🔴 खर्च (Expense)</option>
@@ -270,59 +200,97 @@ tbody td{padding:12px 10px;font-size:14px;border-bottom:1px solid rgba(255,255,2
             </select>
           </div>
 
-          <div class="field"><label>मिति</label><input type="date" id="date" required min="1900-01-01" max="2200-12-31"></div>
-          <div class="field"><label>रकम (रु.)</label><input type="number" id="amount" min="1" placeholder="0" required></div>
+          <div class="field">
+            <label>मिति</label>
+            <input type="date" id="date" required min="1900-01-01" max="2200-12-31">
+          </div>
+
+          <div class="field">
+            <label>रकम (रु.)</label>
+            <input type="number" id="amount" min="1" placeholder="0" required>
+          </div>
           
-          <div class="field" style="grid-column: span 2;"><label>के को लागि? (कोटी)</label><select id="category" required></select></div>
+          <div class="field">
+            <label>के को लागि? (कोटी)</label>
+            <select id="category" required></select>
+          </div>
           
-          <div class="field" style="grid-column: span 2;">
-            <label>भुक्तानी माध्यम (Payment Method)</label>
+          <div class="field">
+            <label>भुक्तानी माध्यम</label>
             <select id="paymentMethod">
                 <option value="cash">💵 नगद (Cash)</option>
                 <option value="bank">🏦 बैंक (Bank)</option>
-                <option value="online">📱 अनलाइन (eSewa/Khalti)</option>
+                <option value="online">📱 अनलाइन (Online)</option>
             </select>
           </div>
 
-          <div class="field" style="grid-column: span 2;"><label>विवरण (Note)</label><input type="text" id="note" placeholder="जस्तै: तलब आयो / तेल किनेको"></div>
-          
-          <div class="field" style="grid-column: span 2;">
-             <button type="submit" class="btn-primary" id="submitBtn">रेकर्ड सेभ गर्नुहोस्</button>
-             <button type="button" class="btn-ghost" id="cancelEditBtn" style="display:none; margin-top: 10px; width:100%;" onclick="cancelEdit()">रद्द गर्नुहोस्</button>
+          <div class="field">
+            <label>विवरण (Note)</label>
+            <input type="text" id="note" placeholder="जस्तै: तलब आयो / तेल किनेको">
           </div>
-        </div>
+          
+          <button type="submit" class="btn-primary" id="submitBtn" style="margin-top: 10px;">रेकर्ड सेभ गर्नुहोस्</button>
+          <button type="button" class="btn-ghost" id="cancelEditBtn" style="display:none; margin-top: 10px; width:100%;" onclick="cancelEdit()">रद्द गर्नुहोस्</button>
+        </form>
     </div>
 
+    <!-- RIGHT SIDE: CATEGORY BREAKDOWN -->
     <div class="glass-card card">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-            <h2 class="card-title" style="margin:0;">🧾 कारोबारको सूची</h2>
-            <button class="btn-ghost" onclick="downloadCSV()" style="padding: 6px 12px; font-size:12px;">⬇️ CSV</button>
+        <h2 class="card-title">📊 कुन कुरामा कति खर्च भयो? (कोटी अनुसार)</h2>
+        <div class="category-grid" id="categoryBreakdownContainer">
+            <!-- Dynamic content will load here -->
         </div>
-        
-        <!-- Search Bar -->
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="🔍 खर्च खोज्नुहोस् (जस्तै: तेल, स्कुल...)" oninput="renderHisab()">
-        </div>
-
-        <div class="table-scroll">
-          <table>
-            <thead><tr><th>मिति</th><th>प्रकार</th><th>विवरण</th><th style="text-align:right;">रकम</th><th></th></tr></thead>
-            <tbody id="tableBody"></tbody>
-          </table>
-        </div>
-        <div id="tableEmpty" style="text-align:center;padding:30px;color:var(--text-muted);display:none;">📭 यो अवधिमा कुनै रेकर्ड भेटिएन।</div>
     </div>
+
+  </div>
+
+  <!-- TABLE & FILTERS SECTION -->
+  <div class="glass-card card">
+    <h2 class="card-title">🧾 सबै कारोबारको सूची</h2>
+    
+    <div class="filter-bar">
+        <select id="yearFilter" onchange="renderDashboard()">
+            <option value="all">सबै वर्ष</option>
+        </select>
+        <select id="monthFilter" onchange="renderDashboard()">
+            <option value="all">सबै महिना</option>
+            <option value="0">जनवरी</option><option value="1">फेब्रुअरी</option><option value="2">मार्च</option>
+            <option value="3">अप्रिल</option><option value="4">मे</option><option value="5">जुन</option>
+            <option value="6">जुलाई</option><option value="7">अगस्ट</option><option value="8">सेप्टेम्बर</option>
+            <option value="9">अक्टोबर</option><option value="10">नोभेम्बर</option><option value="11">डिसेम्बर</option>
+        </select>
+        <input type="text" id="searchInput" placeholder="🔍 खर्च खोज्नुहोस् (जस्तै: तेल, स्कुल...)" oninput="renderDashboard()">
+        <button class="btn-ghost" onclick="downloadCSV()">⬇️ CSV ब्याकअप</button>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+            <tr>
+                <th>मिति</th>
+                <th>प्रकार</th>
+                <th>कोटी र विवरण</th>
+                <th>माध्यम</th>
+                <th style="text-align:right;">रकम</th>
+                <th style="text-align:right;">कार्य</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+    <div id="tableEmpty" style="text-align:center;padding:30px;color:var(--text-muted);display:none;">📭 यो अवधिमा कुनै रेकर्ड भेटिएन।</div>
   </div>
 
 </div>
+
+<!-- Music Button -->
+<button id="musicBtn" onclick="toggleMusic()">🎵</button>
 
 <script>
 /* ================= CONFIG ================= */
 const BASE_URL = "https://anjana-khata-default-rtdb.firebaseio.com/khata/";
 const EXPENSE_URL = BASE_URL + "expenses";
 const INCOME_URL = BASE_URL + "incomes";
-const BUDGET_URL = BASE_URL + "budget";
-const GOAL_URL = BASE_URL + "familyGoal";
 
 /* CATEGORIES */
 const EXPENSE_CATS = [
@@ -346,16 +314,60 @@ const INCOME_CATS = [
 ];
 
 const MONTHS_NE = ['जनवरी','फेब्रुअरी','मार्च','अप्रिल','मे','जुन','जुलाई','अगस्ट','सेप्टेम्बर','अक्टोबर','नोभेम्बर','डिसेम्बर'];
-const MONTHS_SHORT = ['जन','फेब','मार्च','अप्रि','मे','जुन','जुल','अग','सेप','अक्टो','नोभ','डिस'];
 
 let allTransactions = []; 
-let budgetData = 0;
-let familyGoal = { name: '', target: 0, current: 0 };
 let editingId = null;
 let editingType = null; 
 const $ = id => document.getElementById(id);
 const allCatsMap = Object.fromEntries([...EXPENSE_CATS, ...INCOME_CATS].map(c => [c.id, c]));
 
+/* ================= MUSIC LOGIC (song.mp3 & song2.mp3) ================= */
+const songs = ['song.mp3', 'song2.mp3'];
+let currentSongIndex = 0;
+const music = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicBtn');
+let isPlaying = false;
+
+// पहिलो गीत सेट गर्ने
+music.src = songs[currentSongIndex];
+
+// गीत सकिएपछि अर्को गीत बजाउने
+music.addEventListener('ended', function() {
+    currentSongIndex = (currentSongIndex + 1) % songs.length;
+    music.src = songs[currentSongIndex];
+    music.play().catch(e => {});
+});
+
+function playMusic() {
+    if (!isPlaying) {
+        music.play().then(() => {
+            isPlaying = true;
+            musicBtn.classList.add('playing');
+            musicBtn.textContent = '⏸️';
+        }).catch(e => {}); // ब्राउजरले रोक्यो भने केही नगर्ने
+    }
+}
+
+function toggleMusic() {
+    if (isPlaying) {
+        music.pause();
+        isPlaying = false;
+        musicBtn.classList.remove('playing');
+        musicBtn.textContent = '🎵';
+    } else {
+        playMusic();
+    }
+}
+
+// स्क्रिनमा पहिलो पटक टच/क्लिक गर्दा गीत बज्ने (Autoplay policy)
+document.body.addEventListener('touchstart', function(e) {
+    if (!e.target.closest('#musicBtn')) playMusic();
+}, { passive: true });
+document.body.addEventListener('click', function(e) {
+    if (!e.target.closest('#musicBtn')) playMusic();
+});
+
+/* ================= HELPER FUNCTIONS ================= */
 function fmt(n){ return 'रु. ' + (Number(n)||0).toLocaleString('en-IN'); }
 function toISO(d){ return d.toISOString().split('T')[0]; }
 function formatDate(iso){ const [y,m,d] = iso.split('-'); return `${+d} ${MONTHS_NE[+m-1]} ${y}`; }
@@ -367,8 +379,8 @@ function showToast(msg, color='#16a34a'){
   toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-/* LIVE TIME & DATE */
-function initTime() {
+/* ================= LIVE CLOCK ================= */
+function initClock() {
     try {
         const now = new Date();
         const nd = new NepaliDate(now);
@@ -382,20 +394,12 @@ function initTime() {
     }, 1000);
 }
 
-/* HISAB LOGIC */
+/* ================= FORM LOGIC ================= */
 function toggleCategories() {
     const type = $('txType').value;
     const catSelect = $('category');
     const cats = type === 'income' ? INCOME_CATS : EXPENSE_CATS;
     catSelect.innerHTML = cats.map(c => `<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
-}
-
-function quickAdd(catId, label) {
-    $('txType').value = 'expense';
-    toggleCategories();
-    $('category').value = catId;
-    $('amount').focus();
-    showToast(`"${label}" को लागि रकम हाल्नुहोस्`, '#3b82f6');
 }
 
 async function loadCloudData() {
@@ -412,53 +416,26 @@ async function loadCloudData() {
 
     allTransactions = [...expenses, ...incomes];
     
-    const bRes = await fetch(BUDGET_URL + ".json");
-    budgetData = await bRes.json() || 0;
-    $('budgetInput').value = budgetData > 0 ? budgetData : '';
-    
-    const gRes = await fetch(GOAL_URL + ".json");
-    const gJson = await gRes.json();
-    if(gJson) {
-        familyGoal = gJson;
-        $('goalName').value = familyGoal.name || '';
-        $('goalTarget').value = familyGoal.target || '';
-        $('goalCurrent').value = familyGoal.current || '';
-    }
-
+    // वर्ष फिल्टर अपडेट गर्ने
     const currentYear = new Date().getFullYear();
     const years = new Set();
-    for(let i = 1900; i <= 2200; i++) { years.add(i); }
+    for(let i = 2015; i <= currentYear + 5; i++) { years.add(i); }
     allTransactions.forEach(d => { const y = +d.date.split('-')[0]; if(y) years.add(y); });
     
     const sortedYears = [...years].sort((a,b) => b-a);
-    $('yearFilter').innerHTML = sortedYears.map(y => `<option value="${y}">${y}</option>`).join('');
-    $('yearFilter').value = currentYear;
+    const yearSel = $('yearFilter');
+    const currentVal = yearSel.value;
     
-    renderHisab();
-  } catch(e) { console.error("डाटा लोड भएन"); }
-}
-
-async function saveGoal() {
-    const name = $('goalName').value.trim();
-    const target = Number($('goalTarget').value);
-    const current = Number($('goalCurrent').value);
-    if(!name || !target) return alert("लक्ष्यको नाम र रकम भर्नुहोस्।");
-    try {
-        await fetch(GOAL_URL + ".json", { method: 'PUT', body: JSON.stringify({ name, target, current }) });
-        showToast("✓ पारिवारिक लक्ष्य सेभ भयो!");
-        loadCloudData();
-    } catch(e) { alert("सेभ गर्न सकिएन।"); }
-}
-
-async function saveBudget() {
-    const val = Number($('budgetInput').value);
-    if(!val) return alert('कृपया सही रकम हाल्नुहोस्।');
-    try {
-        await fetch(BUDGET_URL + ".json", { method: 'PUT', body: JSON.stringify(val) });
-        budgetData = val;
-        showToast('✓ बजेट सेभ भयो!');
-        renderHisab();
-    } catch(e) { alert("बजेट सेभ गर्न सकिएन।"); }
+    yearSel.innerHTML = `<option value="all">सबै वर्ष</option>` + sortedYears.map(y => `<option value="${y}">${y}</option>`).join('');
+    
+    if (currentVal && (currentVal === 'all' || sortedYears.includes(+currentVal))) {
+        yearSel.value = currentVal;
+    } else {
+        yearSel.value = 'all'; // डिफल्टमा सबै वर्ष देखाउने
+    }
+    
+    renderDashboard();
+  } catch(e) { console.error("डाटा लोड भएन", e); }
 }
 
 $('expenseForm').addEventListener('submit', async (e) => {
@@ -495,35 +472,27 @@ $('expenseForm').addEventListener('submit', async (e) => {
   } catch(err) { alert("सेभ गर्न सकिएन।"); } finally { $('submitBtn').textContent = 'रेकर्ड सेभ गर्नुहोस्'; $('submitBtn').disabled = false; }
 });
 
-function renderHisab() {
+/* ================= DASHBOARD RENDER ================= */
+function renderDashboard() {
   toggleCategories(); 
 
-  const y = +$('yearFilter').value || new Date().getFullYear(); 
+  const y = $('yearFilter').value; 
   const m = $('monthFilter').value;
   const searchTerm = $('searchInput').value.toLowerCase();
   
-  let filtered = allTransactions.filter(d => +d.date.split('-')[0] === y);
+  // १. फिल्टरिङ
+  let filtered = allTransactions;
+  if (y !== 'all') {
+      filtered = filtered.filter(d => +d.date.split('-')[0] === +y);
+  }
   if (m !== 'all') {
       filtered = filtered.filter(d => (+d.date.split('-')[1] - 1) === +m);
   }
-  
   if (searchTerm) {
       filtered = filtered.filter(d => 
           (d.note && d.note.toLowerCase().includes(searchTerm)) || 
           (allCatsMap[d.category] && allCatsMap[d.category].name.toLowerCase().includes(searchTerm))
       );
-  }
-
-  // १. लक्ष्य
-  if (familyGoal.target > 0) {
-      $('goalNameDisplay').textContent = familyGoal.name;
-      $('goalAmountDisplay').textContent = `${fmt(familyGoal.current)} / ${fmt(familyGoal.target)}`;
-      const gPercent = Math.min((familyGoal.current / familyGoal.target) * 100, 100);
-      $('goalFill').style.width = gPercent + '%';
-  } else {
-      $('goalNameDisplay').textContent = "लक्ष्य सेट गर्नुभएको छैन";
-      $('goalAmountDisplay').textContent = "रु. ० / रु. ०";
-      $('goalFill').style.width = '0%';
   }
 
   // २. स्ट्याट्स
@@ -535,91 +504,9 @@ function renderHisab() {
   $('statExpense').textContent = fmt(totalExpense);
   $('statSavings').textContent = fmt(totalSavings);
   $('statSavings').style.color = totalSavings < 0 ? '#ef4444' : '#3b82f6';
+  $('statCount').textContent = fmtNum(filtered.length) + ' वटा';
 
-  const todayStr = toISO(new Date());
-  const todayExpense = allTransactions.filter(d => d.date === todayStr && d.type === 'expense').reduce((s,d) => s + d.amount, 0);
-  $('statToday').textContent = fmt(todayExpense);
-
-  // ३. बजेट र स्मार्ट सुझाव
-  const now = new Date();
-  const currentMonthExpense = allTransactions.filter(d => +d.date.split('-')[0] === y && (+d.date.split('-')[1] - 1) === now.getMonth() && d.type === 'expense').reduce((s,d)=>s+d.amount, 0);
-  
-  let savingsRate = 0;
-  if (totalIncome > 0) savingsRate = ((totalSavings / totalIncome) * 100).toFixed(1);
-  
-  if (budgetData > 0) {
-      $('budgetProgressArea').style.display = 'block';
-      $('budgetTarget').textContent = fmt(budgetData);
-      $('budgetSpent').textContent = fmt(currentMonthExpense);
-      
-      let percent = (currentMonthExpense / budgetData) * 100;
-      let barColor = '#f59e0b';
-      
-      const daysInMonth = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
-      const daysLeft = daysInMonth - now.getDate();
-      const remainingBudget = budgetData - currentMonthExpense;
-      
-      if (remainingBudget < 0) {
-          barColor = '#ef4444';
-          $('budgetMsg').innerHTML = `⚠️ बजेट भन्दा ${fmt(Math.abs(remainingBudget))} बढी खर्च भयो!`;
-          $('budgetMsg').style.color = '#ef4444';
-          $('smartInsightText').innerHTML = `तपाईंको बजेट सकिएको छ। अझै <b>${daysLeft}</b> दिन बाँकी छन्। खर्च कम गर्नुपर्छ।<br>यो अवधिको बचत दर: <b>${savingsRate}%</b>`;
-      } else {
-          barColor = '#f59e0b';
-          $('budgetMsg').innerHTML = `✓ रु. ${(remainingBudget).toLocaleString('en-IN')} बचत गर्न सक्नुहुन्छ।`;
-          $('budgetMsg').style.color = '#10b981';
-          const dailyAllowance = daysLeft > 0 ? (remainingBudget / daysLeft).toFixed(0) : remainingBudget;
-          $('smartInsightText').innerHTML = `यो महिना अझै <b>${daysLeft}</b> दिन बाँकी छन्। दिनको करिब <b>रु. ${Number(dailyAllowance).toLocaleString('en-IN')}</b> खर्च गर्न सक्नुहुन्छ।<br>यो अवधिको बचत दर: <b>${savingsRate}%</b>`;
-      }
-      
-      $('budgetBar').style.width = Math.min(percent, 100) + '%';
-      $('budgetBar').style.background = barColor;
-  } else {
-      $('budgetProgressArea').style.display = 'none';
-      $('smartInsightText').innerHTML = `बजेट सेट गर्नुभएको छैन। मासिक बजेट सेट गर्नुहोस्।<br>यो अवधिको बचत दर: <b>${savingsRate}%</b>`;
-  }
-
-  // ४. चार्ट
-  const monthlyIncome = Array(12).fill(0);
-  const monthlyExpense = Array(12).fill(0);
-  
-  allTransactions.filter(d => +d.date.split('-')[0] === y).forEach(d => {
-      const monthIdx = +d.date.split('-')[1] - 1;
-      if (d.type === 'income') monthlyIncome[monthIdx] += d.amount;
-      else monthlyExpense[monthIdx] += d.amount;
-  });
-
-  const maxVal = Math.max(...monthlyIncome, ...monthlyExpense);
-  
-  let chartHTML = '';
-  for(let i=0; i<12; i++) {
-      const incH = maxVal > 0 ? (monthlyIncome[i] / maxVal) * 100 : 0;
-      const expH = maxVal > 0 ? (monthlyExpense[i] / maxVal) * 100 : 0;
-      
-      chartHTML += `
-      <div style="flex:1; display:flex; gap:2px; align-items:flex-end; justify-content:center; height:100%; position:relative;" title="${MONTHS_NE[i]}">
-          <div style="width:40%; background:#10b981; border-radius:2px 2px 0 0; height:${incH}%; min-height:${monthlyIncome[i]>0?'2px':'0'}; transition:height 0.5s ease;"></div>
-          <div style="width:40%; background:#db2777; border-radius:2px 2px 0 0; height:${expH}%; min-height:${monthlyExpense[i]>0?'2px':'0'}; transition:height 0.5s ease;"></div>
-          <span style="position:absolute; bottom:-20px; font-size:9px; font-weight:bold; color:#cbd5e1;">${MONTHS_SHORT[i]}</span>
-      </div>`;
-  }
-  $('yearlyChart').innerHTML = chartHTML;
-
-  let analysisStr = `<div style="display:flex; gap:15px; margin-bottom:10px;">
-    <div style="display:flex; align-items:center; gap:5px;"><div style="width:12px; height:12px; background:#10b981; border-radius:50%;"></div> <b>आम्दानी</b></div>
-    <div style="display:flex; align-items:center; gap:5px;"><div style="width:12px; height:12px; background:#db2777; border-radius:50%;"></div> <b>खर्च</b></div>
-  </div>`;
-  
-  if (totalSavings > 0) {
-      analysisStr += `✅ तपाईंले यो अवधिमा <b>${fmt(totalSavings)}</b> बचत गर्नुभएको छ।`;
-  } else if (totalSavings < 0) {
-      analysisStr += `⚠️ तपाईंको खर्च आम्दानी भन्दा <b>${fmt(Math.abs(totalSavings))}</b> बढी भएको छ।`;
-  } else {
-      analysisStr += `तपाईंको आम्दानी र खर्च बराबर छ।`;
-  }
-  $('analysisText').innerHTML = analysisStr;
-
-  // ५. कोटी अनुसार
+  // ३. कोटी अनुसार विश्लेषण (Category Breakdown)
   const expByCat = {};
   const incByCat = {};
   filtered.forEach(d => {
@@ -627,45 +514,51 @@ function renderHisab() {
       else expByCat[d.category] = (expByCat[d.category] || 0) + d.amount;
   });
   
-  let catHTML = '<div style="font-size:15px; font-weight:bold; margin-bottom:15px; color:#fff;">कोटी अनुसार विश्लेषण</div>';
+  let catHTML = '';
   
+  // आम्दानीको स्रोत
+  catHTML += '<div class="cat-section">';
+  catHTML += '<h3 style="color:#10b981;">🟢 आम्दानीको स्रोत</h3>';
   if (totalIncome > 0) {
-    catHTML += '<div style="font-size:13px; color:#10b981; font-weight:bold; margin-bottom:8px;">🟢 आम्दानीको स्रोत</div>';
     const sortedInc = Object.keys(incByCat).sort((a,b) => incByCat[b] - incByCat[a]);
     sortedInc.forEach(catId => {
         const cat = allCatsMap[catId] || allCatsMap['other_inc'];
         const amt = incByCat[catId];
         const percent = (amt / totalIncome) * 100;
         catHTML += `
-        <div style="margin-bottom:10px;">
-            <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:bold; margin-bottom:4px;"><span>${cat.icon} ${cat.name}</span> <span>${fmt(amt)}</span></div>
-            <div style="height:6px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden;"><div style="height:100%; border-radius:10px; width: ${percent}%; background: ${cat.color};"></div></div>
+        <div class="cat-item">
+            <div class="cat-header"><span>${cat.icon} ${cat.name}</span> <span>${fmt(amt)}</span></div>
+            <div class="cat-bar-bg"><div class="cat-bar-fill" style="width: ${percent}%; background: ${cat.color};"></div></div>
         </div>`;
     });
-    catHTML += '<hr style="border:none; border-top:1px solid rgba(255,255,255,0.1); margin:15px 0;">';
+  } else {
+    catHTML += `<div style="font-size:13px; color:#cbd5e1;">कुनै आम्दानी छैन।</div>`;
   }
+  catHTML += '</div>';
 
+  // खर्चको स्रोत
+  catHTML += '<div class="cat-section">';
+  catHTML += '<h3 style="color:#f472b6;">🔴 खर्चको स्रोत</h3>';
   if (totalExpense > 0) {
-    catHTML += '<div style="font-size:13px; color:#f472b6; font-weight:bold; margin-bottom:8px;">🔴 खर्चको स्रोत</div>';
     const sortedExp = Object.keys(expByCat).sort((a,b) => expByCat[b] - expByCat[a]);
     sortedExp.forEach(catId => {
         const cat = allCatsMap[catId] || allCatsMap['other_exp'];
         const amt = expByCat[catId];
         const percent = (amt / totalExpense) * 100;
         catHTML += `
-        <div style="margin-bottom:10px;">
-            <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:bold; margin-bottom:4px;"><span>${cat.icon} ${cat.name}</span> <span>${fmt(amt)}</span></div>
-            <div style="height:6px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden;"><div style="height:100%; border-radius:10px; width: ${percent}%; background: ${cat.color};"></div></div>
+        <div class="cat-item">
+            <div class="cat-header"><span>${cat.icon} ${cat.name}</span> <span>${fmt(amt)}</span></div>
+            <div class="cat-bar-bg"><div class="cat-bar-fill" style="width: ${percent}%; background: ${cat.color};"></div></div>
         </div>`;
     });
+  } else {
+    catHTML += `<div style="font-size:13px; color:#cbd5e1;">कुनै खर्च छैन।</div>`;
   }
-  
-  if (Object.keys(expByCat).length === 0 && Object.keys(incByCat).length === 0) {
-      catHTML += `<div style="font-size:13px; color:#cbd5e1; text-align:center;">कुनै डाटा छैन।</div>`;
-  }
-  $('catBreakdown').innerHTML = catHTML;
+  catHTML += '</div>';
 
-  // ६. टेबल
+  $('categoryBreakdownContainer').innerHTML = catHTML;
+
+  // ४. टेबल
   filtered.sort((a,b) => b.date.localeCompare(a.date) || b.ts - a.ts);
   $('tableBody').innerHTML = filtered.map(d => {
     const c = allCatsMap[d.category] || { icon:'📦', name: d.category, color:'#64748b' };
@@ -675,19 +568,22 @@ function renderHisab() {
     return `<tr>
       <td>${formatDate(d.date)}</td>
       <td><span class="badge" style="background:${isInc?'#10b98120':'#ef444420'}; color:${isInc?'#10b981':'#ef4444'}; border:1px solid ${isInc?'#10b981':'#ef4444'};">${isInc?'आम्दानी':'खर्च'}</span></td>
-      <td style="color:#cbd5e1;font-size:12px; max-width:100px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${d.note || ''}">${payIcon} ${c.icon} ${c.name} ${d.note ? '- '+d.note : ''}</td>
+      <td><span style="font-weight:bold; color:${c.color}">${c.icon} ${c.name}</span> <br><small style="color:#cbd5e1">${d.note || ''}</small></td>
+      <td style="font-size: 20px;" title="${d.payment || 'cash'}">${payIcon}</td>
       <td style="text-align:right;font-weight:700; color:${isInc?'#10b981':'#fff'};">${isInc?'+':'-'} ${fmt(d.amount)}</td>
-      <td>
-        <div class="action-btns">
+      <td style="text-align:right;">
+        <div class="action-btns" style="justify-content: flex-end;">
             <button class="icon-btn" onclick="editItem('${d.id}', '${d.type}')">✏️</button>
             <button class="icon-btn del" style="color:#ef4444;" onclick="deleteItem('${d.id}', '${d.type}')">🗑️</button>
         </div>
       </td>
     </tr>`;
   }).join('');
+  
   $('tableEmpty').style.display = filtered.length === 0 ? 'block' : 'none';
 }
 
+/* ================= EDIT & DELETE ================= */
 window.editItem = (id, type) => {
   const item = allTransactions.find(d => d.id === id); if(!item) return;
   $('txType').value = type;
@@ -732,11 +628,11 @@ function downloadCSV() {
     link.click();
 }
 
-/* INIT */
+/* ================= INIT ================= */
 (function init() {
   $('date').value = toISO(new Date());
   toggleCategories(); 
-  initTime();
+  initClock();
   loadCloudData();
 })();
 </script>
