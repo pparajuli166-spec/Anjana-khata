@@ -2,202 +2,993 @@
 <html lang="ne">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anjana Hisab - Family App</title>
-<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0f0a1e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="अन्जना हिसाब">
+<meta name="format-detection" content="telephone=no">
+<title>अन्जना हिसाब · Family Finance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/nepali-date-converter@3.3.4/dist/nepali-date-converter.umd.js"></script>
 
 <style>
-:root{ 
-    --primary:#db2777; 
-    --secondary:#9333ea;
-    --green:#10b981;
-    --red:#ef4444;
-    --blue:#3b82f6;
-    --glass-bg: rgba(255, 255, 255, 0.08);
-    --glass-border: rgba(255, 255, 255, 0.15);
-    --text-main: #ffffff;
-    --text-muted: #cbd5e1;
-    --radius: 16px;
+:root{
+    --bg-0:#08050f; --bg-1:#0f0a1e;
+    --pink:#ec4899; --purple:#a855f7;
+    --green:#10b981; --green-2:#34d399;
+    --red:#f43f5e; --amber:#f59e0b; --blue:#60a5fa;
+    --glass:rgba(20,14,38,0.75);
+    --glass-hi:rgba(255,255,255,0.04);
+    --line:rgba(255,255,255,0.08);
+    --line-hi:rgba(255,255,255,0.14);
+    --txt:#ffffff; --txt-2:#a8a3c2; --txt-3:#6b6585;
+    --radius-sm:12px; --radius:18px; --radius-lg:24px;
+    --safe-t:env(safe-area-inset-top, 0px);
+    --safe-b:env(safe-area-inset-bottom, 0px);
+    --safe-l:env(safe-area-inset-left, 0px);
+    --safe-r:env(safe-area-inset-right, 0px);
 }
-*{box-sizing:border-box;margin:0;padding:0; font-family: 'Mukta', sans-serif;} 
-
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+*::selection{background:rgba(236,72,153,0.4);color:#fff;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
 body{
-    color:var(--text-main);
-    padding:16px;
-    background: linear-gradient(135deg, #0f172a 0%, #2e1065 50%, #4c1d95 100%);
-    background-attachment: fixed;
-    min-height: 100vh;
+    font-family:'Mukta','Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+    color:var(--txt);
+    background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(168,85,247,0.18), transparent 60%),
+        radial-gradient(900px 500px at 100% 0%, rgba(236,72,153,0.15), transparent 55%),
+        radial-gradient(800px 600px at 50% 100%, rgba(59,130,246,0.10), transparent 60%),
+        linear-gradient(180deg,#08050f 0%, #0f0a1e 100%);
+    background-attachment:fixed;
+    min-height:100vh; min-height:100dvh;
+    padding:
+        max(14px, calc(var(--safe-t) + 12px))
+        max(14px, calc(var(--safe-r) + 12px))
+        max(110px, calc(var(--safe-b) + 90px))
+        max(14px, calc(var(--safe-l) + 12px));
+    line-height:1.5; overflow-x:hidden;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior-y:contain;
+}
+body::before, body::after{
+    content:''; position:fixed; border-radius:50%; filter:blur(90px);
+    opacity:0.35; pointer-events:none; z-index:0; animation:float 20s ease-in-out infinite;
+}
+body::before{ width:400px; height:400px; background:var(--pink); top:-100px; left:-100px; }
+body::after { width:350px; height:350px; background:var(--purple); bottom:-100px; right:-100px; animation-delay:-10s; }
+@keyframes float{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(50px,-30px) scale(1.1);}}
+
+.wrap{max-width:840px;margin:0 auto;position:relative;z-index:1;display:flex;flex-direction:column;gap:14px;}
+
+.glass{
+    background:var(--glass);
+    backdrop-filter:blur(24px) saturate(160%);
+    -webkit-backdrop-filter:blur(24px) saturate(160%);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+    box-shadow:0 1px 0 rgba(255,255,255,0.06) inset, 0 20px 50px -20px rgba(0,0,0,0.6);
+    padding:20px; position:relative; overflow:hidden;
+}
+.glass::before{
+    content:''; position:absolute;inset:0;
+    background:linear-gradient(135deg, var(--glass-hi), transparent 40%);
+    pointer-events:none; border-radius:inherit;
+}
+.glass > *{position:relative;z-index:1;}
+
+/* HEADER */
+.top-header{
+    position:sticky;
+    top:max(8px, calc(var(--safe-t) + 4px));
+    z-index:100;
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:12px 16px; border-radius:var(--radius-lg);
+    background:linear-gradient(135deg, rgba(236,72,153,0.94), rgba(168,85,247,0.94));
+    border:1px solid rgba(255,255,255,0.2);
+    backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+    box-shadow:0 1px 0 rgba(255,255,255,0.3) inset, 0 12px 40px -12px rgba(236,72,153,0.5), 0 4px 12px -4px rgba(0,0,0,0.4);
+}
+.header-left{display:flex;align-items:center;gap:12px;min-width:0;flex:1;}
+.couple-photo{
+    width:48px;height:48px;border-radius:50%;object-fit:cover;
+    border:2.5px solid rgba(255,255,255,0.92); cursor:pointer; flex-shrink:0;
+    transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    box-shadow:0 4px 12px rgba(0,0,0,0.3);
+}
+.couple-photo:hover{transform:scale(1.08) rotate(-3deg);}
+.header-info{min-width:0;flex:1;}
+.header-info h1{
+    font-size:17px;font-weight:800;letter-spacing:-0.02em;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    text-shadow:0 1px 2px rgba(0,0,0,0.15);
+}
+.header-info p{
+    font-size:11px;color:rgba(255,255,255,0.9);
+    display:flex;align-items:center;gap:5px;flex-wrap:wrap;
+    font-weight:500;margin-top:1px;
+}
+.live{
+    display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;
+    padding:2px 6px;border-radius:100px;
+    background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.95);
+    text-transform:uppercase;letter-spacing:0.05em;
+}
+.live-dot{width:5px;height:5px;border-radius:50%;background:#94a3b8;transition:0.3s;}
+.live.on .live-dot{background:#22c55e;box-shadow:0 0 8px #22c55e, 0 0 16px rgba(34,197,94,0.6);animation:pulseDot 2s ease-in-out infinite;}
+@keyframes pulseDot{50%{opacity:0.4;}}
+
+.export-btns{display:flex;gap:6px;flex-shrink:0;}
+.btn-ic{
+    width:40px;height:40px;min-width:40px;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,0.15);
+    border:1px solid rgba(255,255,255,0.25);
+    color:#fff;border-radius:11px;font-size:16px;cursor:pointer;
+    transition:all 0.2s;
+    touch-action:manipulation;
+}
+.btn-ic:hover{background:rgba(255,255,255,0.28);}
+.btn-ic:active{transform:scale(0.92);}
+
+/* CLOCK */
+.clock-card{
+    display:grid;
+    grid-template-columns:1fr 1px 1fr;
+    align-items:center;
+    padding:14px 10px;
+    gap:8px;
+    background:var(--glass);
+    backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+    box-shadow:0 1px 0 rgba(255,255,255,0.06) inset, 0 12px 30px -15px rgba(0,0,0,0.5);
+}
+.clock-item{
+    display:flex; flex-direction:column; align-items:center;
+    gap:2px; min-width:0;
+}
+.clock-item .flag{ font-size:22px; line-height:1; margin-bottom:3px; }
+.clock-item .lbl{
+    font-size:9.5px; font-weight:700;
+    color:var(--txt-3);
+    text-transform:uppercase; letter-spacing:0.08em;
+}
+.clock-item .val{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:15px; font-weight:800;
+    color:#fff;
+    font-variant-numeric:tabular-nums;
+    letter-spacing:-0.02em;
+    white-space:nowrap;
+    margin-top:2px;
+}
+.clock-item .date{
+    font-size:10px;
+    color:var(--txt-2);
+    font-weight:600;
+    margin-top:1px;
+    white-space:nowrap;
+}
+.clock-divider{
+    width:1px; height:52px;
+    background:linear-gradient(180deg, transparent, var(--line-hi), transparent);
+    justify-self:center;
 }
 
-.glass-card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius);
-    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.3);
+/* HERO */
+.hero{
+    background:linear-gradient(140deg,#1e1240 0%, #2d1155 50%, #4a1250 100%);
+    border:1px solid rgba(192,132,252,0.25);
+    position:relative; overflow:hidden;
+}
+.hero::before{
+    content:''; position:absolute; width:280px;height:280px;
+    background:radial-gradient(circle, rgba(236,72,153,0.35), transparent 70%);
+    border-radius:50%; top:-120px;right:-80px; filter:blur(20px); pointer-events:none;
+}
+.hero::after{
+    content:''; position:absolute; width:240px;height:240px;
+    background:radial-gradient(circle, rgba(168,85,247,0.3), transparent 70%);
+    border-radius:50%; bottom:-140px;left:-60px; filter:blur(20px); pointer-events:none;
+}
+.hero-label{
+    font-size:11px;font-weight:700;color:rgba(255,255,255,0.6);
+    text-transform:uppercase;letter-spacing:0.08em;
+    display:flex;align-items:center;gap:6px;margin-bottom:6px;
+}
+.hero-value{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:clamp(32px,8vw,46px); font-weight:800;
+    letter-spacing:-0.03em; line-height:1.05;
+    background:linear-gradient(135deg,#ffffff 20%,#f0abfc 100%);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    font-variant-numeric:tabular-nums; word-break:break-word;
+}
+.hero-value.negative{background:linear-gradient(135deg,#fff,#fda4af 100%);-webkit-background-clip:text;background-clip:text;}
+.hero-sub{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:14px; padding-top:14px;
+    border-top:1px solid rgba(255,255,255,0.1);
+}
+.hero-sub-item{display:flex;flex-direction:column;gap:2px;}
+.hero-sub-item .lbl{font-size:10px;color:rgba(255,255,255,0.55);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;}
+.hero-sub-item .val{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;color:#fff;}
+.hero-sub-item .val.income{color:#34d399;}
+.hero-sub-item .val.expense{color:#fb7185;}
+
+/* SECTION */
+.sec-head{
+    display:flex;align-items:center;gap:10px;
+    font-size:14px;font-weight:700;color:#fff;margin-bottom:14px;letter-spacing:-0.01em;
+}
+.sec-head .ico{
+    width:30px;height:30px;display:flex;align-items:center;justify-content:center;
+    border-radius:9px;
+    background:linear-gradient(135deg, rgba(236,72,153,0.2), rgba(168,85,247,0.2));
+    border:1px solid rgba(236,72,153,0.25); font-size:14px; flex-shrink:0;
+}
+.sec-head .sub{font-size:11px;font-weight:600;color:var(--txt-2);margin-left:auto;font-family:'Plus Jakarta Sans',sans-serif;}
+
+/* FIELDS */
+.field{display:flex;flex-direction:column;gap:6px;}
+.field label{font-size:12px;font-weight:600;color:var(--txt-2);letter-spacing:0.02em;}
+.field input, .field select{
+    padding:13px 14px;
+    border-radius:var(--radius-sm);
+    border:1px solid var(--line);
+    background:rgba(0,0,0,0.3);
+    color:#fff;
+    font-size:16px;
+    font-family:inherit; font-weight:500;
+    outline:none; width:100%;
+    transition:all 0.2s;
+    -webkit-appearance:none; appearance:none;
+    min-height:48px;
+}
+.field input::placeholder{color:var(--txt-3);}
+.field input:focus, .field select:focus{
+    border-color:var(--pink);
+    background:rgba(236,72,153,0.06);
+    box-shadow:0 0 0 3px rgba(236,72,153,0.15);
+}
+.field select{
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a8a3c2' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 14px center;
+    padding-right:36px; cursor:pointer;
+}
+.field select option{background:#1e1240;color:#fff;}
+.field input[type="date"]{color-scheme:dark;}
+
+.h-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px;}
+
+.h-result{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:16px 18px;
+    background:linear-gradient(135deg, rgba(245,158,11,0.15), rgba(251,191,36,0.08));
+    border:1px solid rgba(245,158,11,0.35);
+    border-radius:var(--radius);
+    position:relative; overflow:hidden;
+}
+.h-result.negative{
+    background:linear-gradient(135deg, rgba(244,63,94,0.15), rgba(251,113,133,0.08));
+    border-color:rgba(244,63,94,0.4);
+}
+.h-result::before{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(135deg, transparent, rgba(245,158,11,0.15), transparent);
+    animation:shimmerBg 3s infinite;
+}
+@keyframes shimmerBg{0%,100%{transform:translateX(-100%);}50%{transform:translateX(100%);}}
+.h-result .label{
+    font-size:12px; font-weight:800; color:#fef3c7;
+    text-transform:uppercase; letter-spacing:0.06em;
+    display:flex; align-items:center; gap:6px;
+    position:relative;
+}
+.h-result.negative .label{color:#fee2e2;}
+.h-result .amount{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:clamp(20px, 5vw, 26px); font-weight:800;
+    color:#fbbf24; font-variant-numeric:tabular-nums;
+    letter-spacing:-0.03em; position:relative;
+    text-shadow:0 0 20px rgba(251,191,36,0.4);
+    white-space:nowrap;
+}
+.h-result.negative .amount{color:#fb7185; text-shadow:0 0 20px rgba(244,63,94,0.4);}
+
+/* ANJANA */
+.anjana-card{
+    background:linear-gradient(140deg, rgba(16,185,129,0.08) 0%, rgba(30,20,60,0.9) 50%, rgba(168,85,247,0.08) 100%);
+    border:1px solid rgba(52,211,153,0.2);
+}
+.anjana-card .sec-head .ico{
+    background:linear-gradient(135deg, rgba(52,211,153,0.25), rgba(16,185,129,0.15));
+    border-color:rgba(52,211,153,0.35);
+}
+.acct-flow{display:flex;flex-direction:column;gap:0;}
+.acct-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:11px 0; gap:10px;
+}
+.acct-row .label{
+    font-size:13px; font-weight:600; color:var(--txt-2);
+    display:flex; align-items:center; gap:8px;
+    min-width:0; flex:1;
+}
+.acct-row .label .dot{width:8px; height:8px; border-radius:50%; flex-shrink:0;}
+.acct-row .label span:not(.dot){overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.acct-row .amount{
+    font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; font-weight:700;
+    color:#fff; font-variant-numeric:tabular-nums; letter-spacing:-0.01em;
+    white-space:nowrap;
+}
+.acct-row.opening .dot{ background:var(--amber); box-shadow:0 0 8px rgba(245,158,11,0.5); }
+.acct-row.extra   .dot{ background:var(--blue);  box-shadow:0 0 8px rgba(96,165,250,0.5); }
+.acct-row.income-tot .dot{ background:var(--green-2); box-shadow:0 0 8px rgba(52,211,153,0.5); }
+.acct-row.expense .dot{ background:var(--red);   box-shadow:0 0 8px rgba(244,63,94,0.5); }
+.acct-row.opening .amount{ color:var(--amber); }
+.acct-row.extra   .amount{ color:var(--blue); }
+.acct-row.income-tot .amount{ color:var(--green-2); font-weight:800; }
+.acct-row.expense .amount{ color:#fb7185; }
+.acct-divider{height:1px; background:linear-gradient(90deg, transparent, var(--line-hi), transparent); margin:4px 0;}
+
+.acct-balance{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:16px 18px; margin-top:10px;
+    background:linear-gradient(135deg, rgba(16,185,129,0.15), rgba(52,211,153,0.08));
+    border:1px solid rgba(52,211,153,0.35);
+    border-radius:var(--radius);
+    position:relative; overflow:hidden;
+}
+.acct-balance::before{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(135deg, transparent, rgba(52,211,153,0.15), transparent);
+    animation:shimmerBg 3s infinite;
+}
+.acct-balance .label{
+    font-size:12px; font-weight:800; color:#d1fae5;
+    text-transform:uppercase; letter-spacing:0.06em;
+    display:flex; align-items:center; gap:6px; position:relative;
+}
+.acct-balance .amount{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:clamp(20px, 5.5vw, 28px); font-weight:800;
+    color:#34d399; font-variant-numeric:tabular-nums;
+    letter-spacing:-0.03em; position:relative;
+    text-shadow:0 0 20px rgba(52,211,153,0.4);
+    white-space:nowrap;
+}
+.acct-balance.negative .amount{ color:#fb7185; text-shadow:0 0 20px rgba(244,63,94,0.4); }
+
+/* FAMILY TABLE */
+.family-card{
+    background:linear-gradient(140deg, rgba(168,85,247,0.10) 0%, rgba(20,14,38,0.9) 50%, rgba(236,72,153,0.10) 100%);
+    border:1px solid rgba(168,85,247,0.28);
+}
+.family-card .sec-head .ico{
+    background:linear-gradient(135deg, rgba(168,85,247,0.3), rgba(236,72,153,0.2));
+    border-color:rgba(168,85,247,0.4);
+}
+.family-table-wrap{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior-x:contain;
+    border-radius:var(--radius);
+    margin:0 -4px;
+    padding:0 4px;
+}
+.family-table{
+    display:grid;
+    grid-template-columns:1.35fr 1fr 1fr 1fr;
+    gap:0;
+    border-radius:var(--radius);
+    overflow:hidden;
+    border:1px solid var(--line-hi);
+    background:rgba(0,0,0,0.25);
+    min-width:320px;
+}
+.ft-h{
+    padding:11px 6px;
+    font-size:11px; font-weight:800;
+    text-transform:uppercase; letter-spacing:0.05em;
+    text-align:right; color:var(--txt-2);
+    background:rgba(255,255,255,0.04);
+    border-bottom:1px solid var(--line);
+    white-space:nowrap;
+}
+.ft-h.first{ text-align:left; }
+.ft-h.hus{ color:#fbbf24; }
+.ft-h.anj{ color:#34d399; }
+.ft-h.tot{ color:#c084fc; }
+
+.ft-label{
+    padding:13px 6px;
+    font-size:12px; font-weight:700;
+    color:var(--txt-2);
+    border-bottom:1px solid var(--line);
+    background:rgba(0,0,0,0.15);
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.ft-cell{
+    padding:13px 6px;
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:13px; font-weight:700;
+    font-variant-numeric:tabular-nums;
+    text-align:right; color:#fff;
+    border-bottom:1px solid var(--line);
+    letter-spacing:-0.02em;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+.ft-cell.tot{ color:#c084fc; background:rgba(168,85,247,0.08); font-weight:800; }
+.ft-cell.hus{ color:#fbbf24; }
+.ft-cell.anj{ color:#34d399; }
+.ft-cell.neg{ color:#fb7185; }
+.ft-cell.transfer{ color:var(--txt-2); font-size:11px; font-weight:600; font-style:italic; }
+
+.ft-row-savings .ft-label{
+    background:linear-gradient(135deg, rgba(168,85,247,0.15), rgba(236,72,153,0.1));
+    color:#f3e8ff; border-bottom:none;
+    border-top:2px solid rgba(168,85,247,0.4);
+    font-size:13px;
+}
+.ft-row-savings .ft-cell{
+    background:linear-gradient(135deg, rgba(168,85,247,0.15), rgba(236,72,153,0.1));
+    border-bottom:none;
+    border-top:2px solid rgba(168,85,247,0.4);
+    font-size:13px; font-weight:800;
+}
+.ft-note{
+    font-size:10.5px; color:var(--txt-3);
+    margin-top:10px; line-height:1.5;
+    font-style:italic; text-align:center;
+    padding:0 6px;
 }
 
-.wrap { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
-
-/* Top Header */
-.top-header { 
-    display: flex; align-items: center; gap: 15px; padding: 15px; border-radius: var(--radius); 
-    background: linear-gradient(135deg, rgba(219, 39, 119, 0.9), rgba(147, 51, 234, 0.9));
-    box-shadow: 0 8px 20px rgba(219, 39, 119, 0.3);
+/* FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.form-grid .full{grid-column:span 2;}
+.seg{
+    display:grid; grid-template-columns:1fr 1fr; gap:4px; padding:4px;
+    background:rgba(0,0,0,0.35); border:1px solid var(--line);
+    border-radius:var(--radius-sm); margin-bottom:12px;
 }
-.couple-photo { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 3px solid #fff; }
-.header-info h1 { font-size: 22px; font-weight: 800; }
-.header-info p { font-size: 13px; color: #fbcfe8; }
-
-/* Time Box */
-.time-box { display: flex; justify-content: space-between; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 12px; margin-bottom: 16px; text-align: center; }
-.time-item .flag { font-size: 20px; }
-.time-item .label { font-size: 11px; color: var(--text-muted); font-weight: bold; }
-.time-item .val { font-size: 18px; font-weight: 800; color: #fff; margin-top: 2px; }
-
-/* Cards */
-.card { padding: 16px; }
-.card-title { font-size: 16px; font-weight: 700; margin-bottom: 15px; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
-
-/* Summary Grid */
-.summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-.summary-box { padding: 15px; border-radius: 12px; text-align: center; background: rgba(0,0,0,0.2); border-bottom: 4px solid; }
-.summary-box .title { font-size: 12px; color: var(--text-muted); font-weight: 600; }
-.summary-box .amount { font-size: 20px; font-weight: 800; margin-top: 4px; }
-
-/* Form Grid */
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.form-grid .full { grid-column: span 2; }
-.input-group { display: flex; flex-direction: column; gap: 5px; }
-.input-group label { font-size: 13px; color: var(--text-muted); font-weight: 600; }
-.input-group input, .input-group select {
-    padding: 12px; border-radius: 10px; border: 1px solid var(--glass-border);
-    background: rgba(0,0,0,0.2); color: #fff; font-size: 15px; outline: none;
+.seg button{
+    padding:11px; border:none; background:transparent; color:var(--txt-2);
+    font-size:13px; font-weight:700; border-radius:8px; cursor:pointer;
+    transition:all 0.2s; font-family:inherit;
+    display:flex; align-items:center; justify-content:center; gap:5px;
+    min-height:42px;
+    touch-action:manipulation;
 }
-.input-group select option { background: #1e1b4b; color: #fff; }
+.seg button.active-exp{background:linear-gradient(135deg, rgba(244,63,94,0.95), rgba(236,72,153,0.85));color:#fff;box-shadow:0 4px 12px -2px rgba(244,63,94,0.5);}
+.seg button.active-inc{background:linear-gradient(135deg, rgba(16,185,129,0.95), rgba(52,211,153,0.85));color:#fff;box-shadow:0 4px 12px -2px rgba(16,185,129,0.5);}
 
-/* Buttons */
-.btn-submit { width: 100%; padding: 14px; border-radius: 10px; border: none; font-size: 16px; font-weight: 700; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; cursor: pointer; margin-top: 10px; }
-.btn-cancel { width: 100%; padding: 10px; border-radius: 10px; border: none; font-size: 14px; font-weight: 700; background: rgba(255,255,255,0.1); color: white; cursor: pointer; margin-top: 10px; display: none; }
+.btn-primary{
+    width:100%; padding:15px; border:none; border-radius:var(--radius-sm);
+    font-family:inherit; font-size:15px; font-weight:800; letter-spacing:0.01em;
+    color:#fff; cursor:pointer; margin-top:14px;
+    background:linear-gradient(135deg, var(--pink), var(--purple));
+    box-shadow:0 1px 0 rgba(255,255,255,0.25) inset, 0 10px 30px -8px rgba(236,72,153,0.6);
+    transition:all 0.2s; position:relative; overflow:hidden;
+    min-height:50px;
+    touch-action:manipulation;
+}
+.btn-primary::before{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(135deg, transparent, rgba(255,255,255,0.15), transparent);
+    transform:translateX(-100%); transition:transform 0.6s;
+}
+.btn-primary:hover::before{transform:translateX(100%);}
+.btn-primary:active{transform:scale(0.985);}
+.btn-primary:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
 
-/* Filter Bar */
-.filter-bar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
-.filter-bar select, .filter-bar input { padding: 10px; border-radius: 10px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); color: #fff; font-size: 14px; outline: none; }
-.filter-bar input { flex: 1; min-width: 150px; }
+.btn-ghost{
+    width:100%; padding:12px; border-radius:var(--radius-sm);
+    font-family:inherit; font-size:13px; font-weight:700;
+    color:var(--txt-2); background:rgba(255,255,255,0.06);
+    border:1px solid var(--line); cursor:pointer; margin-top:8px;
+    display:none; transition:all 0.2s;
+    min-height:44px;
+    touch-action:manipulation;
+}
+.btn-ghost:hover{background:rgba(255,255,255,0.1);color:#fff;}
 
-/* Table */
-.table-scroll { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; min-width: 600px; }
-th { text-align: left; padding: 10px; font-size: 13px; color: var(--text-muted); border-bottom: 1px solid var(--glass-border); }
-td { padding: 12px 10px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-.badge { padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: bold; }
+/* FILTERS */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.filters select, .filters input{
+    padding:11px 12px; border-radius:10px; border:1px solid var(--line);
+    background:rgba(0,0,0,0.3); color:#fff;
+    font-size:16px;
+    font-family:inherit; font-weight:500;
+    outline:none; -webkit-appearance:none; appearance:none;
+    transition:all 0.2s;
+    min-height:44px;
+}
+.filters select{
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a8a3c2' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 10px center;
+    padding-right:30px; cursor:pointer;
+}
+.filters select option{background:#1e1240;}
+.filters input{flex:1;min-width:140px;font-size:14px;}
+.filters input:focus, .filters select:focus{border-color:var(--pink);background:rgba(236,72,153,0.06);}
 
-/* Category Breakdown Items */
-.cat-item { margin-bottom: 12px; }
-.cat-header { display: flex; justify-content: space-between; font-size: 13px; font-weight: bold; margin-bottom: 5px; }
-.cat-bar-bg { height: 8px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; }
-.cat-bar-fill { height: 100%; border-radius: 5px; transition: width 0.3s; }
+/* CATEGORY */
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:8px;}
+.cat-col h4{
+    font-size:11px; font-weight:800; text-transform:uppercase;
+    letter-spacing:0.06em; margin-bottom:12px;
+    display:flex; align-items:center; gap:6px;
+}
+.cat-col.inc h4{color:var(--green-2);}
+.cat-col.exp h4{color:#fb7185;}
+.cat-item{margin-bottom:11px;}
+.cat-item:last-child{margin-bottom:0;}
+.cat-row{
+    display:flex; justify-content:space-between; font-size:12px;
+    font-weight:600; margin-bottom:5px; gap:6px; align-items:center;
+}
+.cat-row .nm{color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60%;}
+.cat-row .am{
+    font-family:'Plus Jakarta Sans',sans-serif; font-size:12px; font-weight:700;
+    color:var(--txt-2); font-variant-numeric:tabular-nums; white-space:nowrap;
+}
+.cat-bar{height:6px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;position:relative;}
+.cat-fill{height:100%;border-radius:3px;transition:width 0.6s cubic-bezier(0.4,0,0.2,1);position:relative;}
+.cat-fill::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation:shimmer 2.5s infinite;
+}
+@keyframes shimmer{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}
+.cat-empty{font-size:11px;color:var(--txt-3);font-style:italic;padding:6px 0;}
 
-/* Toast */
-#toast { position: fixed; bottom: 20px; left: 50%; transform: translate(-50%, 100px); background: #16a34a; color: white; padding: 10px 20px; border-radius: 20px; font-weight: 600; transition: 0.3s; z-index: 9999; opacity: 0; }
-#toast.show { transform: translate(-50%, 0); opacity: 1; }
+/* TRANSACTIONS */
+.tx-list{display:flex;flex-direction:column;gap:8px;}
+.tx{
+    display:grid; grid-template-columns:auto 1fr auto; gap:10px;
+    align-items:center; padding:11px 12px; border-radius:var(--radius);
+    background:rgba(255,255,255,0.025); border:1px solid var(--line);
+    transition:all 0.2s;
+}
+.tx:hover{background:rgba(255,255,255,0.05);border-color:var(--line-hi);}
+.tx-ic{
+    width:38px;height:38px;border-radius:11px;display:flex;align-items:center;
+    justify-content:center;font-size:17px;background:rgba(255,255,255,0.05);
+    border:1px solid var(--line); flex-shrink:0;
+}
+.tx-body{min-width:0;overflow:hidden;}
+.tx-name{
+    font-size:13px; font-weight:700; color:var(--txt);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    display:flex; align-items:center; gap:5px; margin-bottom:2px;
+}
+.tx-meta{
+    font-size:11px; color:var(--txt-3); font-weight:500;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.tx-amt{
+    font-family:'Plus Jakarta Sans',sans-serif; font-size:14px;
+    font-weight:800; font-variant-numeric:tabular-nums;
+    text-align:right; white-space:nowrap; letter-spacing:-0.01em;
+}
+.tx-amt.inc{color:var(--green-2);}
+.tx-amt.exp{color:#fb7185;}
+.tx-acts{display:flex;gap:4px;grid-column:1/-1;justify-content:flex-end;margin-top:2px;}
+.tx-acts button{
+    width:36px;height:36px;background:rgba(255,255,255,0.04);
+    border:1px solid var(--line);cursor:pointer;
+    border-radius:9px;font-size:14px;color:var(--txt-3);
+    transition:all 0.15s;
+    display:flex;align-items:center;justify-content:center;
+    touch-action:manipulation;
+}
+.tx-acts button:active{background:rgba(255,255,255,0.12);color:#fff;transform:scale(0.94);}
+.tx-date-badge{
+    display:inline-block; font-size:10px; font-weight:700;
+    padding:2px 6px; border-radius:5px; background:rgba(168,85,247,0.15);
+    color:#c084fc; text-transform:uppercase; letter-spacing:0.04em; margin-right:6px;
+}
 
-/* Music Button */
-#musicBtn { position: fixed; bottom: 20px; right: 20px; width: 55px; height: 55px; border-radius: 50%; background: linear-gradient(45deg, #db2777, #9333ea); color: white; font-size: 22px; border: 2px solid white; box-shadow: 0 4px 15px rgba(147,51,234,0.5); cursor: pointer; z-index: 9999; display: flex; justify-content: center; align-items: center; }
+.empty{text-align:center;padding:40px 20px;color:var(--txt-3);font-size:14px;font-weight:500;}
+.empty-ic{font-size:40px;margin-bottom:10px;opacity:0.5;}
+
+#toast{
+    position:fixed;
+    bottom:calc(24px + var(--safe-b));
+    left:50%;
+    transform:translate(-50%, 140px);
+    background:linear-gradient(135deg, #065f46, #059669);
+    border:1px solid rgba(52,211,153,0.4); color:#fff;
+    padding:12px 20px; border-radius:100px; font-size:13px; font-weight:700;
+    z-index:9999; opacity:0;
+    transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    box-shadow:0 12px 32px -8px rgba(16,185,129,0.6);
+    display:flex; align-items:center; gap:8px;
+    max-width:calc(100vw - 32px);
+    pointer-events:none;
+}
+#toast.show{transform:translate(-50%,0);opacity:1;}
+
+/* FLOATING */
+.float-controls{
+    position:fixed;
+    bottom:calc(20px + var(--safe-b));
+    right:calc(20px + var(--safe-r));
+    display:flex;
+    align-items:center;
+    gap:8px;
+    z-index:9999;
+}
+#musicBtn{
+    width:52px; height:52px; border-radius:50%;
+    background:linear-gradient(135deg, var(--pink), var(--purple));
+    color:#fff; font-size:20px;
+    border:2px solid rgba(255,255,255,0.9);
+    box-shadow:0 8px 24px -4px rgba(236,72,153,0.6);
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:all 0.2s;
+    touch-action:manipulation;
+    padding:0;
+}
+#songBtn{
+    width:42px; height:42px; border-radius:50%;
+    background:rgba(20,14,38,0.92);
+    color:#fff; font-size:17px;
+    border:1.5px solid rgba(255,255,255,0.4);
+    box-shadow:0 4px 12px rgba(0,0,0,0.4);
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:all 0.2s;
+    touch-action:manipulation;
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    padding:0;
+    position:relative;
+}
+#songBtn.has-song::after{
+    content:'';
+    position:absolute; top:1px; right:1px;
+    width:9px; height:9px; border-radius:50%;
+    background:#22c55e;
+    box-shadow:0 0 6px #22c55e;
+    border:1.5px solid #0f0a1e;
+}
+#musicBtn:active, #songBtn:active{transform:scale(0.9);}
+#musicBtn.playing{animation:musicPulse 2s ease-in-out infinite;}
+@keyframes musicPulse{50%{box-shadow:0 8px 24px -4px rgba(236,72,153,0.6), 0 0 0 8px rgba(236,72,153,0.15);}}
+#musicBtn.attn{animation:attnPulse 1.4s ease-in-out infinite;}
+@keyframes attnPulse{
+    50%{
+        transform:scale(1.1);
+        box-shadow:0 8px 24px -4px rgba(236,72,153,0.7), 0 0 0 12px rgba(236,72,153,0.18);
+    }
+}
+
+/* MOBILE */
+@media (max-width:640px){
+    body{
+        padding:
+            max(12px, calc(var(--safe-t) + 10px))
+            max(12px, calc(var(--safe-r) + 10px))
+            max(110px, calc(var(--safe-b) + 90px))
+            max(12px, calc(var(--safe-l) + 10px));
+    }
+    .wrap{gap:12px;}
+    .glass{padding:18px 16px;border-radius:20px;}
+    .top-header{padding:11px 13px;}
+    .couple-photo{width:44px;height:44px;}
+    .header-info h1{font-size:15.5px;}
+    .header-info p{font-size:10.5px;}
+    .btn-ic{width:38px;height:38px;font-size:15px;}
+
+    .clock-card{padding:12px 8px;gap:6px;}
+    .clock-item .flag{font-size:19px;}
+    .clock-item .lbl{font-size:9px;}
+    .clock-item .val{font-size:14px;}
+    .clock-item .date{font-size:9.5px;}
+
+    .h-grid{grid-template-columns:1fr;}
+    .h-grid .field label{font-size:11.5px;}
+
+    .form-grid{grid-template-columns:1fr;}
+    .form-grid .full{grid-column:span 1;}
+
+    .cat-grid{grid-template-columns:1fr;gap:14px;}
+
+    .acct-row .amount{font-size:14px;}
+    .acct-balance{padding:14px 16px;}
+
+    .h-result{padding:14px 16px;}
+    .h-result .amount{font-size:22px;}
+
+    .hero-sub{gap:10px;}
+    .hero-sub-item .val{font-size:13px;}
+
+    .ft-h{padding:10px 5px;font-size:10px;}
+    .ft-label{padding:12px 5px;font-size:11.5px;}
+    .ft-cell{padding:12px 5px;font-size:12px;}
+    .ft-row-savings .ft-label{font-size:12px;padding:13px 5px;}
+    .ft-row-savings .ft-cell{font-size:12px;padding:13px 5px;}
+
+    .tx{padding:10px 11px;gap:9px;}
+    .tx-ic{width:36px;height:36px;font-size:16px;}
+    .tx-amt{font-size:13px;}
+    .tx-acts button{width:38px;height:38px;}
+
+    #musicBtn{width:48px;height:48px;font-size:18px;}
+    #songBtn{width:38px;height:38px;font-size:15px;}
+}
+
+@media (max-width:380px){
+    .glass{padding:16px 13px;}
+    .header-info h1{font-size:14.5px;}
+    .hero-value{font-size:30px;}
+    .hero-sub-item .val{font-size:12.5px;}
+    .ft-h, .ft-label, .ft-cell{font-size:10.5px;padding:10px 4px;}
+    .ft-row-savings .ft-cell{font-size:11.5px;}
+    .h-result .amount{font-size:20px;}
+    .acct-balance .amount{font-size:20px;}
+    .acct-row .amount{font-size:13px;}
+    .clock-item .val{font-size:13px;}
+    .clock-item .date{font-size:9px;}
+}
+
+@media print{
+    body{background:#fff;color:#000;padding:0;}
+    body::before,body::after{display:none;}
+    .glass,.top-header,.hero,.anjana-card,.family-card,.clock-card{
+        background:#fff !important;border:1px solid #ddd;box-shadow:none;color:#000;backdrop-filter:none;
+    }
+    .top-header{position:static;background:#f3f4f6 !important;}
+    .hero-value{-webkit-text-fill-color:#000;color:#000;background:none;}
+    .hero-label,.hero-sub-item .lbl,.acct-row .label,.clock-item .lbl,.clock-item .date{color:#666;}
+    .hero-sub-item .val,.acct-row .amount,.acct-balance .amount,.h-result .amount,.clock-item .val{color:#000 !important;text-shadow:none;}
+    .acct-balance,.h-result{background:#f9fafb !important;border:1px solid #ccc !important;}
+    .acct-balance::before,.h-result::before{display:none;}
+    .acct-balance .label,.h-result .label{color:#333 !important;}
+    #entryForm,.export-btns,.float-controls,.filters,.tx-acts,.live{display:none !important;}
+    .tx{border:1px solid #ddd !important;background:#fafafa !important;}
+    .cat-fill::after{display:none;}
+    td,th,.v,h1,h2,.stat .lbl,.cat-row,.ft-cell,.ft-label,.ft-h{color:#000 !important;}
+    .sec-head{color:#000;}
+    .sec-head .ico{display:none;}
+    .family-table{border:1px solid #ccc;}
+    .ft-h{background:#f3f4f6 !important;}
+    .ft-row-savings .ft-label,.ft-row-savings .ft-cell{background:#f3f4f6 !important;border-top:2px solid #333 !important;}
+    .family-table-wrap{overflow:visible;margin:0;padding:0;}
+}
 </style>
 </head>
 <body>
 
-<audio id="bgMusic" loop></audio>
-<div id="toast">✓ <span id="toastMsg"></span></div>
+<audio id="bgMusic" loop preload="auto"></audio>
+<div id="toast"><span id="toastIcon">✓</span><span id="toastMsg"></span></div>
+<input type="file" id="photoInput" accept="image/*" hidden>
+<input type="file" id="songInput" accept="audio/*" hidden>
 
 <div class="wrap">
-    <!-- HEADER -->
+
     <header class="top-header">
-        <img src="wife.jpg" alt="Photo" class="couple-photo">
-        <div class="header-info">
-            <h1>🌸 अन्जना हिसाब</h1>
-            <p id="nepaliDate">मिति...</p>
+        <div class="header-left">
+            <img src="" alt="Photo" class="couple-photo" id="couplePhoto">
+            <div class="header-info">
+                <h1>🌸 अन्जना हिसाब</h1>
+                <p>
+                    <span id="nepaliDate">…</span>
+                    <span class="live" id="liveBadge">
+                        <span class="live-dot"></span>
+                        <span id="liveText">off</span>
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="export-btns">
+            <button class="btn-ic" onclick="exportCSV()" aria-label="CSV डाउनलोड">📥</button>
+            <button class="btn-ic" onclick="window.print()" aria-label="प्रिन्ट">🖨️</button>
         </div>
     </header>
 
-    <!-- LIVE CLOCK -->
-    <div class="glass-card time-box">
-        <div class="time-item">
-            <div class="flag">🇸🇦</div>
-            <div class="label">साउदी समय</div>
-            <div class="val" id="saudiTime">--:--:--</div>
+    <div class="clock-card">
+        <div class="clock-item">
+            <span class="flag">🇸🇦</span>
+            <span class="lbl">साउदी समय</span>
+            <span class="val" id="saudiTime">--:--:-- --</span>
+            <span class="date" id="saudiDate">—</span>
         </div>
-        <div class="time-item">
-            <div class="flag">🇳🇵</div>
-            <div class="label">नेपाल समय</div>
-            <div class="val" id="nepalTime">--:--:--</div>
-        </div>
-    </div>
-
-    <!-- SUMMARY TOTALS -->
-    <div class="summary-grid">
-        <div class="summary-box" style="border-color: var(--green);">
-            <div class="title">कुल आम्दानी</div>
-            <div class="amount" id="sumIncome" style="color: var(--green);">रु. ०</div>
-        </div>
-        <div class="summary-box" style="border-color: var(--red);">
-            <div class="title">कुल खर्च</div>
-            <div class="amount" id="sumExpense" style="color: var(--red);">रु. ०</div>
-        </div>
-        <div class="summary-box" style="border-color: var(--blue); grid-column: span 2;">
-            <div class="title">कुल बचत (Savings)</div>
-            <div class="amount" id="sumSavings" style="color: var(--blue);">रु. ०</div>
+        <div class="clock-divider"></div>
+        <div class="clock-item">
+            <span class="flag">🇳🇵</span>
+            <span class="lbl">नेपाल समय</span>
+            <span class="val" id="nepalTime">--:--:-- --</span>
+            <span class="date" id="nepalDate">—</span>
         </div>
     </div>
 
-    <!-- FORM -->
-    <div class="glass-card card">
-        <h2 class="card-title">➕ नयाँ रेकर्ड थप्नुहोस्</h2>
+    <div class="glass hero">
+        <div class="hero-label">💎 परिवारको कुल बचत</div>
+        <div class="hero-value" id="heroValue">रु. ०</div>
+        <div class="hero-sub">
+            <div class="hero-sub-item">
+                <span class="lbl">कुल आम्दानी</span>
+                <span class="val income" id="heroIncome">रु. ०</span>
+            </div>
+            <div class="hero-sub-item">
+                <span class="lbl">कुल खर्च</span>
+                <span class="val expense" id="heroExpense">रु. ०</span>
+            </div>
+            <div class="hero-sub-item">
+                <span class="lbl">👨 पतिको बचत</span>
+                <span class="val" id="heroHSav" style="color:#fbbf24;">रु. ०</span>
+            </div>
+            <div class="hero-sub-item">
+                <span class="lbl">👩 अन्जना बचत</span>
+                <span class="val" id="heroASav" style="color:#34d399;">रु. ०</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass">
+        <div class="sec-head">
+            <span class="ico">👨‍💼</span>
+            पतिको खाता
+        </div>
+        <div class="h-grid">
+            <div class="field">
+                <label>तलब (रु.)</label>
+                <input type="number" id="hSalary" placeholder="0" oninput="calculateHusband()" inputmode="decimal">
+            </div>
+            <div class="field">
+                <label>व्यक्तिगत खर्च (रु.)</label>
+                <input type="number" id="hExpense" placeholder="0" oninput="calculateHusband()" inputmode="decimal">
+            </div>
+            <div class="field">
+                <label>अन्जनालाई पठाएको (रु.)</label>
+                <input type="number" id="hSent" placeholder="0" oninput="calculateHusband()" inputmode="decimal">
+            </div>
+        </div>
+        <div class="h-result" id="hSavBox">
+            <span class="label">💰 पतिको बचत</span>
+            <span class="amount" id="hSavings">रु. ०</span>
+        </div>
+    </div>
+
+    <div class="glass anjana-card">
+        <div class="sec-head">
+            <span class="ico">👩</span>
+            अन्जना खाता
+            <span class="sub">पतिबाट सुरु</span>
+        </div>
+
+        <div class="acct-flow">
+            <div class="acct-row opening">
+                <span class="label"><span class="dot"></span><span>पतिबाट आएको</span></span>
+                <span class="amount" id="anjanaOpening">रु. ०</span>
+            </div>
+            <div class="acct-row extra">
+                <span class="label"><span class="dot"></span><span>थप आम्दानी</span></span>
+                <span class="amount" id="anjanaExtra">रु. ०</span>
+            </div>
+            <div class="acct-divider"></div>
+            <div class="acct-row income-tot">
+                <span class="label"><span class="dot"></span><span>कुल आम्दानी</span></span>
+                <span class="amount" id="anjanaTotalIncome">रु. ०</span>
+            </div>
+            <div class="acct-row expense">
+                <span class="label"><span class="dot"></span><span>कुल खर्च</span></span>
+                <span class="amount" id="anjanaExpense">रु. ०</span>
+            </div>
+        </div>
+
+        <div class="acct-balance" id="anjanaBalanceBox">
+            <span class="label">💎 बाँकी बचत</span>
+            <span class="amount" id="anjanaBalance">रु. ०</span>
+        </div>
+    </div>
+
+    <div class="glass family-card">
+        <div class="sec-head">
+            <span class="ico">👨‍👩‍👧</span>
+            परिवारको सारांश
+            <span class="sub">दुवैको तुलना</span>
+        </div>
+
+        <div class="family-table-wrap">
+            <div class="family-table">
+                <div class="ft-h first"></div>
+                <div class="ft-h hus">👨 पति</div>
+                <div class="ft-h anj">👩 अन्जना</div>
+                <div class="ft-h tot">💎 कुल</div>
+
+                <div class="ft-label">आम्दानी</div>
+                <div class="ft-cell hus" id="ftHIncome">रु. ०</div>
+                <div class="ft-cell anj" id="ftAIncome">रु. ०</div>
+                <div class="ft-cell tot" id="ftTIncome">रु. ०</div>
+
+                <div class="ft-label" style="font-size:11px;font-weight:600;font-style:italic;color:var(--txt-3);">पतिबाट प्राप्त</div>
+                <div class="ft-cell transfer" id="ftHTransfer">− रु. ०</div>
+                <div class="ft-cell transfer" id="ftATransfer">+ रु. ०</div>
+                <div class="ft-cell transfer" style="text-align:right;">—</div>
+
+                <div class="ft-label">खर्च</div>
+                <div class="ft-cell" id="ftHExpense" style="color:#fb7185;">रु. ०</div>
+                <div class="ft-cell" id="ftAExpense" style="color:#fb7185;">रु. ०</div>
+                <div class="ft-cell tot" id="ftTExpense">रु. ०</div>
+
+                <div class="ft-label ft-row-savings">बचत</div>
+                <div class="ft-cell hus ft-row-savings" id="ftHSavings">रु. ०</div>
+                <div class="ft-cell anj ft-row-savings" id="ftASavings">रु. ०</div>
+                <div class="ft-cell tot ft-row-savings" id="ftTSavings">रु. ०</div>
+            </div>
+        </div>
+
+        <div class="ft-note">
+            "पतिबाट प्राप्त" भनेको पतिको पैसा अन्जनाकहाँ सर्ने (transfer) हो — परिवारको कुल आम्दानीमा दोहोरो गनिँदैन।
+        </div>
+    </div>
+
+    <div class="glass">
+        <div class="sec-head">
+            <span class="ico">➕</span>
+            अन्जनाको नयाँ रेकर्ड
+            <span class="sub" id="editHint"></span>
+        </div>
         <form id="entryForm">
+            <div class="seg">
+                <button type="button" id="segExp" class="active-exp" onclick="setType('expense')">🔴 खर्च</button>
+                <button type="button" id="segInc" onclick="setType('income')">🟢 थप आम्दानी</button>
+            </div>
+            <select id="type" hidden>
+                <option value="expense">expense</option>
+                <option value="income">income</option>
+            </select>
             <div class="form-grid">
-                <div class="input-group full">
-                    <label>प्रकार (Type)</label>
-                    <select id="type" onchange="updateCategories()">
-                        <option value="expense">🔴 खर्च (Expense)</option>
-                        <option value="income">🟢 आम्दानी (Income)</option>
-                    </select>
-                </div>
-                <div class="input-group">
+                <div class="field">
                     <label>मिति</label>
                     <input type="date" id="date" required>
                 </div>
-                <div class="input-group">
+                <div class="field">
                     <label>रकम (रु.)</label>
-                    <input type="number" id="amount" required placeholder="0">
+                    <input type="number" id="amount" required placeholder="0" min="0" step="any" inputmode="decimal">
                 </div>
-                <div class="input-group full">
-                    <label>के को लागि? (कोटी)</label>
+                <div class="field full">
+                    <label>शीर्षक / कोटी</label>
                     <select id="category" required></select>
                 </div>
-                <div class="input-group full">
+                <div class="field full">
                     <label>भुक्तानी माध्यम</label>
                     <select id="payment">
-                        <option value="cash">💵 नगद (Cash)</option>
-                        <option value="bank">🏦 बैंक (Bank)</option>
-                        <option value="online">📱 अनलाइन (Online)</option>
+                        <option value="cash">💵 नगद</option>
+                        <option value="bank">🏦 बैंक</option>
+                        <option value="online">📱 अनलाइन</option>
                     </select>
                 </div>
-                <div class="input-group full">
-                    <label>विवरण (Note)</label>
-                    <input type="text" id="note" placeholder="जस्तै: तलब आयो / तेल किनेको">
+                <div class="field full">
+                    <label>विवरण</label>
+                    <input type="text" id="note" placeholder="जस्तै: घरभाडा / तरकारी किनेको">
                 </div>
             </div>
-            <button type="submit" class="btn-submit" id="submitBtn">सेभ गर्नुहोस्</button>
-            <button type="button" class="btn-cancel" id="cancelBtn" onclick="cancelEdit()">रद्द गर्नुहोस्</button>
+            <button type="submit" class="btn-primary" id="submitBtn">रेकर्ड सेभ गर्नुहोस्</button>
+            <button type="button" class="btn-ghost" id="cancelBtn" onclick="cancelEdit()">रद्द गर्नुहोस्</button>
         </form>
     </div>
 
-    <!-- FILTERS -->
-    <div class="glass-card card">
-        <div class="filter-bar">
+    <div class="glass">
+        <div class="sec-head">
+            <span class="ico">🧾</span>
+            अन्जनाका कारोबारहरू
+            <span class="sub" id="txCount"></span>
+        </div>
+
+        <div class="filters">
             <select id="filterYear" onchange="renderData()">
                 <option value="all">सबै वर्ष</option>
             </select>
@@ -208,143 +999,386 @@ td { padding: 12px 10px; font-size: 14px; border-bottom: 1px solid rgba(255,255,
                 <option value="6">जुलाई</option><option value="7">अगस्ट</option><option value="8">सेप्टेम्बर</option>
                 <option value="9">अक्टोबर</option><option value="10">नोभेम्बर</option><option value="11">डिसेम्बर</option>
             </select>
-            <input type="text" id="searchBar" placeholder="🔍 खोज्नुहोस्..." oninput="renderData()">
+            <input type="text" id="searchBar" placeholder="🔍 खोज्नुहोस्…" oninput="renderData()">
         </div>
 
-        <!-- CATEGORY BREAKDOWN (कुन कुरामा कति) -->
-        <h2 class="card-title" style="margin-top:20px;">📊 कुन कुरामा कति खर्च/आम्दानी?</h2>
-        <div id="categoryBreakdown" style="margin-bottom: 20px;">
-            <!-- Loads dynamically -->
-        </div>
+        <div class="cat-grid" id="categoryBreakdown"></div>
 
-        <!-- DATA TABLE -->
-        <h2 class="card-title">🧾 सबै कारोबारको सूची</h2>
-        <div class="table-scroll">
-            <table>
-                <thead>
-                    <tr>
-                        <th>मिति</th>
-                        <th>प्रकार</th>
-                        <th>विवरण</th>
-                        <th style="text-align:right;">रकम</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody"></tbody>
-            </table>
+        <div style="height:1px;background:var(--line);margin:20px 0;"></div>
+
+        <div class="tx-list" id="txList"></div>
+        <div class="empty" id="emptyState" style="display:none;">
+            <div class="empty-ic">📭</div>
+            कुनै रेकर्ड भेटिएन
         </div>
-        <div id="emptyState" style="text-align:center; padding: 20px; color:var(--text-muted); display:none;">कुनै रेकर्ड भेटिएन।</div>
     </div>
 </div>
 
-<button id="musicBtn" onclick="toggleMusic()">🎵</button>
+<div class="float-controls">
+    <button id="songBtn" onclick="pickSong()" aria-label="गीत थप्नुहोस्">🎤</button>
+    <button id="musicBtn" onclick="toggleMusic()" aria-label="संगीत">🎵</button>
+</div>
 
 <script>
 /* ================= CONFIG ================= */
-const DB_URL = "https://anjana-khata-default-rtdb.firebaseio.com/khata";
-const EXP_URL = DB_URL + "/expenses";
-const INC_URL = DB_URL + "/incomes";
+const DB_URL      = "https://anjana-khata-default-rtdb.firebaseio.com/khata";
+const EXP_URL     = DB_URL + "/expenses";
+const INC_URL     = DB_URL + "/incomes";
+const HUSBAND_URL = DB_URL + "/husband";
+const PHOTO_URL   = DB_URL + "/photo";
 
 const EXP_CATS = [
-    { id:'khana', name:'खाना', icon:'🍚', color:'#f59e0b' },
-    { id:'school_fee', name:'स्कुल फी', icon:'🏫', color:'#f97316' },
-    { id:'bijuli', name:'बिजुली', icon:'💡', color:'#eab308' },
-    { id:'pani', name:'पानी', icon:'💧', color:'#3b82f6' },
-    { id:'gas', name:'ग्यास', icon:'🔥', color:'#ef4444' },
-    { id:'wifi', name:'वाइफाइ', icon:'📶', color:'#06b6d4' },
-    { id:'shopping', name:'सपिङ', icon:'🛍️', color:'#a855f7' },
-    { id:'medical', name:'मेडिकल', icon:'💊', color:'#dc2626' },
-    { id:'other_exp', name:'अन्य', icon:'📦', color:'#64748b' }
+    { id:'khana',      name:'खाना',           icon:'🍚', color:'#f59e0b' },
+    { id:'school_fee', name:'स्कुल फी',        icon:'🏫', color:'#f97316' },
+    { id:'bijuli',     name:'बिजुली',          icon:'💡', color:'#eab308' },
+    { id:'pani',       name:'पानी',            icon:'💧', color:'#3b82f6' },
+    { id:'gas',        name:'ग्यास',           icon:'🔥', color:'#ef4444' },
+    { id:'wifi',       name:'वाइफाइ',          icon:'📶', color:'#06b6d4' },
+    { id:'shopping',   name:'सपिङ',            icon:'🛍️', color:'#a855f7' },
+    { id:'medical',    name:'मेडिकल',          icon:'💊', color:'#dc2626' },
+    { id:'other_exp',  name:'अन्य खर्च',        icon:'📦', color:'#64748b' }
 ];
-
 const INC_CATS = [
-    { id:'salary', name:'तलब', icon:'💼', color:'#10b981' },
-    { id:'business', name:'व्यापार', icon:'🏪', color:'#0ea5e9' },
-    { id:'gift', name:'उपहार', icon:'🎁', color:'#8b5cf6' },
-    { id:'other_inc', name:'अन्य', icon:'💰', color:'#14b8a6' }
+    { id:'business',  name:'व्यापार',   icon:'🏪', color:'#0ea5e9' },
+    { id:'gift',      name:'उपहार',     icon:'🎁', color:'#8b5cf6' },
+    { id:'other_inc', name:'अन्य आम्दानी', icon:'💰', color:'#14b8a6' }
 ];
-
 const MONTHS = ['जनवरी','फेब्रुअरी','मार्च','अप्रिल','मे','जुन','जुलाई','अगस्ट','सेप्टेम्बर','अक्टोबर','नोभेम्बर','डिसेम्बर'];
 const catMap = Object.fromEntries([...EXP_CATS, ...INC_CATS].map(c => [c.id, c]));
+catMap['husband_given'] = { id:'husband_given', name:'पति सहयोग (पुरानो)', icon:'🤝', color:'#10b981' };
+catMap['husband_extra'] = { id:'husband_extra', name:'पति थप सहयोग', icon:'🤝', color:'#10b981' };
+
+const PLACEHOLDER = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ec4899"/><stop offset="1" stop-color="#a855f7"/></linearGradient></defs><rect width="60" height="60" fill="url(#g)"/><text x="30" y="42" font-size="26" text-anchor="middle">&#127800;</text></svg>`
+);
 
 let allData = [];
+let lastFiltered = [];
+let husbandData = { salary: 0, expense: 0, sent: 0 };
 let editingId = null;
 let editingType = null;
+
+let sseSources = [];
+let pollTimer = null;
+let reloadTimer = null;
+let hSaveTimer = null;
+
 const $ = id => document.getElementById(id);
-
-function fmt(n) { return 'रु. ' + (Number(n)||0).toLocaleString('en-IN'); }
-function toISO(d) { return d.toISOString().split('T')[0]; }
-function formatDate(iso) { const [y,m,d] = iso.split('-'); return `${+d} ${MONTHS[+m-1]} ${y}`; }
-
-/* ================= MUSIC LOGIC ================= */
-const songs = ['song.mp3', 'song2.mp3'];
-let songIdx = 0;
-const audio = $('bgMusic');
-audio.src = songs[songIdx];
-audio.addEventListener('ended', () => {
-    songIdx = (songIdx + 1) % songs.length;
-    audio.src = songs[songIdx];
-    audio.play().catch(e=>{});
-});
-
-let isPlaying = false;
-function playMusic() {
-    if(!isPlaying) {
-        audio.play().then(()=>{ isPlaying=true; $('musicBtn').textContent='⏸️'; }).catch(e=>{});
-    }
+const fmt = n => 'रु. ' + (Number(n)||0).toLocaleString('en-IN');
+const toISO = d => d.toISOString().split('T')[0];
+function formatDate(iso){
+    if(!iso) return '-';
+    const [y,m,d] = iso.split('-');
+    if(!y||!m||!d) return iso;
+    return `${+d} ${MONTHS[+m-1]||''} ${y}`;
 }
-function toggleMusic() {
-    if(isPlaying) { audio.pause(); isPlaying=false; $('musicBtn').textContent='🎵'; }
-    else { playMusic(); }
+function showToast(msg, icon='✓'){
+    $('toastIcon').textContent = icon;
+    $('toastMsg').textContent = msg;
+    $('toast').classList.add('show');
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => $('toast').classList.remove('show'), 2600);
 }
-document.body.addEventListener('click', (e)=>{ if(!e.target.closest('#musicBtn')) playMusic(); });
+function setLive(on){
+    $('liveBadge').classList.toggle('on', !!on);
+    $('liveText').textContent = on ? 'live' : 'off';
+}
 
 /* ================= CLOCK ================= */
-function startClock() {
-    setInterval(() => {
+function startClock(){
+    function tick(){
         const d = new Date();
-        $('saudiTime').textContent = d.toLocaleTimeString('en-US', { timeZone:'Asia/Riyadh', hour12:false });
-        $('nepalTime').textContent = d.toLocaleTimeString('en-US', { timeZone:'Asia/Kathmandu', hour12:false });
-    }, 1000);
-    try {
-        const nd = new NepaliDate(new Date());
-        $('nepaliDate').textContent = nd.format('DD MMMM YYYY', 'np');
-    } catch(e) {}
+        try{
+            $('saudiTime').textContent = d.toLocaleTimeString('en-US', {
+                timeZone:'Asia/Riyadh', hour12:true,
+                hour:'2-digit', minute:'2-digit', second:'2-digit'
+            });
+            $('nepalTime').textContent = d.toLocaleTimeString('en-US', {
+                timeZone:'Asia/Kathmandu', hour12:true,
+                hour:'2-digit', minute:'2-digit', second:'2-digit'
+            });
+            $('saudiDate').textContent = d.toLocaleDateString('en-GB', {
+                timeZone:'Asia/Riyadh', weekday:'short', day:'numeric', month:'short'
+            });
+            $('nepalDate').textContent = d.toLocaleDateString('en-GB', {
+                timeZone:'Asia/Kathmandu', weekday:'short', day:'numeric', month:'short'
+            });
+        }catch(e){}
+    }
+    tick();
+    setInterval(tick, 1000);
+
+    function tickDate(){
+        try{
+            const nd = new NepaliDate(new Date());
+            $('nepaliDate').textContent = nd.format('DD MMMM YYYY', 'np');
+        }catch(e){ $('nepaliDate').textContent = toISO(new Date()); }
+    }
+    tickDate();
+    setInterval(tickDate, 60000);
 }
 
-/* ================= FORM & LOAD ================= */
-function updateCategories() {
+/* ================= MUSIC (autoplay on open) ================= */
+const FALLBACK_SONG = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3';
+const MUSIC_DB = 'anjana_music_v1';
+const MUSIC_STORE = 'song';
+
+let currentSongURL = null;
+let musicSource = 'fallback';
+let isPlaying = false;
+let userPaused = false;
+const audio = $('bgMusic');
+
+function openMusicDB(){
+    return new Promise((res, rej) => {
+        const req = indexedDB.open(MUSIC_DB, 1);
+        req.onupgradeneeded = e => {
+            const db = e.target.result;
+            if(!db.objectStoreNames.contains(MUSIC_STORE)) db.createObjectStore(MUSIC_STORE);
+        };
+        req.onsuccess = e => res(e.target.result);
+        req.onerror = () => rej(req.error);
+    });
+}
+async function saveSongDB(blob){
+    const db = await openMusicDB();
+    return new Promise((res, rej) => {
+        const tx = db.transaction(MUSIC_STORE, 'readwrite');
+        tx.objectStore(MUSIC_STORE).put(blob, 'current');
+        tx.oncomplete = () => res();
+        tx.onerror = () => rej(tx.error);
+    });
+}
+async function loadSongDB(){
+    const db = await openMusicDB();
+    return new Promise((res, rej) => {
+        const tx = db.transaction(MUSIC_STORE, 'readonly');
+        const req = tx.objectStore(MUSIC_STORE).get('current');
+        req.onsuccess = () => res(req.result);
+        req.onerror = () => rej(req.error);
+    });
+}
+
+async function initMusic(){
+    try{
+        const blob = await loadSongDB();
+        if(blob){
+            if(currentSongURL) URL.revokeObjectURL(currentSongURL);
+            currentSongURL = URL.createObjectURL(blob);
+            audio.src = currentSongURL;
+            musicSource = 'custom';
+            $('songBtn').classList.add('has-song');
+        }else{
+            audio.src = FALLBACK_SONG;
+            musicSource = 'fallback';
+            $('songBtn').classList.remove('has-song');
+        }
+    }catch(e){
+        audio.src = FALLBACK_SONG;
+        musicSource = 'fallback';
+    }
+    updateMusicBtn();
+    await attemptAutoplay();
+}
+
+async function attemptAutoplay(){
+    if(userPaused) return false;
+    try{
+        audio.currentTime = 0;
+        await audio.play();
+        isPlaying = true;
+        $('musicBtn').classList.remove('attn');
+        updateMusicBtn();
+        return true;
+    }catch(e){
+        $('musicBtn').classList.add('attn');
+        armGestureStart();
+        return false;
+    }
+}
+
+function armGestureStart(){
+    let fired = false;
+    const cleanup = () => {
+        document.removeEventListener('click', start, true);
+        document.removeEventListener('touchstart', start, true);
+        document.removeEventListener('keydown', start, true);
+        window.removeEventListener('scroll', start, true);
+    };
+    const start = async (ev) => {
+        if(fired || userPaused || isPlaying) return;
+        if(ev && ev.target && ev.target.closest && ev.target.closest('#musicBtn, #songBtn')) return;
+        fired = true;
+        try{
+            await audio.play();
+            isPlaying = true;
+            $('musicBtn').classList.remove('attn');
+            updateMusicBtn();
+            showToast('🎵 संगीत सुरु भयो');
+            cleanup();
+        }catch(e){ fired = false; }
+    };
+    document.addEventListener('click', start, true);
+    document.addEventListener('touchstart', start, { capture:true, passive:true });
+    document.addEventListener('keydown', start, true);
+    window.addEventListener('scroll', start, { capture:true, passive:true });
+}
+
+function updateMusicBtn(){
+    const btn = $('musicBtn');
+    if(isPlaying){
+        btn.textContent = '⏸️';
+        btn.classList.add('playing');
+        btn.classList.remove('attn');
+    }else{
+        btn.textContent = '🎵';
+        btn.classList.remove('playing');
+    }
+}
+
+async function toggleMusic(){
+    if(isPlaying){
+        audio.pause();
+        isPlaying = false;
+        userPaused = true;
+        $('musicBtn').classList.remove('attn');
+        updateMusicBtn();
+        return;
+    }
+    try{
+        await audio.play();
+        isPlaying = true;
+        userPaused = false;
+        $('musicBtn').classList.remove('attn');
+        updateMusicBtn();
+        showToast(musicSource === 'custom' ? 'गीत बज्दैछ 🎵' : 'डिफल्ट गीत · 🎤 थप्नुहोस्');
+    }catch(e){
+        showToast('गीत बजाउन सकिएन','⚠️');
+    }
+}
+
+function pickSong(){ $('songInput').click(); }
+
+audio.addEventListener('ended', () => {
+    audio.currentTime = 0;
+    audio.play().catch(()=>{});
+});
+
+$('songInput').addEventListener('change', async e => {
+    const file = e.target.files[0];
+    e.target.value = '';
+    if(!file) return;
+
+    if(!file.type.startsWith('audio/') && !/\.(mp3|m4a|aac|wav|ogg|opus)$/i.test(file.name)){
+        showToast('कृपया audio फाइल छान्नुहोस्','⚠️');
+        return;
+    }
+    if(file.size > 25 * 1024 * 1024){
+        showToast('फाइल धेरै ठूलो (25MB भन्दा कम)','⚠️');
+        return;
+    }
+
+    try{
+        if(isPlaying){ audio.pause(); isPlaying = false; }
+        if(currentSongURL) URL.revokeObjectURL(currentSongURL);
+
+        await saveSongDB(file);
+        currentSongURL = URL.createObjectURL(file);
+        audio.src = currentSongURL;
+        audio.currentTime = 0;
+        musicSource = 'custom';
+        $('songBtn').classList.add('has-song');
+        userPaused = false;
+
+        try{
+            await audio.play();
+            isPlaying = true;
+            $('musicBtn').classList.remove('attn');
+            updateMusicBtn();
+            showToast('🎵 नयाँ गीत बज्दैछ');
+        }catch(e){
+            updateMusicBtn();
+            showToast('गीत सेभ भयो 🎵 थिच्नुहोस्');
+        }
+    }catch(err){
+        console.error(err);
+        showToast('गीत सेभ गर्न सकिएन','⚠️');
+    }
+});
+
+/* ================= PHOTO ================= */
+function setPhoto(b64){ $('couplePhoto').src = b64 || PLACEHOLDER; }
+$('couplePhoto').addEventListener('error', () => $('couplePhoto').src = PLACEHOLDER);
+$('couplePhoto').addEventListener('click', () => $('photoInput').click());
+
+$('photoInput').addEventListener('change', async e => {
+    const file = e.target.files[0];
+    e.target.value = '';
+    if(!file) return;
+    try{
+        const b64 = await resizeImage(file, 260);
+        setPhoto(b64);
+        try{ localStorage.setItem('anjana_photo', b64); }catch(_){}
+        await fetch(PHOTO_URL + '.json', { method:'PUT', body: JSON.stringify(b64) });
+        showToast('फोटो सेभ भयो', '📸');
+    }catch(err){ showToast('फोटो सेभ गर्न सकिएन','⚠️'); }
+});
+
+function resizeImage(file, max){
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        img.onload = () => {
+            const scale = Math.min(1, max / Math.max(img.width, img.height));
+            const w = Math.round(img.width * scale), h = Math.round(img.height * scale);
+            const c = document.createElement('canvas');
+            c.width = w; c.height = h;
+            c.getContext('2d').drawImage(img, 0, 0, w, h);
+            URL.revokeObjectURL(url);
+            resolve(c.toDataURL('image/jpeg', 0.85));
+        };
+        img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('bad')); };
+        img.src = url;
+    });
+}
+
+/* ================= HUSBAND ================= */
+async function saveHusbandToDB(){
+    try{ await fetch(HUSBAND_URL + '.json', { method:'PUT', body: JSON.stringify(husbandData) }); }catch(e){}
+}
+function calculateHusband(shouldSave = true){
+    const salary  = Number($('hSalary').value)  || 0;
+    const expense = Number($('hExpense').value) || 0;
+    const sent    = Number($('hSent').value)    || 0;
+    const savings = salary - expense - sent;
+
+    husbandData = { salary, expense, sent };
+    if(shouldSave){
+        clearTimeout(hSaveTimer);
+        hSaveTimer = setTimeout(saveHusbandToDB, 700);
+    }
+    $('hSavings').textContent = fmt(savings);
+    $('hSavBox').classList.toggle('negative', savings < 0);
+    renderData();
+}
+
+/* ================= FORM ================= */
+function setType(type){
+    $('type').value = type;
+    $('segExp').className = type === 'expense' ? 'active-exp' : '';
+    $('segInc').className = type === 'income'  ? 'active-inc' : '';
+    updateCategories();
+}
+function updateCategories(){
     const type = $('type').value;
     const cats = type === 'income' ? INC_CATS : EXP_CATS;
     $('category').innerHTML = cats.map(c => `<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
 }
 
-async function loadData() {
-    try {
-        const [expRes, incRes] = await Promise.all([fetch(EXP_URL+'.json'), fetch(INC_URL+'.json')]);
-        const exps = await expRes.json() || {};
-        const incs = await incRes.json() || {};
-        
-        allData = [];
-        for(let k in exps) allData.push({ id:k, type:'expense', ...exps[k] });
-        for(let k in incs) allData.push({ id:k, type:'income', ...incs[k] });
-
-        // Populate Years
-        const currentY = new Date().getFullYear();
-        let years = new Set(allData.map(d => +d.date.split('-')[0]));
-        years.add(currentY);
-        let sortedYears = [...years].sort((a,b)=>b-a);
-        $('filterYear').innerHTML = `<option value="all">सबै वर्ष</option>` + sortedYears.map(y=>`<option value="${y}">${y}</option>`).join('');
-
-        renderData();
-    } catch(e) { console.error("Load error", e); }
-}
-
-$('entryForm').addEventListener('submit', async (e) => {
+$('entryForm').addEventListener('submit', async e => {
     e.preventDefault();
     const type = $('type').value;
-    const url = type === 'income' ? INC_URL : EXP_URL;
-    
+    const url  = type === 'income' ? INC_URL : EXP_URL;
     const newData = {
         date: $('date').value,
         category: $('category').value,
@@ -354,153 +1388,391 @@ $('entryForm').addEventListener('submit', async (e) => {
         ts: Date.now()
     };
 
-    $('submitBtn').textContent = 'सेभ हुँदै...';
+    $('submitBtn').textContent = 'सेभ गर्दै…';
     $('submitBtn').disabled = true;
 
-    try {
-        if(editingId) {
-            if(editingType !== type) {
-                let oldUrl = editingType === 'income' ? INC_URL : EXP_URL;
-                await fetch(`${oldUrl}/${editingId}.json`, { method: 'DELETE' });
-                await fetch(`${url}.json`, { method:'POST', body:JSON.stringify(newData) });
-            } else {
-                await fetch(`${url}/${editingId}.json`, { method:'PUT', body:JSON.stringify(newData) });
+    try{
+        if(editingId){
+            if(editingType !== type){
+                const oldUrl = editingType === 'income' ? INC_URL : EXP_URL;
+                await fetch(`${oldUrl}/${editingId}.json`, { method:'DELETE' });
+                await fetch(`${url}.json`, { method:'POST', body: JSON.stringify(newData) });
+            }else{
+                await fetch(`${url}/${editingId}.json`, { method:'PUT', body: JSON.stringify(newData) });
             }
             editingId = null; editingType = null;
-            $('submitBtn').textContent = 'सेभ गर्नुहोस्';
             $('cancelBtn').style.display = 'none';
-        } else {
-            await fetch(`${url}.json`, { method:'POST', body:JSON.stringify(newData) });
+            $('editHint').textContent = '';
+            showToast('रेकर्ड अपडेट भयो', '✏️');
+        }else{
+            await fetch(`${url}.json`, { method:'POST', body: JSON.stringify(newData) });
+            showToast('रेकर्ड सेभ भयो', '✓');
         }
-        
         $('amount').value = '';
         $('note').value = '';
         $('date').value = toISO(new Date());
-        await loadData();
-    } catch(e) { alert('सेभ गर्न सकिएन'); }
-    finally { $('submitBtn').textContent = 'सेभ गर्नुहोस्'; $('submitBtn').disabled = false; }
+        await loadData(true);
+    }catch(err){
+        showToast('सेभ गर्न सकिएन', '⚠️');
+    }finally{
+        $('submitBtn').textContent = 'रेकर्ड सेभ गर्नुहोस्';
+        $('submitBtn').disabled = false;
+    }
 });
 
-function cancelEdit() {
+function cancelEdit(){
     editingId = null; editingType = null;
     $('amount').value = ''; $('note').value = '';
-    $('submitBtn').textContent = 'सेभ गर्नुहोस्';
+    $('submitBtn').textContent = 'रेकर्ड सेभ गर्नुहोस्';
     $('cancelBtn').style.display = 'none';
+    $('editHint').textContent = '';
 }
 
-/* ================= RENDER & CALCULATE ================= */
-function renderData() {
-    updateCategories();
-    
+/* ================= LOAD ================= */
+async function loadData(silent = false){
+    try{
+        const fy = $('filterYear').value;
+        const fm = $('filterMonth').value;
+
+        const [expRes, incRes, husRes, phoRes] = await Promise.all([
+            fetch(EXP_URL + '.json'),
+            fetch(INC_URL + '.json'),
+            fetch(HUSBAND_URL + '.json'),
+            fetch(PHOTO_URL + '.json')
+        ]);
+        const exps = (await expRes.json()) || {};
+        const incs = (await incRes.json()) || {};
+        const hus  = await husRes.json();
+        const pho  = await phoRes.json();
+
+        allData = [];
+        for(const k in exps) allData.push({ id:k, type:'expense', ...exps[k] });
+        for(const k in incs) allData.push({ id:k, type:'income',  ...incs[k] });
+
+        if(hus){
+            husbandData = {
+                salary:  Number(hus.salary)  || 0,
+                expense: Number(hus.expense) || 0,
+                sent:    Number(hus.sent)    || 0
+            };
+            if(document.activeElement !== $('hSalary'))  $('hSalary').value  = husbandData.salary  || '';
+            if(document.activeElement !== $('hExpense')) $('hExpense').value = husbandData.expense || '';
+            if(document.activeElement !== $('hSent'))    $('hSent').value    = husbandData.sent    || '';
+        }
+        calculateHusband(false);
+
+        if(pho){ setPhoto(pho); try{ localStorage.setItem('anjana_photo', pho); }catch(_){} }
+
+        buildYearFilter(fy);
+        $('filterMonth').value = fm || 'all';
+        renderData();
+    }catch(e){
+        console.error('Load', e);
+        if(!silent) showToast('डाटा लोड भएन', '⚠️');
+    }
+}
+
+function buildYearFilter(keep){
+    const now = new Date().getFullYear();
+    const years = new Set([now, now + 1]);
+    allData.forEach(d => { const y = (d.date||'').split('-')[0]; if(y) years.add(+y); });
+    const list = [...years].filter(y => !isNaN(y)).sort((a,b) => b - a);
+    $('filterYear').innerHTML = `<option value="all">सबै वर्ष</option>` +
+        list.map(y => `<option value="${y}">${y}</option>`).join('');
+    $('filterYear').value = (keep && (keep === 'all' || list.includes(+keep))) ? keep : 'all';
+}
+
+/* ================= REALTIME ================= */
+function startRealtime(){
+    stopRealtime();
+    if(typeof EventSource === 'undefined'){ startPolling(); return; }
+    try{
+        attachStream(EXP_URL + '.json', 'expense');
+        attachStream(INC_URL + '.json', 'income');
+        attachStream(HUSBAND_URL + '.json', 'husband');
+        attachStream(PHOTO_URL + '.json', 'photo');
+    }catch(e){ startPolling(); }
+}
+function attachStream(url, kind){
+    const es = new EventSource(url);
+    sseSources.push(es);
+    const handle = ev => { try{ handleStreamEvent(kind, JSON.parse(ev.data)); }catch(_){} };
+    es.addEventListener('put', handle);
+    es.addEventListener('patch', handle);
+    es.onopen  = () => setLive(true);
+    es.onerror = () => setLive(false);
+}
+function handleStreamEvent(kind, payload){
+    const path = payload.path || '/';
+    const data = payload.data;
+
+    if(kind === 'husband'){
+        husbandData = {
+            salary:  Number(data?.salary)  || 0,
+            expense: Number(data?.expense) || 0,
+            sent:    Number(data?.sent)    || 0
+        };
+        if(document.activeElement !== $('hSalary'))  $('hSalary').value  = husbandData.salary  || '';
+        if(document.activeElement !== $('hExpense')) $('hExpense').value = husbandData.expense || '';
+        if(document.activeElement !== $('hSent'))    $('hSent').value    = husbandData.sent    || '';
+        calculateHusband(false);
+        return;
+    }
+    if(kind === 'photo'){
+        if(typeof data === 'string' && data){ setPhoto(data); try{ localStorage.setItem('anjana_photo', data); }catch(_){} }
+        return;
+    }
+    if(path === '/'){
+        allData = allData.filter(d => d.type !== kind);
+        if(data) for(const k in data) allData.push({ id:k, type:kind, ...data[k] });
+        renderData();
+        return;
+    }
+    const segs = path.split('/').filter(Boolean);
+    const id = segs[0];
+    if(segs.length === 1){
+        allData = allData.filter(d => !(d.id === id && d.type === kind));
+        if(data) allData.push({ id, type: kind, ...data });
+        renderData();
+    }else{
+        clearTimeout(reloadTimer);
+        reloadTimer = setTimeout(() => loadData(true), 600);
+    }
+}
+function startPolling(){
+    clearInterval(pollTimer);
+    setLive(false);
+    pollTimer = setInterval(() => loadData(true), 15000);
+}
+function stopRealtime(){
+    sseSources.forEach(es => { try{ es.close(); }catch(_){} });
+    sseSources = [];
+    clearInterval(pollTimer);
+    pollTimer = null;
+    setLive(false);
+}
+
+/* ================= RENDER ================= */
+function renderData(){
     const y = $('filterYear').value;
     const m = $('filterMonth').value;
-    const search = $('searchBar').value.toLowerCase();
+    const search = ($('searchBar').value || '').toLowerCase().trim();
 
     let filtered = allData;
-    if(y !== 'all') filtered = filtered.filter(d => +d.date.split('-')[0] === +y);
-    if(m !== 'all') filtered = filtered.filter(d => (+d.date.split('-')[1]-1) === +m);
-    if(search) filtered = filtered.filter(d => (d.note||'').toLowerCase().includes(search) || (catMap[d.category]||{}).name.toLowerCase().includes(search));
+    if(y !== 'all') filtered = filtered.filter(d => (d.date||'').split('-')[0] === String(y));
+    if(m !== 'all') filtered = filtered.filter(d => (+((d.date||'').split('-')[1]) - 1) === +m);
+    if(search){
+        filtered = filtered.filter(d => {
+            const note = (d.note || '').toLowerCase();
+            const cname = (catMap[d.category]?.name || '').toLowerCase();
+            return note.includes(search) || cname.includes(search);
+        });
+    }
 
-    // Calculations
-    let incTotal = 0, expTotal = 0;
-    let incCat = {}, expCat = {};
-
+    let extraIncTotal = 0, expTotal = 0;
+    const incCat = {}, expCat = {};
     filtered.forEach(d => {
-        if(d.type === 'income') {
-            incTotal += d.amount;
-            incCat[d.category] = (incCat[d.category]||0) + d.amount;
-        } else {
-            expTotal += d.amount;
-            expCat[d.category] = (expCat[d.category]||0) + d.amount;
+        const amt = Number(d.amount) || 0;
+        if(d.type === 'income'){
+            extraIncTotal += amt;
+            const key = catMap[d.category] ? d.category : 'other_inc';
+            incCat[key] = (incCat[key]||0) + amt;
+        }else{
+            expTotal += amt;
+            expCat[d.category] = (expCat[d.category]||0) + amt;
         }
     });
 
-    $('sumIncome').textContent = fmt(incTotal);
-    $('sumExpense').textContent = fmt(expTotal);
-    $('sumSavings').textContent = fmt(incTotal - expTotal);
+    const hSalary  = Number($('hSalary').value)  || 0;
+    const hExpense = Number($('hExpense').value) || 0;
+    const hSent    = Number($('hSent').value)    || 0;
+    const hSavings = hSalary - hExpense - hSent;
 
-    // Category Breakdown
-    let breakdownHTML = '<div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">';
-    
-    // Income list
-    breakdownHTML += '<div><h4 style="color:var(--green); margin-bottom:10px; font-size:14px;">🟢 आम्दानी</h4>';
-    if(Object.keys(incCat).length === 0) breakdownHTML += '<p style="font-size:12px; color:var(--muted);">छैन</p>';
-    for(let c in incCat) {
-        let cat = catMap[c] || catMap.other_inc;
-        let pct = incTotal ? (incCat[c]/incTotal*100) : 0;
-        breakdownHTML += `
-        <div class="cat-item">
-            <div class="cat-header"><span>${cat.icon} ${cat.name}</span> <span>${fmt(incCat[c])}</span></div>
-            <div class="cat-bar-bg"><div class="cat-bar-fill" style="width:${pct}%; background:${cat.color};"></div></div>
+    const anjanaOpening     = hSent;
+    const anjanaExtra       = extraIncTotal;
+    const anjanaTotalIncome = anjanaOpening + anjanaExtra;
+    const anjanaExpense     = expTotal;
+    const anjanaSavings     = anjanaTotalIncome - anjanaExpense;
+
+    const familyIncome   = hSalary + anjanaExtra;
+    const familyExpense  = hExpense + anjanaExpense;
+    const familySavings  = hSavings + anjanaSavings;
+
+    const hv = $('heroValue');
+    hv.textContent = fmt(familySavings);
+    hv.classList.toggle('negative', familySavings < 0);
+    $('heroIncome').textContent  = fmt(familyIncome);
+    $('heroExpense').textContent = fmt(familyExpense);
+    $('heroHSav').textContent    = fmt(hSavings);
+    $('heroASav').textContent    = fmt(anjanaSavings);
+
+    $('anjanaOpening').textContent     = fmt(anjanaOpening);
+    $('anjanaExtra').textContent       = fmt(anjanaExtra);
+    $('anjanaTotalIncome').textContent = fmt(anjanaTotalIncome);
+    $('anjanaExpense').textContent     = fmt(anjanaExpense);
+    $('anjanaBalance').textContent     = fmt(anjanaSavings);
+    $('anjanaBalanceBox').classList.toggle('negative', anjanaSavings < 0);
+
+    $('ftHIncome').textContent  = fmt(hSalary);
+    $('ftAIncome').textContent  = fmt(anjanaExtra);
+    $('ftTIncome').textContent  = fmt(familyIncome);
+
+    $('ftHTransfer').textContent = '− ' + fmt(hSent);
+    $('ftATransfer').textContent = '+ ' + fmt(hSent);
+
+    $('ftHExpense').textContent = fmt(hExpense);
+    $('ftAExpense').textContent = fmt(anjanaExpense);
+    $('ftTExpense').textContent = fmt(familyExpense);
+
+    $('ftHSavings').textContent = fmt(hSavings);
+    $('ftASavings').textContent = fmt(anjanaSavings);
+    $('ftTSavings').textContent = fmt(familySavings);
+
+    $('ftHSavings').classList.toggle('neg', hSavings < 0);
+    $('ftASavings').classList.toggle('neg', anjanaSavings < 0);
+    $('ftTSavings').classList.toggle('neg', familySavings < 0);
+
+    let bd = '';
+    bd += `<div class="cat-col inc"><h4>🟢 अन्जनाको आम्दानी</h4>`;
+    if(anjanaOpening > 0){
+        const pct = anjanaTotalIncome ? (anjanaOpening / anjanaTotalIncome * 100) : 0;
+        bd += `<div class="cat-item">
+            <div class="cat-row"><span class="nm">🤝 पतिबाट आएको</span><span class="am">${fmt(anjanaOpening)}</span></div>
+            <div class="cat-bar"><div class="cat-fill" style="width:${pct}%;background:#f59e0b;"></div></div>
         </div>`;
     }
-    breakdownHTML += '</div>';
-
-    // Expense list
-    breakdownHTML += '<div><h4 style="color:var(--red); margin-bottom:10px; font-size:14px;">🔴 खर्च</h4>';
-    if(Object.keys(expCat).length === 0) breakdownHTML += '<p style="font-size:12px; color:var(--muted);">छैन</p>';
-    for(let c in expCat) {
-        let cat = catMap[c] || catMap.other_exp;
-        let pct = expTotal ? (expCat[c]/expTotal*100) : 0;
-        breakdownHTML += `
-        <div class="cat-item">
-            <div class="cat-header"><span>${cat.icon} ${cat.name}</span> <span>${fmt(expCat[c])}</span></div>
-            <div class="cat-bar-bg"><div class="cat-bar-fill" style="width:${pct}%; background:${cat.color};"></div></div>
+    const incKeys = Object.keys(incCat);
+    if(!incKeys.length && anjanaOpening === 0) bd += '<div class="cat-empty">कुनै आम्दानी छैन</div>';
+    incKeys.forEach(c => {
+        const cat = catMap[c] || catMap.other_inc;
+        const pct = anjanaTotalIncome ? (incCat[c] / anjanaTotalIncome * 100) : 0;
+        bd += `<div class="cat-item">
+            <div class="cat-row"><span class="nm">${cat.icon} ${cat.name}</span><span class="am">${fmt(incCat[c])}</span></div>
+            <div class="cat-bar"><div class="cat-fill" style="width:${pct}%;background:${cat.color};"></div></div>
         </div>`;
-    }
-    breakdownHTML += '</div></div>';
-    $('categoryBreakdown').innerHTML = breakdownHTML;
+    });
+    bd += `</div>`;
 
-    // Table
-    filtered.sort((a,b) => b.date.localeCompare(a.date) || b.ts - a.ts);
-    $('tableBody').innerHTML = filtered.map(d => {
-        let c = catMap[d.category] || { icon:'📦', name:'अन्य', color:'#64748b' };
-        let isInc = d.type === 'income';
-        let payIcon = d.payment === 'cash' ? '💵' : (d.payment === 'bank' ? '🏦' : '📱');
-        
-        return `<tr>
-            <td>${formatDate(d.date)}</td>
-            <td><span class="badge" style="background:${isInc?'#10b98120':'#ef444420'}; color:${isInc?'#10b981':'#ef4444'}; border:1px solid ${isInc?'#10b981':'#ef4444'};">${isInc?'आम्दानी':'खर्च'}</span></td>
-            <td>${payIcon} ${c.icon} ${c.name} <br><small style="color:#94a3b8">${d.note||''}</small></td>
-            <td style="text-align:right; font-weight:700; color:${isInc?'#10b981':'#fff'};">${isInc?'+':'-'} ${fmt(d.amount)}</td>
-            <td style="text-align:right;">
-                <button style="background:none; border:none; cursor:pointer;" onclick="editItem('${d.id}', '${d.type}')">✏️</button>
-                <button style="background:none; border:none; cursor:pointer;" onclick="deleteItem('${d.id}', '${d.type}')">🗑️</button>
-            </td>
-        </tr>`;
+    bd += `<div class="cat-col exp"><h4>🔴 अन्जनाको खर्च</h4>`;
+    const expKeys = Object.keys(expCat);
+    if(!expKeys.length) bd += '<div class="cat-empty">कुनै खर्च छैन</div>';
+    else expKeys.forEach(c => {
+        const cat = catMap[c] || catMap.other_exp;
+        const pct = expTotal ? (expCat[c] / expTotal * 100) : 0;
+        bd += `<div class="cat-item">
+            <div class="cat-row"><span class="nm">${cat.icon} ${cat.name}</span><span class="am">${fmt(expCat[c])}</span></div>
+            <div class="cat-bar"><div class="cat-fill" style="width:${pct}%;background:${cat.color};"></div></div>
+        </div>`;
+    });
+    bd += `</div>`;
+    $('categoryBreakdown').innerHTML = bd;
+
+    filtered.sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.ts||0) - (a.ts||0));
+    lastFiltered = filtered;
+    $('txCount').textContent = filtered.length ? `${filtered.length} रेकर्ड` : '';
+
+    $('txList').innerHTML = filtered.map(d => {
+        const c = catMap[d.category] || { icon:'📦', name:'अन्य', color:'#64748b' };
+        const isInc = d.type === 'income';
+        const payIcon = d.payment === 'cash' ? '💵' : (d.payment === 'bank' ? '🏦' : '📱');
+        return `<div class="tx">
+            <div class="tx-ic">${c.icon}</div>
+            <div class="tx-body">
+                <div class="tx-name">${c.name} <span style="font-size:10px;color:var(--txt-3);font-weight:500;">· ${payIcon}</span></div>
+                <div class="tx-meta">
+                    <span class="tx-date-badge">${formatDate(d.date)}</span>${d.note ? d.note : ''}
+                </div>
+            </div>
+            <div class="tx-amt ${isInc?'inc':'exp'}">${isInc?'+':'−'} ${fmt(d.amount).replace('रु. ','')}</div>
+            <div class="tx-acts">
+                <button onclick="editItem('${d.id}','${d.type}')" aria-label="सम्पादन">✏️</button>
+                <button onclick="deleteItem('${d.id}','${d.type}')" aria-label="मेटाउनु">🗑️</button>
+            </div>
+        </div>`;
     }).join('');
+
     $('emptyState').style.display = filtered.length === 0 ? 'block' : 'none';
 }
 
+/* ================= EXPORT ================= */
+function exportCSV(){
+    const hSalary  = Number($('hSalary').value)  || 0;
+    const hExpense = Number($('hExpense').value) || 0;
+    const hSent    = Number($('hSent').value)    || 0;
+    const hSavings = hSalary - hExpense - hSent;
+
+    let extraInc = 0, expTot = 0;
+    lastFiltered.forEach(d => { if(d.type==='income') extraInc += Number(d.amount)||0; else expTot += Number(d.amount)||0; });
+    const aIncome  = hSent + extraInc;
+    const aSavings = aIncome - expTot;
+    const familySavings = hSavings + aSavings;
+
+    let csv = '\uFEFF';
+    csv += '=== FAMILY SUMMARY ===\n';
+    csv += `Parameter,Husband,Anjana,Total\n`;
+    csv += `Aamdani,${hSalary},${extraInc},${hSalary+extraInc}\n`;
+    csv += `Patibata payeko,${-hSent},${hSent},0\n`;
+    csv += `Kharcha,${hExpense},${expTot},${hExpense+expTot}\n`;
+    csv += `Bachat,${hSavings},${aSavings},${familySavings}\n\n`;
+
+    csv += '=== ANJANA TRANSACTIONS ===\n';
+    csv += 'Miti,Prakar,Category,Rakam,Vivaran\n';
+    lastFiltered.forEach(d => {
+        const c = catMap[d.category] || { name:'Other' };
+        csv += `${d.date||''},${d.type},"${c.name}",${d.amount||0},"${(d.note||'').replace(/"/g,'""')}"\n`;
+    });
+
+    const blob = new Blob([csv], { type:'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'Anjana_Hisab_Report.csv';
+    document.body.appendChild(link); link.click(); document.body.removeChild(link);
+    setTimeout(() => URL.revokeObjectURL(link.href), 1500);
+    showToast('CSV डाउनलोड भयो','📥');
+}
+
+/* ================= EDIT / DELETE ================= */
 window.editItem = (id, type) => {
-    let item = allData.find(d => d.id === id); if(!item) return;
-    $('type').value = type;
+    const item = allData.find(d => d.id === id && d.type === type);
+    if(!item) return;
+    setType(type);
     editingType = type;
-    updateCategories();
-    $('date').value = item.date;
+    $('date').value = item.date || toISO(new Date());
     $('category').value = item.category;
     $('amount').value = item.amount;
     $('note').value = item.note || '';
     $('payment').value = item.payment || 'cash';
     editingId = id;
-    $('submitBtn').textContent = 'अपडेट गर्नुहोस्';
+    $('submitBtn').textContent = 'रेकर्ड अपडेट गर्नुहोस्';
     $('cancelBtn').style.display = 'block';
-    window.scrollTo({top:0, behavior:'smooth'});
+    $('editHint').textContent = '· सम्पादन';
+    window.scrollTo({ top: 0, behavior:'smooth' });
 };
 
 window.deleteItem = async (id, type) => {
-    if(!confirm('मेटाउने हो?')) return;
-    let url = type === 'income' ? INC_URL : EXP_URL;
-    await fetch(`${url}/${id}.json`, { method: 'DELETE' });
-    loadData();
+    if(!confirm('यो रेकर्ड मेटाउने हो?')) return;
+    const url = type === 'income' ? INC_URL : EXP_URL;
+    try{
+        await fetch(`${url}/${id}.json`, { method:'DELETE' });
+        showToast('रेकर्ड मेटाइयो','🗑️');
+    }catch(e){ showToast('मेटाउन सकिएन','⚠️'); }
 };
 
-/* INIT */
-(function init() {
+/* ================= INIT ================= */
+(function init(){
     $('date').value = toISO(new Date());
-    updateCategories();
+    $('couplePhoto').src = PLACEHOLDER;
+    try{
+        const cached = localStorage.getItem('anjana_photo');
+        if(cached) setPhoto(cached);
+    }catch(_){}
+    setType('expense');
     startClock();
+    initMusic();
     loadData();
+    startRealtime();
+    window.addEventListener('online', () => { loadData(true); startRealtime(); });
+    document.addEventListener('visibilitychange', () => { if(!document.hidden) loadData(true); });
 })();
 </script>
 </body>
